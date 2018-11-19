@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <AssemblyName>Editors.Tests</AssemblyName>
+
+    <RootNamespace>Maseya.Editors.Tests</RootNamespace>
+
+    <LangVersion>latest</LangVersion>
+
+    <Authors>Nelson Garcia</Authors>
+
+    <Company>Maseya</Company>
+
+    <Product>Helper.Tests</Product>
+
+    <Description>Test suite for Maseya.Editors package.</Description>
+
+    <Copyright>Copyright (c) 2018 Nelson Garcia</Copyright>
+
+    <PackageLicenseUrl>https://www.gnu.org/licenses/#AGPL</PackageLicenseUrl>
+
+    <PackageProjectUrl>https://github.com/Maseya/Editors</PackageProjectUrl>
+
+    <RepositoryUrl>https://github.com/Maseya/Editors</RepositoryUrl>
+
+    <RepositoryType>Dependency</RepositoryType>
+
+    <NeutralLanguage>en-US</NeutralLanguage>
+
+    <PackageId>Maseya.Editors.Tests</PackageId>
+
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Editors\Editors.csproj" />
+  </ItemGroup>
+
+</Project>
