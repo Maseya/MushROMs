@@ -2,14 +2,34 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Maseya.Editors</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <PackageId>Maseya.Editors</PackageId>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Nelson Garcia</Authors>
+    <Company>Maseya</Company>
+    <Description>C# .NET Class Library for creating 2D game editors.</Description>
+    <Copyright>Copyright (c) 2018 Nelson Garcia</Copyright>
+    <PackageLicenseUrl>https://www.gnu.org/licenses/#AGPL</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Maseya/Editors</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Maseya/Editors</RepositoryUrl>
+    <RepositoryType>Dependency</RepositoryType>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet />
+    <DocumentationFile>bin\Release\Editors.xml</DocumentationFile>
+    <OutputPath>bin\$(Configuration)</OutputPath>
+    <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <CodeAnalysisRuleSet />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <NoWarn>1701;1702;CS1591</NoWarn>
+    <DocumentationFile>bin\Debug\Editors.xml</DocumentationFile>
+    <OutputPath>bin\$(Configuration)</OutputPath>
   </PropertyGroup>
 
 </Project>
