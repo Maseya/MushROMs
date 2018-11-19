@@ -55,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj" />
     <ProjectReference Include="..\..\src\Editors\Editors.csproj" />
   </ItemGroup>
 

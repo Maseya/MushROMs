@@ -32,4 +32,8 @@
     <OutputPath>bin\$(Configuration)</OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj" />
+  </ItemGroup>
+
 </Project>
