@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Maseya.Snes</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <PackageId>Maseya.Snes</PackageId>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Nelson Garcia</Authors>
+    <Company>Maseya</Company>
+    <Description>C# .NET class library for Super NES graphics resources.</Description>
+    <Copyright>Copyright (c) 2018 Nelson Garcia</Copyright>
+    <PackageLicenseUrl>https://www.gnu.org/licenses/#AGPL</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Maseya/MushROMs</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Maseya/MushROMs</RepositoryUrl>
+    <RepositoryType>Dependency</RepositoryType>
+    <NeutralLanguage>English (United States)</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>Release\Debug\Snes.xml</DocumentationFile>
+    <OutputPath>$(Configuration)\Debug</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>Debug\Debug\Snes.xml</DocumentationFile>
+    <OutputPath>$(Configuration)\Debug</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj" />
+    <ProjectReference Include="..\Editors\Editors.csproj" />
+  </ItemGroup>
+
+</Project>

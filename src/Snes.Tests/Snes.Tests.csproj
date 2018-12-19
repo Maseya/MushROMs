@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <RootNamespace>Maseya.Snes.Tests</RootNamespace>
+
+    <LangVersion>latest</LangVersion>
+
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+    <PackageId>Maseya.Snes.Tests</PackageId>
+
+    <Authors>Nelson Garcia</Authors>
+
+    <Company>Maseya</Company>
+
+    <Product>Snes.Tests</Product>
+
+    <Description>Test suite for Maseya.Snes package.</Description>
+
+    <Copyright>Copyright (c) 2018 Nelson Garcia</Copyright>
+
+    <PackageLicenseUrl>https://www.gnu.org/licenses/#AGPL</PackageLicenseUrl>
+
+    <PackageProjectUrl>https://github.com/Maseya/MushROMs</PackageProjectUrl>
+
+    <RepositoryUrl>https://github.com/Maseya/MushROMs</RepositoryUrl>
+
+    <RepositoryType>Dependency</RepositoryType>
+
+    <NeutralLanguage>English (United States)</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>$(Configuration\bin</OutputPath>
+    <DocumentationFile>$(Configuration\bin\Snes.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>$(Configuration\bin</OutputPath>
+    <DocumentationFile>$(Configuration\bin\Snes.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj" />
+    <ProjectReference Include="..\Editors\Editors.csproj" />
+    <ProjectReference Include="..\Snes\Snes.csproj" />
+  </ItemGroup>
+
+</Project>
