@@ -8,9 +8,11 @@
 namespace Maseya.Editors
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using Maseya.Helper;
     using static System.IO.Path;
+    using SR = Helper.StringHelper;
 
     /// <summary>
     /// Provides a generic implementation of <see cref="IEditor"/>.
@@ -22,6 +24,12 @@ namespace Maseya.Editors
         /// read from and write to during any file operations.
         /// </summary>
         private string _path;
+
+        /// <summary>
+        /// The current untitled number of each extension.
+        /// </summary>
+        private static readonly Dictionary<string, int> UntitledNumbers =
+            new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Editor"/> class.
@@ -301,29 +309,38 @@ namespace Maseya.Editors
         /// <param name="extension">
         /// The file extension the new file should have.
         /// </param>
-        /// <param name="number">
-        /// A reference to the current untitled number. This value will
-        /// be incremented until a valid new file name is found.
-        /// </param>
         /// <returns>
         /// A string to the first path generated that does not already
         /// exist.
         /// </returns>
-        protected static string NextUntitledPath(
-            string name,
-            string extension,
-            ref int number)
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="name"/> or <paramref name="extension"/>is
+        /// <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="extension"/> contains one or more of the
+        /// invalid path characters defined in <see cref="
+        /// InvalidPathChars"/>.
+        /// </exception>
+        public static string GetUntitledPath(string name, string extension)
         {
+            if (!UntitledNumbers.TryGetValue(extension, out var number))
+            {
+                number = 0;
+            }
+
             string path;
             do
             {
+                number++;
                 path = Combine(
                     name,
-                    extension,
-                    (++number).ToString());
+                    SR.GetString(number),
+                    GetExtension(extension));
             }
             while (File.Exists(path));
 
+            UntitledNumbers[extension] = number;
             return path;
         }
 
