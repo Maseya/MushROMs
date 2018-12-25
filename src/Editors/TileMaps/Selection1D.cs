@@ -87,6 +87,57 @@ namespace Maseya.Editors.TileMaps
         public abstract bool Contains(int index);
 
         /// <summary>
+        /// Create a data dictionary of the values at the indexes of a
+        /// specified list.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of the values in the dictionary.
+        /// </typeparam>
+        /// <param name="collection">
+        /// An implementation of <see cref="IReadOnlyList{T}"/> to
+        /// retrieve values from indexes specified by the <see cref="
+        /// Selection1D"/>. If the index is outside the bounds of
+        /// <paramref name="collection"/>, the default value of
+        /// <typeparamref name="T"/> will be used.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Dictionary{TKey, TValue}"/> whose keys are the
+        /// integer indexes of the <see cref="Selection1D"/> and whose
+        /// values are the values of <paramref name="collection"/> at
+        /// the corresponding index.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="collection"/> is <see langword="null"/>.
+        /// </exception>
+        public Dictionary<int, T> GetValues<T>(IReadOnlyList<T> collection)
+        {
+            if (collection is null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            var result = new Dictionary<int, T>(Count);
+            foreach (var index in this)
+            {
+                if ((uint)index >= (uint)collection.Count)
+                {
+                    result.Add(index, default);
+                }
+
+                result.Add(index, collection[index]);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        IDictionary<int, T> ISelection1D.GetValues<T>(
+            IReadOnlyList<T> collection)
+        {
+            return GetValues(collection);
+        }
+
+        /// <summary>
         /// When overridden in a derived class, returns an enumerator
         /// that enumerates through the <see cref="Selection1D"/>.
         /// </summary>
@@ -138,6 +189,18 @@ namespace Maseya.Editors.TileMaps
             bool ISelection1D.Contains(int index)
             {
                 return false;
+            }
+
+            /// <inheritdoc/>
+            IDictionary<int, T> ISelection1D.GetValues<T>(
+                IReadOnlyList<T> collection)
+            {
+                if (collection is null)
+                {
+                    throw new ArgumentNullException(nameof(collection));
+                }
+
+                return new Dictionary<int, T>();
             }
 
             /// <inheritdoc/>

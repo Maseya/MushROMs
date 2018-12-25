@@ -88,6 +88,70 @@ namespace Maseya.Editors.TileMaps
         public abstract bool Contains(Point position);
 
         /// <summary>
+        /// Create a data dictionary of the values at the indexes of a
+        /// specified list.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of the values in the dictionary.
+        /// </typeparam>
+        /// <param name="collection">
+        /// An implementation of <see cref="IReadOnlyList{T}"/> to
+        /// retrieve values from indexes specified by the <see cref="
+        /// Selection2D"/>. If the index is outside the bounds of
+        /// <paramref name="collection"/>, the default value of
+        /// <typeparamref name="T"/> will be used.
+        /// </param>
+        /// <param name="width">
+        /// The width of the 2D area representing <paramref name="
+        /// collection"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Dictionary{TKey, TValue}"/> whose keys are the
+        /// integer indexes of the <see cref="Selection2D"/> and whose
+        /// values are the values of <paramref name="collection"/> at
+        /// the corresponding index.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="collection"/> is <see langword="null"/>.
+        /// </exception>
+        public Dictionary<Point, T> GetValues<T>(
+            IReadOnlyList<T> collection,
+            int width)
+        {
+            if (collection is null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            var result = new Dictionary<Point, T>(Count);
+            foreach (var point in this)
+            {
+                if ((uint)point.X >= (uint)width)
+                {
+                    result.Add(point, default);
+                }
+
+                var index = TileMap1D.GetGridTile(point, width);
+                if ((uint)index >= (uint)collection.Count)
+                {
+                    result.Add(point, default);
+                }
+
+                result.Add(point, collection[index]);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        IDictionary<Point, T> ISelection2D.GetValues<T>(
+            IReadOnlyList<T> collection,
+            int width)
+        {
+            return GetValues(collection, width);
+        }
+
+        /// <summary>
         /// When overridden in a derived class, returns an enumerator
         /// that enumerates through the <see cref="Selection2D"/>.
         /// </summary>
@@ -103,6 +167,10 @@ namespace Maseya.Editors.TileMaps
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// Represents an implementation of <see cref="ISelection1D"/>
+        /// that contains no data.
+        /// </summary>
         private sealed class EmptySelection2D : ISelection2D
         {
             /// <inheritdoc/>
@@ -133,6 +201,19 @@ namespace Maseya.Editors.TileMaps
             bool ISelection2D.Contains(Point position)
             {
                 return false;
+            }
+
+            /// <inheritdoc/>
+            IDictionary<Point, T> ISelection2D.GetValues<T>(
+                IReadOnlyList<T> collection,
+                int width)
+            {
+                if (collection is null)
+                {
+                    throw new ArgumentNullException(nameof(collection));
+                }
+
+                return new Dictionary<Point, T>();
             }
 
             /// <inheritdoc/>

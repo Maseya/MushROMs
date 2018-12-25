@@ -7,6 +7,7 @@
 
 namespace Maseya.Editors.TileMaps
 {
+    using System;
     using System.Collections.Generic;
     using System.Drawing;
 
@@ -44,5 +45,36 @@ namespace Maseya.Editors.TileMaps
         /// A copy of this <see cref="ISelection2D"/>.
         /// </returns>
         ISelection2D Copy();
+
+        /// <summary>
+        /// Create a data dictionary of the values at the indexes of a
+        /// specified list.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of the values in the dictionary.
+        /// </typeparam>
+        /// <param name="collection">
+        /// An implementation of <see cref="IReadOnlyList{T}"/> to
+        /// retrieve values from indexes specified by the <see cref="
+        /// ISelection2D"/>. If the index is outside the bounds of
+        /// <paramref name="collection"/>, the default value of
+        /// <typeparamref name="T"/> will be used.
+        /// </param>
+        /// <param name="width">
+        /// The width of the 2D area representing <paramref name="
+        /// collection"/>.
+        /// </param>
+        /// <returns>
+        /// An implementation of <see cref="IDictionary{TKey, TValue}"/>
+        /// whose keys are the integer indexes of the <see cref="
+        /// ISelection2D"/> and whose values are the values of
+        /// <paramref name="collection"/> at the corresponding index.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="collection"/> is <see langword="null"/>.
+        /// </exception>
+        IDictionary<Point, T> GetValues<T>(
+            IReadOnlyList<T> collection,
+            int width);
     }
 }
