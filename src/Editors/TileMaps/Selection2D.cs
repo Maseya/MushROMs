@@ -11,7 +11,6 @@ namespace Maseya.Editors.TileMaps
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
-    using Enumerable = System.Linq.Enumerable;
 
     /// <summary>
     /// Provides a base implementation for making a selection of data in
@@ -220,7 +219,7 @@ namespace Maseya.Editors.TileMaps
             /// <inheritdoc/>
             public IEnumerator<Point> GetEnumerator()
             {
-                return Enumerable.Empty<Point>().GetEnumerator();
+                yield break;
             }
 
             /// <inheritdoc/>
