@@ -143,140 +143,14 @@ namespace Maseya.Editors.TileMaps
         /// </returns>
         public override IEnumerator<Point> GetEnumerator()
         {
-            return new Enumerator(this);
-        }
-
-        /// <summary>
-        /// Supports an iteration over a <see cref="SingleSelection1D"/>
-        /// instance.
-        /// </summary>
-        private struct Enumerator : IEnumerator<Point>
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="
-            /// Enumerator"/> struct.
-            /// </summary>
-            /// <param name="selection">
-            /// The <see cref="BoxSelection1D"/> that created this
-            /// <see cref="Enumerator"/>.
-            /// </param>
-            /// <exception cref="ArgumentNullException">
-            /// <paramref name="selection"/> is <see langword="null"/>.
-            /// </exception>
-            public Enumerator(BoxSelection2D selection)
+            for (var y = 0; y < Size.Height; y++)
             {
-                Selection = selection
-                    ?? throw new ArgumentNullException(nameof(selection));
-
-                Index = StartPosition;
-                Current = default;
-            }
-
-            /// <summary>
-            /// Gets the location in the <see cref="BoxSelection2D"/>
-            /// at the current position of the enumerator.
-            /// </summary>
-            public Point Current
-            {
-                get;
-                private set;
-            }
-
-            /// <inheritdoc/>
-            object IEnumerator.Current
-            {
-                get
+                for (var x = 0; x < Size.Width; x++)
                 {
-                    return Current;
+                    yield return new Point(
+                        StartPosition.X + x,
+                        StartPosition.Y + y);
                 }
-            }
-
-            /// <summary>
-            /// Gets the <see cref="BoxSelection2D"/> that created
-            /// this <see cref="Enumerator"/>.
-            /// </summary>
-            private BoxSelection2D Selection
-            {
-                get;
-            }
-
-            /// <summary>
-            /// Gets the location of the first selected tile.
-            /// </summary>
-            private Point StartPosition
-            {
-                get
-                {
-                    return Selection.StartPosition;
-                }
-            }
-
-            /// <summary>
-            /// Gets the size of the selection.
-            /// </summary>
-            private Size Size
-            {
-                get
-                {
-                    return Selection.Size;
-                }
-            }
-
-            /// <summary>
-            /// Gets or sets the location of the next tile to be
-            /// selected.
-            /// </summary>
-            private Point Index
-            {
-                get;
-                set;
-            }
-
-            /// <summary>
-            /// Sets the enumerator to the initial position.
-            /// </summary>
-            public void Reset()
-            {
-                Index = StartPosition;
-                Current = default;
-            }
-
-            /// <summary>
-            /// Advances the enumerator to the next index in the
-            /// <see cref="LineSelection1D"/>.
-            /// </summary>
-            /// <returns>
-            /// <see langword="true"/> if the enumerator was
-            /// successfully advanced to the next index; <see langword="
-            /// false"/> if the enumerator has passed the end of the
-            /// <see cref="LineSelection1D"/>.
-            /// </returns>
-            public bool MoveNext()
-            {
-                var x = Index.X;
-                var y = Index.Y;
-
-                x++;
-
-                if (x >= StartPosition.X + Size.Width)
-                {
-                    x = StartPosition.X;
-                    y = 0;
-                }
-
-                if (y < StartPosition.Y + Size.Height)
-                {
-                    Current = Index;
-                    Index = new Point(x, y);
-                    return true;
-                }
-
-                return false;
-            }
-
-            /// <inheritdoc/>
-            void IDisposable.Dispose()
-            {
             }
         }
     }

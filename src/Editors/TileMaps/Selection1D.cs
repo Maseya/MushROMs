@@ -10,6 +10,7 @@ namespace Maseya.Editors.TileMaps
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Enumerable = System.Linq.Enumerable;
 
     /// <summary>
     /// Provides a base implementation for making a selection of data in
@@ -204,49 +205,15 @@ namespace Maseya.Editors.TileMaps
             }
 
             /// <inheritdoc/>
-            IEnumerator<int> IEnumerable<int>.GetEnumerator()
+            public IEnumerator<int> GetEnumerator()
             {
-                return default(Enumerator);
+                return Enumerable.Empty<int>().GetEnumerator();
             }
 
             /// <inheritdoc/>
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return default(Enumerator);
-            }
-
-            /// <summary>
-            /// Provides an empty enumerator that has no elements.
-            /// </summary>
-            private struct Enumerator : IEnumerator<int>
-            {
-                /// <inheritdoc/>
-                int IEnumerator<int>.Current
-                {
-                    get;
-                }
-
-                /// <inheritdoc/>
-                object IEnumerator.Current
-                {
-                    get;
-                }
-
-                /// <inheritdoc/>
-                void IEnumerator.Reset()
-                {
-                }
-
-                /// <inheritdoc/>
-                bool IEnumerator.MoveNext()
-                {
-                    return false;
-                }
-
-                /// <inheritdoc/>
-                void IDisposable.Dispose()
-                {
-                }
+                return GetEnumerator();
             }
         }
     }
