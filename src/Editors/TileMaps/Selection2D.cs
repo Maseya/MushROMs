@@ -11,6 +11,7 @@ namespace Maseya.Editors.TileMaps
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
+    using static Helper.ThrowHelper;
 
     /// <summary>
     /// Provides a base implementation for making a selection of data in
@@ -121,6 +122,11 @@ namespace Maseya.Editors.TileMaps
             if (collection is null)
             {
                 throw new ArgumentNullException(nameof(collection));
+            }
+
+            if (width <= 0)
+            {
+                throw ValueNotGreaterThan(nameof(width), width);
             }
 
             var result = new Dictionary<Point, T>(Count);
