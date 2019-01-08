@@ -1,6 +1,6 @@
 ﻿// <copyright file="EditorSelector.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved Licensed under GNU
-//     Affero General Public License. See LICENSE in project root for full
+//     Copyright (c) 2019 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
 //     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
@@ -624,8 +624,6 @@ namespace Maseya.Editors
             /// contains an <see cref="IEditor"/> with the specified file path
             /// key; otherwise <see langword="false"/>.
             /// </returns>
-            /// <inheritdoc cref="GetFullPath(String)" select=" exception"/>
-            ///            /// ///
             /// <exception cref="ArgumentException">
             /// <paramref name="key"/> is a zero-length string, contains only
             /// whitespace, or contains one or more of the invalid characters
@@ -649,6 +647,8 @@ namespace Maseya.Editors
             /// The specified path, file name, or both exceed the
             /// system-defined maximum length.
             /// </exception>
+            /// <inheritdoc cref="GetFullPath(String)" select="exception"/>
+            ///
             public bool TryGetValue(string key, out IEditor value)
             {
                 var actualKey = GetFullPath(key);
