@@ -1441,8 +1441,14 @@
         /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
+            var version = Version;
             for (var i = 0; i < Count; i++)
             {
+                if (version != Version)
+                {
+                    throw new InvalidOperationException();
+                }
+
                 yield return this[i];
             }
         }
