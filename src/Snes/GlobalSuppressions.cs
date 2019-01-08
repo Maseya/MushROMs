@@ -1,14 +1,13 @@
 ﻿// <copyright file="GlobalSuppressions.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
-// This file is used by Code Analysis to maintain SuppressMessage
-// attributes that are applied to this project. Project-level
-// suppressions either have no target or are given a specific target and
-// scoped to a namespace, type, member, etc.
+// This file is used by Code Analysis to maintain SuppressMessage attributes
+// that are applied to this project. Project-level suppressions either have no
+// target or are given a specific target and scoped to a namespace, type,
+// member, etc.
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.OrderingRules",
     "SA1217:Using static directives must be ordered alphabetically",

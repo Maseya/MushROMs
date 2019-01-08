@@ -1,8 +1,7 @@
 ﻿// <copyright file="SingleSelection1D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
@@ -15,8 +14,8 @@ namespace Maseya.Editors.TileMaps
     public sealed class SingleSelection1D : Selection1D
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="
-        /// SingleSelection1D"/> class.
+        /// Initializes a new instance of the <see cref=" SingleSelection1D"/>
+        /// class.
         /// </summary>
         /// <param name="index">
         /// The index of the selected tile of this <see cref="
@@ -40,8 +39,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="SingleSelection1D"/>
-        /// that has the same selection properties as this instance.
+        /// Creates a new instance of <see cref="SingleSelection1D"/> that has
+        /// the same selection properties as this instance.
         /// </summary>
         /// <returns>
         /// A copy of this <see cref="SingleSelection1D"/>.
@@ -52,16 +51,15 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Determines whether a data grid index is part of this
-        /// <see cref="SingleSelection1D"/>.
+        /// Determines whether a data grid index is part of this <see
+        /// cref="SingleSelection1D"/>.
         /// </summary>
         /// <param name="index">
         /// The <see cref="ITileMap1D"/> grid index to inspect.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="index"/> is
-        /// in this <see cref="SingleSelection1D"/>; otherwise
-        /// <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="index"/> is in this <see
+        /// cref="SingleSelection1D"/>; otherwise <see langword="false"/>.
         /// </returns>
         public override bool Contains(int index)
         {
@@ -69,8 +67,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Returns an enumerator that enumerates through the
-        /// <see cref="SingleSelection1D"/>.
+        /// Returns an enumerator that enumerates through the <see
+        /// cref="SingleSelection1D"/>.
         /// </summary>
         /// <returns>
         /// A <see cref="IEnumerator{T}"/> for the <see cref="

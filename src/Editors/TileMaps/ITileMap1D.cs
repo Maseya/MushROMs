@@ -1,15 +1,14 @@
 ﻿// <copyright file="ITileMap1D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
 {
     /// <summary>
-    /// Defines methods and properties that represent a one-dimensional
-    /// array of data as a tilemap.
+    /// Defines methods and properties that represent a one-dimensional array
+    /// of data as a tilemap.
     /// </summary>
     public interface ITileMap1D : ITileMap
     {
@@ -23,8 +22,7 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets index of the first data grid cell in the view
-        /// area.
+        /// Gets or sets index of the first data grid cell in the view area.
         /// </summary>
         int ZeroTile
         {

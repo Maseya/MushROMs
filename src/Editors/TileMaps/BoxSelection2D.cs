@@ -1,27 +1,24 @@
 ﻿// <copyright file="BoxSelection2D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
     using static Helper.ThrowHelper;
 
     /// <summary>
-    /// Specifies a rectangular selection of <see cref="ITileMap2D"/>
-    /// tiles.
+    /// Specifies a rectangular selection of <see cref="ITileMap2D"/> tiles.
     /// </summary>
     public sealed class BoxSelection2D : Selection2D
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="
-        /// BoxSelection2D"/> class.
+        /// Initializes a new instance of the <see cref=" BoxSelection2D"/>
+        /// class.
         /// </summary>
         /// <param name="startPosition">
         /// The location of the first selected tile.
@@ -30,8 +27,7 @@ namespace Maseya.Editors.TileMaps
         /// The size of the selection.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// One of the properties of <paramref name="size"/> is less
-        /// than zero.
+        /// One of the properties of <paramref name="size"/> is less than zero.
         /// </exception>
         public BoxSelection2D(
             Point startPosition,
@@ -41,8 +37,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="
-        /// BoxSelection2D"/> class.
+        /// Initializes a new instance of the <see cref=" BoxSelection2D"/>
+        /// class.
         /// </summary>
         /// <param name="startPosition">
         /// The location of the first selected tile.
@@ -55,7 +51,9 @@ namespace Maseya.Editors.TileMaps
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="width"/> is less than zero.
-        /// <para/>-or-<para/>
+        /// <para/>
+        /// -or-
+        /// <para/>
         /// <paramref name="height"/> is less than zero.
         /// </exception>
         public BoxSelection2D(
@@ -102,8 +100,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="BoxSelection1D"/>
-        /// that has the same selection properties as this instance.
+        /// Creates a new instance of <see cref="BoxSelection1D"/> that has the
+        /// same selection properties as this instance.
         /// </summary>
         /// <returns>
         /// A copy of this <see cref="BoxSelection1D"/>.
@@ -114,16 +112,15 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Determines whether a data grid index is part of this
-        /// <see cref="BoxSelection2D"/>.
+        /// Determines whether a data grid index is part of this <see
+        /// cref="BoxSelection2D"/>.
         /// </summary>
         /// <param name="position">
         /// The <see cref="ITileMap2D"/> grid location to inspect.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="position"/> is
-        /// in this <see cref="BoxSelection2D"/>; otherwise
-        /// <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="position"/> is in this
+        /// <see cref="BoxSelection2D"/>; otherwise <see langword="false"/>.
         /// </returns>
         public override bool Contains(Point position)
         {
@@ -134,8 +131,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Returns an enumerator that enumerates through the
-        /// <see cref="SingleSelection2D"/>.
+        /// Returns an enumerator that enumerates through the <see
+        /// cref="SingleSelection2D"/>.
         /// </summary>
         /// <returns>
         /// A <see cref="IEnumerator{T}"/> for the <see cref="

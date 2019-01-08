@@ -1,8 +1,7 @@
 ﻿// <copyright file="TileMap1D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
@@ -59,8 +58,7 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets index of the first data grid cell in the view
-        /// area.
+        /// Gets or sets index of the first data grid cell in the view area.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         /// A value less than zero is set.
@@ -107,8 +105,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the view location (in cell coordinates) of the
-        /// data grid cell the user is on.
+        /// Gets or sets the view location (in cell coordinates) of the data
+        /// grid cell the user is on.
         /// </summary>
         public override Point ActiveViewTile
         {
@@ -140,8 +138,8 @@ namespace Maseya.Editors.TileMaps
         /// Get the view-area X-coordinate of a data grid cell.
         /// </summary>
         /// <param name="gridTile">
-        /// The index of the data grid cell to get the view-area
-        /// X-coordinate of.
+        /// The index of the data grid cell to get the view-area X-coordinate
+        /// of.
         /// </param>
         /// <param name="viewWidth">
         /// The width of the view area.
@@ -166,8 +164,8 @@ namespace Maseya.Editors.TileMaps
         /// Get the view-area Y-coordinate of a data grid cell.
         /// </summary>
         /// <param name="gridTile">
-        /// The index of the data grid cell to get the view-area
-        /// Y-coordinate of.
+        /// The index of the data grid cell to get the view-area Y-coordinate
+        /// of.
         /// </param>
         /// <param name="viewWidth">
         /// The width of the view area.
@@ -192,8 +190,7 @@ namespace Maseya.Editors.TileMaps
         /// Get the view-area location of a data grid cell.
         /// </summary>
         /// <param name="gridTile">
-        /// The index of the data grid cell to get the view-area
-        /// location of.
+        /// The index of the data grid cell to get the view-area location of.
         /// </param>
         /// <param name="viewWidth">
         /// The width of the view area.
@@ -202,8 +199,8 @@ namespace Maseya.Editors.TileMaps
         /// The index of the first data cell in the view area.
         /// </param>
         /// <returns>
-        /// The location (in cell coordinates) in the view area of
-        /// <paramref name="gridTile"/>.
+        /// The location (in cell coordinates) in the view area of <paramref
+        /// name="gridTile"/>.
         /// </returns>
         public static Point GetViewTile(
             int gridTile,
@@ -272,16 +269,16 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets a value that determines whether a data grid cell
-        /// index is within <see cref="GridSize"/>.
+        /// Gets a value that determines whether a data grid cell index is
+        /// within <see cref="GridSize"/>.
         /// </summary>
         /// <param name="tile">
         /// The index of the data grid cell.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="tile"/> is greater
-        /// than or equal to zero and less than <see cref="GridSize"/>;
-        /// otherwise <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="tile"/> is greater than
+        /// or equal to zero and less than <see cref="GridSize"/>; otherwise
+        /// <see langword="false"/>.
         /// </returns>
         public bool TileIsInGrid(int tile)
         {
@@ -289,8 +286,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets the X-coordinate (in cell coordinates) of a data grid
-        /// cell in the view area.
+        /// Gets the X-coordinate (in cell coordinates) of a data grid cell in
+        /// the view area.
         /// </summary>
         /// <param name="gridTile">
         /// The index of the data grid cell.
@@ -305,8 +302,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets the Y-coordinate (in cell coordinates) of a data grid
-        /// cell in the view area.
+        /// Gets the Y-coordinate (in cell coordinates) of a data grid cell in
+        /// the view area.
         /// </summary>
         /// <param name="gridTile">
         /// The index of the data grid cell.
@@ -321,15 +318,14 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets the location (in cell coordinates) of a data grid
-        /// cell in the view area.
+        /// Gets the location (in cell coordinates) of a data grid cell in the
+        /// view area.
         /// </summary>
         /// <param name="gridTile">
         /// The index of the data grid cell.
         /// </param>
         /// <returns>
-        /// The location (in cell coordinates) of <paramref name="
-        /// gridTile"/>.
+        /// The location (in cell coordinates) of <paramref name=" gridTile"/>.
         /// </returns>
         public Point GetViewTile(int gridTile)
         {
@@ -373,9 +369,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Throws an instance of <see cref="
-        /// ArgumentOutOfRangeException"/> if the passed parameter is
-        /// not greater than zero.
+        /// Throws an instance of <see cref=" ArgumentOutOfRangeException"/> if
+        /// the passed parameter is not greater than zero.
         /// </summary>
         /// <param name="viewWidth">
         /// The value to test.

@@ -1,8 +1,7 @@
 ﻿// <copyright file="EditorSelector.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors
@@ -19,28 +18,26 @@ namespace Maseya.Editors
         KeyValuePair<string, IEditor>;
 
     /// <summary>
-    /// Provides a configurable collection of <see cref="IEditor"/>
-    /// instances.
+    /// Provides a configurable collection of <see cref="IEditor"/> instances.
     /// </summary>
     /// <remarks>
-    /// The purpose of <see cref="EditorSelector"/> is to provide a
-    /// UI-agnostic way of managing the many instances of <see cref="
-    /// IEditor"/> that a user may be working with at once. Instances
-    /// are tracked by their <see cref="IEditor.Path"/> property such
-    /// that if two editors have the same file path, they must be the
-    /// same editor.
+    /// The purpose of <see cref="EditorSelector"/> is to provide a UI-agnostic
+    /// way of managing the many instances of <see cref=" IEditor"/> that a
+    /// user may be working with at once. Instances are tracked by their <see
+    /// cref="IEditor.Path"/> property such that if two editors have the same
+    /// file path, they must be the same editor.
     /// </remarks>
     public class EditorSelector
     {
         /// <summary>
-        /// The <see cref="IEditor"/> that is considered to be actively
-        /// in use by the user.
+        /// The <see cref="IEditor"/> that is considered to be actively in use
+        /// by the user.
         /// </summary>
         private IEditor currentEditor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="
-        /// EditorSelector"/> class.
+        /// Initializes a new instance of the <see cref=" EditorSelector"/>
+        /// class.
         /// </summary>
         public EditorSelector()
         {
@@ -71,8 +68,8 @@ namespace Maseya.Editors
         public event EventHandler<EditorEventArgs> EditorRemoved;
 
         /// <summary>
-        /// Gets the collection of <see cref="IEditor"/> instances that
-        /// this <see cref="EditorSelector"/> can choose between.
+        /// Gets the collection of <see cref="IEditor"/> instances that this
+        /// <see cref="EditorSelector"/> can choose between.
         /// </summary>
         public EditorDictionary Items
         {
@@ -80,14 +77,13 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="IEditor"/> that is considered to
-        /// be actively in use by the user.
+        /// Gets or sets the <see cref="IEditor"/> that is considered to be
+        /// actively in use by the user.
         /// </summary>
         /// <remarks>
-        /// If <see langword="null"/> is set, the current editor is
-        /// removed. If an <see cref="IEditor"/> is set that does not
-        /// exist in <see cref="Items"/>, then it is added to the
-        /// collection first.
+        /// If <see langword="null"/> is set, the current editor is removed. If
+        /// an <see cref="IEditor"/> is set that does not exist in <see
+        /// cref="Items"/>, then it is added to the collection first.
         /// </remarks>
         public IEditor CurrentEditor
         {
@@ -123,8 +119,7 @@ namespace Maseya.Editors
         /// Raises the <see cref="CurrentEditorChanged"/> event.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="EditorEventArgs"/> that contains the event
-        /// data.
+        /// An <see cref="EditorEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnCurrentEditorChanged(EditorEventArgs e)
         {
@@ -144,12 +139,10 @@ namespace Maseya.Editors
 
         /// <summary>
         /// Raises the <see cref="EditorAdded"/> event and sets <see
-        /// cref="CurrentEditor"/> to the newly added <see
-        /// cref="IEditor"/>.
+        /// cref="CurrentEditor"/> to the newly added <see cref="IEditor"/>.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="EditorEventArgs"/> that contains the event
-        /// data.
+        /// An <see cref="EditorEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnEditorAdded(EditorEventArgs e)
         {
@@ -165,12 +158,11 @@ namespace Maseya.Editors
 
         /// <summary>
         /// Raises the <see cref="EditorRemoved"/> event and sets <see
-        /// cref="CurrentEditor"/> to <see langword="null"/> if it is
-        /// the <see cref="IEditor"/> that was removed.
+        /// cref="CurrentEditor"/> to <see langword="null"/> if it is the <see
+        /// cref="IEditor"/> that was removed.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="EditorEventArgs"/> that contains the event
-        /// data.
+        /// An <see cref="EditorEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnEditorRemoved(EditorEventArgs e)
         {
@@ -189,14 +181,13 @@ namespace Maseya.Editors
 
         /// <summary>
         /// Represents a collection of file path keys and <see cref="
-        /// IEditor"/> values that raise <see cref="EditorSelector"/>
-        /// events when items are added or removed.
+        /// IEditor"/> values that raise <see cref="EditorSelector"/> events
+        /// when items are added or removed.
         /// </summary>
         /// <remarks>
-        /// The dictionary keys can be either a relative or full path
-        /// <see cref="String"/>. Internally, the full paths will be
-        /// stored as the keys. Comparison among paths is invariant of
-        /// case.
+        /// The dictionary keys can be either a relative or full path <see
+        /// cref="String"/>. Internally, the full paths will be stored as the
+        /// keys. Comparison among paths is invariant of case.
         /// </remarks>
         public sealed class EditorDictionary :
             IEditorDictionary,
@@ -208,12 +199,11 @@ namespace Maseya.Editors
             /// EditorSelector"/> as its parent.
             /// </summary>
             /// <param name="editorSelector">
-            /// The <see cref="EditorSelector"/> that will own this
-            /// <see cref="EditorDictionary"/>.
+            /// The <see cref="EditorSelector"/> that will own this <see
+            /// cref="EditorDictionary"/>.
             /// </param>
             /// <exception cref="ArgumentNullException">
-            /// <paramref name="editorSelector"/> is
-            /// <see langword="null"/>.
+            /// <paramref name="editorSelector"/> is <see langword="null"/>.
             /// </exception>
             internal EditorDictionary(EditorSelector editorSelector)
             {
@@ -226,8 +216,8 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Gets the <see cref="EditorSelector"/> that owns this
-            /// <see cref="EditorDictionary"/>.
+            /// Gets the <see cref="EditorSelector"/> that owns this <see
+            /// cref="EditorDictionary"/>.
             /// </summary>
             public EditorSelector EditorSelector
             {
@@ -235,8 +225,8 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Gets the number of key/value pairs in this
-            /// <see cref="EditorDictionary"/>.
+            /// Gets the number of key/value pairs in this <see
+            /// cref="EditorDictionary"/>.
             /// </summary>
             public int Count
             {
@@ -247,8 +237,8 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Gets a collection containing the file path keys in this
-            /// <see cref="EditorDictionary"/>.
+            /// Gets a collection containing the file path keys in this <see
+            /// cref="EditorDictionary"/>.
             /// </summary>
             public Dictionary<string, IEditor>.KeyCollection Keys
             {
@@ -259,6 +249,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             ICollection<string> IEditorDictionary.Keys
             {
                 get
@@ -268,6 +259,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             IEnumerable<string> IReadOnlyEditorDictionary.Keys
             {
                 get
@@ -277,8 +269,8 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Gets a collection containing the <see cref="IEditor"/>
-            /// values in this <see cref="EditorDictionary"/>.
+            /// Gets a collection containing the <see cref="IEditor"/> values
+            /// in this <see cref="EditorDictionary"/>.
             /// </summary>
             public Dictionary<string, IEditor>.ValueCollection Values
             {
@@ -289,6 +281,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             ICollection<IEditor> IEditorDictionary.Values
             {
                 get
@@ -298,6 +291,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             IEnumerable<IEditor> IReadOnlyEditorDictionary.Values
             {
                 get
@@ -307,6 +301,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             bool ICollection<PathEditorPair>.IsReadOnly
             {
                 get
@@ -316,8 +311,8 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Gets the internal data dictionary that describes the
-            /// contents of this <see cref="EditorDictionary"/>.
+            /// Gets the internal data dictionary that describes the contents
+            /// of this <see cref="EditorDictionary"/>.
             /// </summary>
             private Dictionary<string, IEditor> Editors
             {
@@ -325,12 +320,11 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Gets the interface implementation of <see cref="
-            /// Editors"/>
+            /// Gets the interface implementation of <see cref=" Editors"/>
             /// </summary>
             /// <remarks>
-            /// This property is just a type caster for the various
-            /// areas where we do explicit interface implementations.
+            /// This property is just a type caster for the various areas where
+            /// we do explicit interface implementations.
             /// </remarks>
             private IEditorDictionary IDictionary
             {
@@ -348,21 +342,23 @@ namespace Maseya.Editors
             /// The file path of the value to get or set.
             /// </param>
             /// <returns>
-            /// The <see cref="IEditor"/> associated with the specified
-            /// file path. If the specified file path is not found, a
-            /// get operations throws a <see cref="
-            /// KeyNotFoundException"/>, and a set operation creates a
-            /// new <see cref="IEditor"/> with the specified file path.
+            /// The <see cref="IEditor"/> associated with the specified file
+            /// path. If the specified file path is not found, a get operations
+            /// throws a <see cref=" KeyNotFoundException"/>, and a set
+            /// operation creates a new <see cref="IEditor"/> with the
+            /// specified file path.
             /// </returns>
             /// <remarks>
-            /// The file path key can be a full or relative path. The
-            /// property will search for the case-invariant full path.
+            /// The file path key can be a full or relative path. The property
+            /// will search for the case-invariant full path.
             /// </remarks>
             /// <exception cref="ArgumentException">
-            /// <paramref name="key"/> is a zero-length string, contains
-            /// only whitespace, or contains one or more of the invalid
-            /// characters defined in <see cref="
-            /// GetInvalidPathChars"/>.<para/>-or-<para/>
+            /// <paramref name="key"/> is a zero-length string, contains only
+            /// whitespace, or contains one or more of the invalid characters
+            /// defined in <see cref=" GetInvalidPathChars"/>.
+            /// <para/>
+            /// -or-
+            /// <para/>
             /// The system could not retrieve the absolute path.
             /// </exception>
             /// <exception cref="System.Security.SecurityException">
@@ -370,20 +366,22 @@ namespace Maseya.Editors
             /// </exception>
             /// <exception cref="ArgumentNullException">
             /// <paramref name="key"/> is <see langword="null"/>.
-            /// <para/>-or-<para/>
+            /// <para/>
+            /// -or-
+            /// <para/>
             /// <paramref name="value"/> is <see langword="null"/>.
             /// </exception>
             /// <exception cref="NotSupportedException">
-            /// <paramref name="key"/> contains a colon (":") that is
-            /// not part of a volume identifier (for example, "c:\").
+            /// <paramref name="key"/> contains a colon (":") that is not part
+            /// of a volume identifier (for example, "c:\").
             /// </exception>
             /// <exception cref="System.IO.PathTooLongException">
             /// The specified path, file name, or both exceed the
             /// system-defined maximum length.
             /// </exception>
             /// <exception cref="KeyNotFoundException">
-            /// The property is retrieved and <paramref name="key"/>
-            /// does not exist in the collection.
+            /// The property is retrieved and <paramref name="key"/> does not
+            /// exist in the collection.
             /// </exception>
             public IEditor this[string key]
             {
@@ -416,8 +414,8 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Adds the specified file path key and <see cref="
-            /// IEditor"/> value to the <see cref="EditorDictionary"/>.
+            /// Adds the specified file path key and <see cref=" IEditor"/>
+            /// value to the <see cref="EditorDictionary"/>.
             /// </summary>
             /// <param name="key">
             /// The file path key of the <see cref="IEditor"/> to add.
@@ -427,22 +425,26 @@ namespace Maseya.Editors
             /// </param>
             /// <exception cref="ArgumentNullException">
             /// <paramref name="key"/> is <see langword="null"/>.
-            /// <para/>-or-<para/>
+            /// <para/>
+            /// -or-
+            /// <para/>
             /// <paramref name="value"/> is <see langword="null"/>.
             /// </exception>
             /// <exception cref="ArgumentException">
-            /// <paramref name="key"/> is a zero-length string, contains
-            /// only whitespace, or contains one or more of the invalid
-            /// characters defined in <see cref="
-            /// GetInvalidPathChars"/>.<para/>-or-<para/>
+            /// <paramref name="key"/> is a zero-length string, contains only
+            /// whitespace, or contains one or more of the invalid characters
+            /// defined in <see cref=" GetInvalidPathChars"/>.
+            /// <para/>
+            /// -or-
+            /// <para/>
             /// The system could not retrieve the absolute path.
             /// </exception>
             /// <exception cref="System.Security.SecurityException">
             /// The caller does not have the required permissions.
             /// </exception>
             /// <exception cref="NotSupportedException">
-            /// <paramref name="key"/> contains a colon (":") that is
-            /// not part of a volume identifier (for example, "c:\").
+            /// <paramref name="key"/> contains a colon (":") that is not part
+            /// of a volume identifier (for example, "c:\").
             /// </exception>
             /// <exception cref="System.IO.PathTooLongException">
             /// The specified path, file name, or both exceed the
@@ -463,6 +465,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc cref="Add(String, IEditor)"/>
+            ///
             void ICollection<PathEditorPair>.Add(PathEditorPair item)
             {
                 Add(item.Key, item.Value);
@@ -484,24 +487,25 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Determines whether the <see cref="EditorDictionary"/>
-            /// contains the specified file path key.
+            /// Determines whether the <see cref="EditorDictionary"/> contains
+            /// the specified file path key.
             /// </summary>
             /// <param name="key">
             /// The file path key to locate in the <see cref="
             /// EditorDictionary"/>.
             /// </param>
             /// <returns>
-            /// <see langword="true"/> if the <see cref="
-            /// EditorDictionary"/> contains an element with the
-            /// specified file path key, otherwise <see langword="
-            /// false"/>.
+            /// <see langword="true"/> if the <see cref=" EditorDictionary"/>
+            /// contains an element with the specified file path key, otherwise
+            /// <see langword=" false"/>.
             /// </returns>
             /// <exception cref="ArgumentException">
-            /// <paramref name="key"/> is a zero-length string, contains
-            /// only whitespace, or contains one or more of the invalid
-            /// characters defined in <see cref="
-            /// GetInvalidPathChars"/>.<para/>-or-<para/>
+            /// <paramref name="key"/> is a zero-length string, contains only
+            /// whitespace, or contains one or more of the invalid characters
+            /// defined in <see cref=" GetInvalidPathChars"/>.
+            /// <para/>
+            /// -or-
+            /// <para/>
             /// The system could not retrieve the absolute path.
             /// </exception>
             /// <exception cref="System.Security.SecurityException">
@@ -511,8 +515,8 @@ namespace Maseya.Editors
             /// <paramref name="key"/> is <see langword="null"/>.
             /// </exception>
             /// <exception cref="NotSupportedException">
-            /// <paramref name="key"/> contains a colon (":") that is
-            /// not part of a volume identifier (for example, "c:\").
+            /// <paramref name="key"/> contains a colon (":") that is not part
+            /// of a volume identifier (for example, "c:\").
             /// </exception>
             /// <exception cref="System.IO.PathTooLongException">
             /// The specified path, file name, or both exceed the
@@ -525,6 +529,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             bool ICollection<PathEditorPair>.Contains(PathEditorPair item)
             {
                 var itemWithActualKey = new PathEditorPair(
@@ -534,22 +539,24 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Removes the <see cref="IEditor"/> with the specified
-            /// file path key.
+            /// Removes the <see cref="IEditor"/> with the specified file path
+            /// key.
             /// </summary>
             /// <param name="key">
             /// The file path of the <see cref="IEditor"/> to remove.
             /// </param>
             /// <returns>
             /// <see langword="true"/> if the <see cref="IEditor"/> is
-            /// successfully found and removed; otherwise
-            /// <see langword="false"/>.
+            /// successfully found and removed; otherwise <see
+            /// langword="false"/>.
             /// </returns>
             /// <exception cref="ArgumentException">
-            /// <paramref name="key"/> is a zero-length string, contains
-            /// only whitespace, or contains one or more of the invalid
-            /// characters defined in <see cref="
-            /// GetInvalidPathChars"/>.<para/>-or-<para/>
+            /// <paramref name="key"/> is a zero-length string, contains only
+            /// whitespace, or contains one or more of the invalid characters
+            /// defined in <see cref=" GetInvalidPathChars"/>.
+            /// <para/>
+            /// -or-
+            /// <para/>
             /// The system could not retrieve the absolute path.
             /// </exception>
             /// <exception cref="System.Security.SecurityException">
@@ -559,8 +566,8 @@ namespace Maseya.Editors
             /// <paramref name="key"/> is <see langword="null"/>.
             /// </exception>
             /// <exception cref="NotSupportedException">
-            /// <paramref name="key"/> contains a colon (":") that is
-            /// not part of a volume identifier (for example, "c:\").
+            /// <paramref name="key"/> contains a colon (":") that is not part
+            /// of a volume identifier (for example, "c:\").
             /// </exception>
             /// <exception cref="System.IO.PathTooLongException">
             /// The specified path, file name, or both exceed the
@@ -582,6 +589,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             bool ICollection<PathEditorPair>.Remove(PathEditorPair item)
             {
                 var itemWithActualKey = new PathEditorPair(
@@ -599,30 +607,32 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Gets the <see cref="IEditor"/> associated with the
-            /// specified file path.
+            /// Gets the <see cref="IEditor"/> associated with the specified
+            /// file path.
             /// </summary>
             /// <param name="key">
             /// The file path of the value to get.
             /// </param>
             /// <param name="value">
-            /// When this method returns, contains the <see cref="
-            /// IEditor"/> associated with <paramref name="key"/>, if it
-            /// is found; otherwise <see langword="null"/> is returned.
-            /// This parameter is passed uninitialized.
+            /// When this method returns, contains the <see cref=" IEditor"/>
+            /// associated with <paramref name="key"/>, if it is found;
+            /// otherwise <see langword="null"/> is returned. This parameter is
+            /// passed uninitialized.
             /// </param>
             /// <returns>
             /// <see langword="true"/> if <see cref="EditorDictionary"/>
-            /// contains an <see cref="IEditor"/> with the specified
-            /// file path key; otherwise <see langword="false"/>.
+            /// contains an <see cref="IEditor"/> with the specified file path
+            /// key; otherwise <see langword="false"/>.
             /// </returns>
-            /// <inheritdoc cref="GetFullPath(String)" select="
-            /// exception"/>
+            /// <inheritdoc cref="GetFullPath(String)" select=" exception"/>
+            ///            /// ///
             /// <exception cref="ArgumentException">
-            /// <paramref name="key"/> is a zero-length string, contains
-            /// only whitespace, or contains one or more of the invalid
-            /// characters defined in <see cref="
-            /// GetInvalidPathChars"/>.<para/>-or-<para/>
+            /// <paramref name="key"/> is a zero-length string, contains only
+            /// whitespace, or contains one or more of the invalid characters
+            /// defined in <see cref=" GetInvalidPathChars"/>.
+            /// <para/>
+            /// -or-
+            /// <para/>
             /// The system could not retrieve the absolute path.
             /// </exception>
             /// <exception cref="System.Security.SecurityException">
@@ -632,8 +642,8 @@ namespace Maseya.Editors
             /// <paramref name="key"/> is <see langword="null"/>.
             /// </exception>
             /// <exception cref="NotSupportedException">
-            /// <paramref name="key"/> contains a colon (":") that is
-            /// not part of a volume identifier (for example, "c:\").
+            /// <paramref name="key"/> contains a colon (":") that is not part
+            /// of a volume identifier (for example, "c:\").
             /// </exception>
             /// <exception cref="System.IO.PathTooLongException">
             /// The specified path, file name, or both exceed the
@@ -648,6 +658,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             void ICollection<PathEditorPair>.CopyTo(
                 PathEditorPair[] array,
                 int arrayIndex)
@@ -656,12 +667,12 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Returns an enumerator that enumerates through the
-            /// <see cref="EditorDictionary"/>.
+            /// Returns an enumerator that enumerates through the <see
+            /// cref="EditorDictionary"/>.
             /// </summary>
             /// <returns>
-            /// A <see cref="Dictionary{TKey, TValue}.Enumerator"/> for
-            /// the <see cref="EditorDictionary"/>.
+            /// A <see cref="Dictionary{TKey, TValue}.Enumerator"/> for the
+            /// <see cref="EditorDictionary"/>.
             /// </returns>
             public Dictionary<string, IEditor>.Enumerator GetEnumerator()
             {
@@ -669,6 +680,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             IEnumerator<PathEditorPair>
                 IEnumerable<PathEditorPair>.GetEnumerator()
             {
@@ -676,6 +688,7 @@ namespace Maseya.Editors
             }
 
             /// <inheritdoc/>
+            ///
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();

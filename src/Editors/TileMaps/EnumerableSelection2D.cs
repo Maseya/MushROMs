@@ -1,8 +1,7 @@
 ﻿// <copyright file="EnumerableSelection2D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
@@ -13,8 +12,8 @@ namespace Maseya.Editors.TileMaps
     using System.Linq;
 
     /// <summary>
-    /// Specifies a selection that is a binary combination of two
-    /// <see cref="ISelection2D"/> instances.
+    /// Specifies a selection that is a binary combination of two <see
+    /// cref="ISelection2D"/> instances.
     /// </summary>
     public sealed class EnumerableSelection2D : Selection2D
     {
@@ -23,21 +22,20 @@ namespace Maseya.Editors.TileMaps
         /// EnumerableSelection2D"/>
         /// </summary>
         /// <param name="left">
-        /// The <see cref="ISelection2D"/> to combine with
-        /// <paramref name="right"/>.
+        /// The <see cref="ISelection2D"/> to combine with <paramref
+        /// name="right"/>.
         /// </param>
         /// <param name="right">
-        /// The <see cref="ISelection2D"/> to combine with
-        /// <paramref name="left"/>.
+        /// The <see cref="ISelection2D"/> to combine with <paramref
+        /// name="left"/>.
         /// </param>
         /// <param name="rule">
-        /// The binary operation to use when selecting each
-        /// point of <paramref name="left"/> and
-        /// <paramref name="right"/>.
+        /// The binary operation to use when selecting each point of <paramref
+        /// name="left"/> and <paramref name="right"/>.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="left"/>, <paramref name="right"/>, or
-        /// <paramref name="rule"/> is <see langword="null"/>.
+        /// <paramref name="left"/>, <paramref name="right"/>, or <paramref
+        /// name="rule"/> is <see langword="null"/>.
         /// </exception>
         public EnumerableSelection2D(
             ISelection2D left,
@@ -49,8 +47,7 @@ namespace Maseya.Editors.TileMaps
 
         /// <summary>
         /// Initializes a new instance of the <see cref="
-        /// EnumerableSelection2D"/> from a collection of selected
-        /// points.
+        /// EnumerableSelection2D"/> from a collection of selected points.
         /// </summary>
         /// <param name="selection">
         /// The collection of selected points.
@@ -97,8 +94,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="EnumerableSelection2D"/>
-        /// that has the same selection properties as this instance.
+        /// Creates a new instance of <see cref="EnumerableSelection2D"/> that
+        /// has the same selection properties as this instance.
         /// </summary>
         /// <returns>
         /// A copy of this <see cref="EnumerableSelection2D"/>.
@@ -109,16 +106,16 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Determines whether a data grid point is part of this
-        /// <see cref="EnumerableSelection2D"/>.
+        /// Determines whether a data grid point is part of this <see
+        /// cref="EnumerableSelection2D"/>.
         /// </summary>
         /// <param name="location">
         /// The <see cref="ITileMap2D"/> grid location to inspect.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="location"/> is
-        /// in this <see cref="EnumerableSelection2D"/>; otherwise
-        /// <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="location"/> is in this
+        /// <see cref="EnumerableSelection2D"/>; otherwise <see
+        /// langword="false"/>.
         /// </returns>
         public override bool Contains(Point location)
         {
@@ -126,8 +123,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Returns an enumerator that enumerates through the
-        /// <see cref="EnumerableSelection2D"/>.
+        /// Returns an enumerator that enumerates through the <see
+        /// cref="EnumerableSelection2D"/>.
         /// </summary>
         /// <returns>
         /// A <see cref="IEnumerator{T}"/> for the <see cref="
@@ -139,31 +136,29 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Get the selected points as a binary operation between the
-        /// points of two <see cref="ISelection2D"/> instances.
+        /// Get the selected points as a binary operation between the points of
+        /// two <see cref="ISelection2D"/> instances.
         /// </summary>
         /// <param name="left">
-        /// The <see cref="ISelection2D"/> to combine with
-        /// <paramref name="right"/>.
+        /// The <see cref="ISelection2D"/> to combine with <paramref
+        /// name="right"/>.
         /// </param>
         /// <param name="right">
-        /// The <see cref="ISelection2D"/> to combine with
-        /// <paramref name="left"/>.
+        /// The <see cref="ISelection2D"/> to combine with <paramref
+        /// name="left"/>.
         /// </param>
         /// <param name="rule">
-        /// The binary operation to use when selecting each
-        /// point of <paramref name="left"/> and
-        /// <paramref name="right"/>.
+        /// The binary operation to use when selecting each point of <paramref
+        /// name="left"/> and <paramref name="right"/>.
         /// </param>
         /// <returns>
-        /// A collection of the selected points that were in
-        /// <paramref name="left"/>, <paramref name="right"/>, both, or
-        /// neither, depending on the return result of
-        /// <paramref name="rule"/>.
+        /// A collection of the selected points that were in <paramref
+        /// name="left"/>, <paramref name="right"/>, both, or neither,
+        /// depending on the return result of <paramref name="rule"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="left"/>, <paramref name="right"/>, or
-        /// <paramref name="rule"/> is <see langword="null"/>.
+        /// <paramref name="left"/>, <paramref name="right"/>, or <paramref
+        /// name="rule"/> is <see langword="null"/>.
         /// </exception>
         private static IEnumerable<Point> GetSelectedPoints(
             ISelection2D left,

@@ -1,14 +1,12 @@
 ﻿// <copyright file="LineSelection1D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using static Helper.ThrowHelper;
 
@@ -18,8 +16,8 @@ namespace Maseya.Editors.TileMaps
     public sealed class LineSelection1D : Selection1D
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="
-        /// LineSelection1D"/> class.
+        /// Initializes a new instance of the <see cref=" LineSelection1D"/>
+        /// class.
         /// </summary>
         /// <param name="startIndex">
         /// The index of the first selected tile of this <see cref="
@@ -65,8 +63,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="LineSelection1D"/>
-        /// that has the same selection properties as this instance.
+        /// Creates a new instance of <see cref="LineSelection1D"/> that has
+        /// the same selection properties as this instance.
         /// </summary>
         /// <returns>
         /// A copy of this <see cref="LineSelection1D"/>.
@@ -77,16 +75,15 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Determines whether a data grid index is part of this
-        /// <see cref="LineSelection1D"/>.
+        /// Determines whether a data grid index is part of this <see
+        /// cref="LineSelection1D"/>.
         /// </summary>
         /// <param name="index">
         /// The <see cref="ITileMap1D"/> grid location to inspect.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="index"/> is
-        /// in this <see cref="LineSelection1D"/>; otherwise
-        /// <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="index"/> is in this <see
+        /// cref="LineSelection1D"/>; otherwise <see langword="false"/>.
         /// </returns>
         public override bool Contains(int index)
         {
@@ -95,8 +92,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Returns an enumerator that enumerates through the
-        /// <see cref="SingleSelection1D"/>.
+        /// Returns an enumerator that enumerates through the <see
+        /// cref="SingleSelection1D"/>.
         /// </summary>
         /// <returns>
         /// A <see cref="IEnumerator{T}"/> for the <see cref="

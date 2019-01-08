@@ -1,8 +1,7 @@
 ﻿// <copyright file="Editor.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors
@@ -20,8 +19,8 @@ namespace Maseya.Editors
     public abstract class Editor : IEditor
     {
         /// <summary>
-        /// The file path that this <see cref="Editor"/> will by default
-        /// read from and write to during any file operations.
+        /// The file path that this <see cref="Editor"/> will by default read
+        /// from and write to during any file operations.
         /// </summary>
         private string _path;
 
@@ -35,10 +34,11 @@ namespace Maseya.Editors
         /// Initializes a new instance of the <see cref="Editor"/> class.
         /// </summary>
         /// <param name="path">
-        /// The file path that this <see cref="Editor"/> will by default
-        /// read from and write to during any file operations.
+        /// The file path that this <see cref="Editor"/> will by default read
+        /// from and write to during any file operations.
         /// </param>
         /// <inheritdoc cref="GetFullPath(String)" select="exception"/>
+        ///
         protected Editor(string path)
         {
             Path = path;
@@ -51,29 +51,28 @@ namespace Maseya.Editors
         public event EventHandler PathChanged;
 
         /// <summary>
-        /// Occurs when <see cref="WriteData(Action, Action)"/> is
-        /// invoked.
+        /// Occurs when <see cref="WriteData(Action, Action)"/> is invoked.
         /// </summary>
         public event EventHandler DataModified;
 
         /// <summary>
-        /// Occurs when <see cref="CanUndo"/> is <see langword="true"/>
-        /// and <see cref="Undo"/> is called.
+        /// Occurs when <see cref="CanUndo"/> is <see langword="true"/> and
+        /// <see cref="Undo"/> is called.
         /// </summary>
         public event EventHandler UndoApplied;
 
         /// <summary>
-        /// Occurs when <see cref="CanRedo"/> is <see langword="true"/>
-        /// and <see cref="Redo"/> is called.
+        /// Occurs when <see cref="CanRedo"/> is <see langword="true"/> and
+        /// <see cref="Redo"/> is called.
         /// </summary>
         public event EventHandler RedoApplied;
 
         /// <summary>
-        /// Gets or sets the file path that this <see cref="Editor"/>
-        /// will by default read from and write to during any file
-        /// operations.
+        /// Gets or sets the file path that this <see cref="Editor"/> will by
+        /// default read from and write to during any file operations.
         /// </summary>
         /// <inheritdoc cref="GetFullPath(String)" select="exception"/>
+        ///
         public string Path
         {
             get
@@ -184,9 +183,8 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets the internal <see cref="UndoFactory"/> that controls
-        /// the undo and redo operations of this <see cref="Editor"/>
-        /// instance.
+        /// Gets the internal <see cref="UndoFactory"/> that controls the undo
+        /// and redo operations of this <see cref="Editor"/> instance.
         /// </summary>
         private UndoFactory History
         {
@@ -194,8 +192,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Undoes the last call to <see cref="WriteData(Action,
-        /// Action)"/>.
+        /// Undoes the last call to <see cref="WriteData(Action, Action)"/>.
         /// </summary>
         public void Undo()
         {
@@ -209,8 +206,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Redoes the last call to <see cref="WriteData(Action,
-        /// Action)"/>.
+        /// Redoes the last call to <see cref="WriteData(Action, Action)"/>.
         /// </summary>
         public void Redo()
         {
@@ -224,9 +220,8 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Copies the current selection of data by calling <see
-        /// cref="Copy"/>, and then deletes the selection by calling
-        /// <see cref="Delete"/>.
+        /// Copies the current selection of data by calling <see cref="Copy"/>,
+        /// and then deletes the selection by calling <see cref="Delete"/>.
         /// </summary>
         public virtual void Cut()
         {
@@ -235,41 +230,40 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// When overridden in a derived class, copies the current
-        /// selection of data.
+        /// When overridden in a derived class, copies the current selection of
+        /// data.
         /// </summary>
         public abstract void Copy();
 
         /// <summary>
-        /// When overridden in a derived class, pastes the data in the
-        /// copy buffer into the current selection.
+        /// When overridden in a derived class, pastes the data in the copy
+        /// buffer into the current selection.
         /// </summary>
         public abstract void Paste();
 
         /// <summary>
-        /// When overridden in a derived class, deletes the data in the
-        /// current selection.
+        /// When overridden in a derived class, deletes the data in the current
+        /// selection.
         /// </summary>
         public abstract void Delete();
 
         /// <summary>
-        /// When overridden in a derived class, puts all of the data in
-        /// this <see cref="Editor"/> instance into the current
-        /// selection.
+        /// When overridden in a derived class, puts all of the data in this
+        /// <see cref="Editor"/> instance into the current selection.
         /// </summary>
         public abstract void SelectAll();
 
         /// <summary>
-        /// Write to the data of this <see cref="Editor"/> instance in
-        /// some way and optionally provide an undo action.
+        /// Write to the data of this <see cref="Editor"/> instance in some way
+        /// and optionally provide an undo action.
         /// </summary>
         /// <param name="action">
-        /// An <see cref="Action"/> to invoke to write to the internal
-        /// data of this <see cref="Editor"/> instance in some way.
+        /// An <see cref="Action"/> to invoke to write to the internal data of
+        /// this <see cref="Editor"/> instance in some way.
         /// </param>
         /// <param name="undo">
-        /// An optional <see cref="Action"/> that will undo the changes
-        /// to the data state that <paramref name="action"/> applied.
+        /// An optional <see cref="Action"/> that will undo the changes to the
+        /// data state that <paramref name="action"/> applied.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="action"/> is <see langword="null"/>.
@@ -294,7 +288,9 @@ namespace Maseya.Editors
         /// Gets the string representation of this <see cref="Editor"/>
         /// instance.
         /// </summary>
-        /// <returns>The file name of <see cref="Path"/>.</returns>
+        /// <returns>
+        /// The file name of <see cref="Path"/>.
+        /// </returns>
         public override string ToString()
         {
             return GetFileName(Path);
@@ -310,17 +306,15 @@ namespace Maseya.Editors
         /// The file extension the new file should have.
         /// </param>
         /// <returns>
-        /// A string to the first path generated that does not already
-        /// exist.
+        /// A string to the first path generated that does not already exist.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="name"/> or <paramref name="extension"/>is
-        /// <see langword="null"/>.
+        /// <paramref name="name"/> or <paramref name="extension"/> is <see
+        /// langword="null"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// <paramref name="extension"/> contains one or more of the
-        /// invalid path characters defined in <see cref="
-        /// InvalidPathChars"/>.
+        /// <paramref name="extension"/> contains one or more of the invalid
+        /// path characters defined in <see cref=" InvalidPathChars"/>.
         /// </exception>
         public static string GetUntitledPath(string name, string extension)
         {

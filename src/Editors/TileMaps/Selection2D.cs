@@ -1,8 +1,7 @@
 ﻿// <copyright file="Selection2D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
@@ -14,21 +13,19 @@ namespace Maseya.Editors.TileMaps
     using static Helper.ThrowHelper;
 
     /// <summary>
-    /// Provides a base implementation for making a selection of data in
-    /// a <see cref="ITileMap2D"/> instance.
+    /// Provides a base implementation for making a selection of data in a <see
+    /// cref="ITileMap2D"/> instance.
     /// </summary>
     public abstract class Selection2D : ISelection2D
     {
         /// <summary>
-        /// An instance of <see cref="ISelection2D"/> that contains no
-        /// data.
+        /// An instance of <see cref="ISelection2D"/> that contains no data.
         /// </summary>
         public static readonly ISelection2D Empty =
             new EmptySelection2D();
 
         /// <summary>
-        /// Initializes a new instance the <see cref="Selection2D"/>
-        /// class.
+        /// Initializes a new instance the <see cref="Selection2D"/> class.
         /// </summary>
         /// <param name="startPosition">
         /// The location of the first selected tile of this <see cref="
@@ -40,8 +37,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets the location of the first selected tile of this
-        /// <see cref="Selection2D"/>.
+        /// Gets the location of the first selected tile of this <see
+        /// cref="Selection2D"/>.
         /// </summary>
         public Point StartPosition
         {
@@ -50,8 +47,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// When overridden in a derived class, gets the number of
-        /// selected tiles in this <see cref="Selection2D"/>.
+        /// When overridden in a derived class, gets the number of selected
+        /// tiles in this <see cref="Selection2D"/>.
         /// </summary>
         public abstract int Count
         {
@@ -59,9 +56,9 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// When overridden in a derived class, creates a new instance
-        /// of <see cref="Selection2D"/> that has the same selection
-        /// properties as this instance.
+        /// When overridden in a derived class, creates a new instance of <see
+        /// cref="Selection2D"/> that has the same selection properties as this
+        /// instance.
         /// </summary>
         /// <returns>
         /// A copy of this <see cref="Selection2D"/>.
@@ -69,22 +66,22 @@ namespace Maseya.Editors.TileMaps
         public abstract Selection2D Copy();
 
         /// <inheritdoc/>
+        ///
         ISelection2D ISelection2D.Copy()
         {
             return Copy();
         }
 
         /// <summary>
-        /// When overridden in a derived class, determines whether a
-        /// data grid point is part of this <see cref="Selection2D"/>.
+        /// When overridden in a derived class, determines whether a data grid
+        /// point is part of this <see cref="Selection2D"/>.
         /// </summary>
         /// <param name="position">
         /// The <see cref="ITileMap2D"/> grid index to inspect.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="position"/> is
-        /// in this <see cref="Selection2D"/>; otherwise
-        /// <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="position"/> is in this
+        /// <see cref="Selection2D"/>; otherwise <see langword="false"/>.
         /// </returns>
         public abstract bool Contains(Point position);
 
@@ -96,21 +93,19 @@ namespace Maseya.Editors.TileMaps
         /// The type of the values in the dictionary.
         /// </typeparam>
         /// <param name="collection">
-        /// An implementation of <see cref="IReadOnlyList{T}"/> to
-        /// retrieve values from indexes specified by the <see cref="
-        /// Selection2D"/>. If the index is outside the bounds of
-        /// <paramref name="collection"/>, the default value of
-        /// <typeparamref name="T"/> will be used.
+        /// An implementation of <see cref="IReadOnlyList{T}"/> to retrieve
+        /// values from indexes specified by the <see cref=" Selection2D"/>. If
+        /// the index is outside the bounds of <paramref name="collection"/>,
+        /// the default value of <typeparamref name="T"/> will be used.
         /// </param>
         /// <param name="width">
         /// The width of the 2D area representing <paramref name="
         /// collection"/>.
         /// </param>
         /// <returns>
-        /// A <see cref="Dictionary{TKey, TValue}"/> whose keys are the
-        /// integer indexes of the <see cref="Selection2D"/> and whose
-        /// values are the values of <paramref name="collection"/> at
-        /// the corresponding index.
+        /// A <see cref="Dictionary{TKey, TValue}"/> whose keys are the integer
+        /// indexes of the <see cref="Selection2D"/> and whose values are the
+        /// values of <paramref name="collection"/> at the corresponding index.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="collection"/> is <see langword="null"/>.
@@ -150,6 +145,7 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <inheritdoc/>
+        ///
         IDictionary<Point, T> ISelection2D.GetValues<T>(
             IReadOnlyList<T> collection,
             int width)
@@ -158,28 +154,29 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// When overridden in a derived class, returns an enumerator
-        /// that enumerates through the <see cref="Selection2D"/>.
+        /// When overridden in a derived class, returns an enumerator that
+        /// enumerates through the <see cref="Selection2D"/>.
         /// </summary>
         /// <returns>
-        /// A <see cref="IEnumerator{T}"/> for the <see cref="
-        /// Selection2D"/>.
+        /// A <see cref="IEnumerator{T}"/> for the <see cref=" Selection2D"/>.
         /// </returns>
         public abstract IEnumerator<Point> GetEnumerator();
 
         /// <inheritdoc/>
+        ///
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
         /// <summary>
-        /// Represents an implementation of <see cref="ISelection1D"/>
-        /// that contains no data.
+        /// Represents an implementation of <see cref="ISelection1D"/> that
+        /// contains no data.
         /// </summary>
         private sealed class EmptySelection2D : ISelection2D
         {
             /// <inheritdoc/>
+            ///
             Point ISelection2D.StartPosition
             {
                 get
@@ -189,6 +186,7 @@ namespace Maseya.Editors.TileMaps
             }
 
             /// <inheritdoc/>
+            ///
             int IReadOnlyCollection<Point>.Count
             {
                 get
@@ -198,18 +196,21 @@ namespace Maseya.Editors.TileMaps
             }
 
             /// <inheritdoc/>
+            ///
             ISelection2D ISelection2D.Copy()
             {
                 return Empty;
             }
 
             /// <inheritdoc/>
+            ///
             bool ISelection2D.Contains(Point position)
             {
                 return false;
             }
 
             /// <inheritdoc/>
+            ///
             IDictionary<Point, T> ISelection2D.GetValues<T>(
                 IReadOnlyList<T> collection,
                 int width)
@@ -223,12 +224,14 @@ namespace Maseya.Editors.TileMaps
             }
 
             /// <inheritdoc/>
+            ///
             public IEnumerator<Point> GetEnumerator()
             {
                 yield break;
             }
 
             /// <inheritdoc/>
+            ///
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();

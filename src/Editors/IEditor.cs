@@ -1,8 +1,7 @@
 ﻿// <copyright file="IEditor.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved
-//     Licensed under GNU Affero General Public License.
-//     See LICENSE in project root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors
@@ -17,11 +16,11 @@ namespace Maseya.Editors
     public interface IEditor
     {
         /// <summary>
-        /// Gets or sets the file path that this <see cref="IEditor"/>
-        /// will by default read from and write to during any file
-        /// operations.
+        /// Gets or sets the file path that this <see cref="IEditor"/> will by
+        /// default read from and write to during any file operations.
         /// </summary>
         /// <inheritdoc cref="GetFullPath(String)" select="exception"/>
+        ///
         string Path
         {
             get;
@@ -102,8 +101,8 @@ namespace Maseya.Editors
         void Redo();
 
         /// <summary>
-        /// Copies the selected data of this <see cref="IEditor"/> and
-        /// then deletes that selection in the <see cref="IEditor"/>.
+        /// Copies the selected data of this <see cref="IEditor"/> and then
+        /// deletes that selection in the <see cref="IEditor"/>.
         /// </summary>
         void Cut();
 
@@ -113,20 +112,20 @@ namespace Maseya.Editors
         void Copy();
 
         /// <summary>
-        /// Pastes the last copied <see cref="IEditor"/> data selection
-        /// to the current selection of this <see cref="IEditor"/>.
+        /// Pastes the last copied <see cref="IEditor"/> data selection to the
+        /// current selection of this <see cref="IEditor"/>.
         /// </summary>
         void Paste();
 
         /// <summary>
-        /// Deletes the contents of the current selection of this
-        /// <see cref="IEditor"/>.
+        /// Deletes the contents of the current selection of this <see
+        /// cref="IEditor"/>.
         /// </summary>
         void Delete();
 
         /// <summary>
-        /// Places all data in this <see cref="IEditor"/> into the
-        /// current selection.
+        /// Places all data in this <see cref="IEditor"/> into the current
+        /// selection.
         /// </summary>
         void SelectAll();
     }

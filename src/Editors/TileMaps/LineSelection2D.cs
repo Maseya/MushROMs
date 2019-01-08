@@ -1,14 +1,12 @@
 ﻿// <copyright file="LineSelection2D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
     using static Helper.ThrowHelper;
@@ -19,8 +17,8 @@ namespace Maseya.Editors.TileMaps
     public sealed class LineSelection2D : Selection2D
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="
-        /// LineSelection2D"/> class.
+        /// Initializes a new instance of the <see cref=" LineSelection2D"/>
+        /// class.
         /// </summary>
         /// <param name="startPosition">
         /// The location of the first selected tile of this <see cref="
@@ -34,7 +32,9 @@ namespace Maseya.Editors.TileMaps
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="length"/> is less than zero.
-        /// <para/>-or-<para/>
+        /// <para/>
+        /// -or-
+        /// <para/>
         /// <paramref name="regionWidth"/> is less than zero.
         /// </exception>
         public LineSelection2D(
@@ -89,8 +89,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="LineSelection1D"/>
-        /// that has the same selection properties as this instance.
+        /// Creates a new instance of <see cref="LineSelection1D"/> that has
+        /// the same selection properties as this instance.
         /// </summary>
         /// <returns>
         /// A copy of this <see cref="LineSelection1D"/>.
@@ -101,16 +101,15 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Determines whether a data grid index is part of this
-        /// <see cref="LineSelection2D"/>.
+        /// Determines whether a data grid index is part of this <see
+        /// cref="LineSelection2D"/>.
         /// </summary>
         /// <param name="position">
         /// The <see cref="ITileMap2D"/> grid location to inspect.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="position"/> is
-        /// in this <see cref="LineSelection2D"/>; otherwise
-        /// <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="position"/> is in this
+        /// <see cref="LineSelection2D"/>; otherwise <see langword="false"/>.
         /// </returns>
         public override bool Contains(Point position)
         {
@@ -121,8 +120,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Returns an enumerator that enumerates through the
-        /// <see cref="SingleSelection2D"/>.
+        /// Returns an enumerator that enumerates through the <see
+        /// cref="SingleSelection2D"/>.
         /// </summary>
         /// <returns>
         /// A <see cref="IEnumerator{T}"/> for the <see cref="

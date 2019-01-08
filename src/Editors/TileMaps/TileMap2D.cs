@@ -1,8 +1,7 @@
 ﻿// <copyright file="TileMap2D.cs" company="Public Domain">
-//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed
-//     under GNU Affero General Public License. See LICENSE in project
-//     root for full license information, or visit
-//     https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2018 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Maseya.Editors.TileMaps
@@ -73,8 +72,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the location of the first data grid cell in the
-        /// view area.
+        /// Gets or sets the location of the first data grid cell in the view
+        /// area.
         /// </summary>
         public Point ZeroTile
         {
@@ -96,8 +95,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the X-coordinate of the first data grid cell in
-        /// the view area.
+        /// Gets or sets the X-coordinate of the first data grid cell in the
+        /// view area.
         /// </summary>
         public int ZeroTileX
         {
@@ -119,8 +118,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the Y-coordinate of the first data grid cell in
-        /// the view area.
+        /// Gets or sets the Y-coordinate of the first data grid cell in the
+        /// view area.
         /// </summary>
         public int ZeroTileY
         {
@@ -142,8 +141,7 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the location of the data grid cell the user is
-        /// on.
+        /// Gets or sets the location of the data grid cell the user is on.
         /// </summary>
         public Point ActiveGridTile
         {
@@ -165,8 +163,8 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the view location (in cell coordinates) of the
-        /// data grid cell the user is on.
+        /// Gets or sets the view location (in cell coordinates) of the data
+        /// grid cell the user is on.
         /// </summary>
         public override Point ActiveViewTile
         {
@@ -201,12 +199,10 @@ namespace Maseya.Editors.TileMaps
         /// The X-coordinate of the view-area cell.
         /// </param>
         /// <param name="zeroTileX">
-        /// The X-coordinate of the first data grid cell in the view
-        /// area.
+        /// The X-coordinate of the first data grid cell in the view area.
         /// </param>
         /// <returns>
-        /// The X-coordinate (in grid space) of <paramref name="
-        /// viewTileX"/>.
+        /// The X-coordinate (in grid space) of <paramref name=" viewTileX"/>.
         /// </returns>
         public static int GetGridTileX(int viewTileX, int zeroTileX)
         {
@@ -220,12 +216,10 @@ namespace Maseya.Editors.TileMaps
         /// The Y-coordinate of the view-area cell.
         /// </param>
         /// <param name="zeroTileY">
-        /// The Y-coordinate of the first data grid cell in the view
-        /// area.
+        /// The Y-coordinate of the first data grid cell in the view area.
         /// </param>
         /// <returns>
-        /// The Y-coordinate (in grid space) of <paramref name="
-        /// viewTileY"/>.
+        /// The Y-coordinate (in grid space) of <paramref name=" viewTileY"/>.
         /// </returns>
         public static int GetGridTileY(int viewTileY, int zeroTileY)
         {
@@ -239,12 +233,10 @@ namespace Maseya.Editors.TileMaps
         /// The location of the view-area cell.
         /// </param>
         /// <param name="zeroTile">
-        /// The location of the first data grid cell in the view
-        /// area.
+        /// The location of the first data grid cell in the view area.
         /// </param>
         /// <returns>
-        /// The location (in grid space) of <paramref name="
-        /// viewTile"/>.
+        /// The location (in grid space) of <paramref name=" viewTile"/>.
         /// </returns>
         public static Point GetGridTile(Point viewTile, Point zeroTile)
         {
@@ -260,12 +252,10 @@ namespace Maseya.Editors.TileMaps
         /// The X-coordinate of the data grid cell.
         /// </param>
         /// <param name="zeroTileX">
-        /// The X-coordinate of the first data grid cell in the view
-        /// area.
+        /// The X-coordinate of the first data grid cell in the view area.
         /// </param>
         /// <returns>
-        /// The X-coordinate (in view space) of <paramref name="
-        /// gridTileX"/>.
+        /// The X-coordinate (in view space) of <paramref name=" gridTileX"/>.
         /// </returns>
         public static int GetViewTileX(int gridTileX, int zeroTileX)
         {
@@ -279,12 +269,10 @@ namespace Maseya.Editors.TileMaps
         /// The Y-coordinate of the data grid cell.
         /// </param>
         /// <param name="zeroTileY">
-        /// The Y-coordinate of the first data grid cell in the view
-        /// area.
+        /// The Y-coordinate of the first data grid cell in the view area.
         /// </param>
         /// <returns>
-        /// The Y-coordinate (in view space) of <paramref name="
-        /// gridTileY"/>.
+        /// The Y-coordinate (in view space) of <paramref name=" gridTileY"/>.
         /// </returns>
         public static int GetViewTileY(int gridTileY, int zeroTileY)
         {
@@ -298,12 +286,10 @@ namespace Maseya.Editors.TileMaps
         /// The location of the data grid cell.
         /// </param>
         /// <param name="zeroTile">
-        /// The location of the first data grid cell in the view
-        /// area.
+        /// The location of the first data grid cell in the view area.
         /// </param>
         /// <returns>
-        /// The location (in view space) of <paramref name="
-        /// gridTile"/>.
+        /// The location (in view space) of <paramref name=" gridTile"/>.
         /// </returns>
         public static Point GetViewTile(Point gridTile, Point zeroTile)
         {
@@ -313,16 +299,16 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets a value that determines whether a data grid cell
-        /// location is within <see cref="GridSize"/>.
+        /// Gets a value that determines whether a data grid cell location is
+        /// within <see cref="GridSize"/>.
         /// </summary>
         /// <param name="tile">
         /// The location of the data grid cell.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="tile"/> is inside
-        /// of a rectangle starting at the origin and with a size of
-        /// <see cref="GridSize"/>; otherwise <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="tile"/> is inside of a
+        /// rectangle starting at the origin and with a size of <see
+        /// cref="GridSize"/>; otherwise <see langword="false"/>.
         /// </returns>
         public bool TileIsInGrid(Point tile)
         {
@@ -337,8 +323,7 @@ namespace Maseya.Editors.TileMaps
         /// The X-coordinate of the view-area cell.
         /// </param>
         /// <returns>
-        /// The X-coordinate (in grid space) of <paramref name="
-        /// viewTileX"/>.
+        /// The X-coordinate (in grid space) of <paramref name=" viewTileX"/>.
         /// </returns>
         public int GetGridTileX(int viewTileX)
         {
@@ -352,8 +337,7 @@ namespace Maseya.Editors.TileMaps
         /// The Y-coordinate of the view-area cell.
         /// </param>
         /// <returns>
-        /// The Y-coordinate (in grid space) of <paramref name="
-        /// viewTileY"/>.
+        /// The Y-coordinate (in grid space) of <paramref name=" viewTileY"/>.
         /// </returns>
         public int GetGridTileY(int viewTileY)
         {
@@ -367,8 +351,7 @@ namespace Maseya.Editors.TileMaps
         /// The location of the view-area cell.
         /// </param>
         /// <returns>
-        /// The location (in grid space) of <paramref name="
-        /// viewTile"/>.
+        /// The location (in grid space) of <paramref name=" viewTile"/>.
         /// </returns>
         public Point GetGridTile(Point viewTile)
         {
@@ -382,8 +365,7 @@ namespace Maseya.Editors.TileMaps
         /// The X-coordinate of the data grid cell.
         /// </param>
         /// <returns>
-        /// The X-coordinate (in view space) of <paramref name="
-        /// gridTileX"/>.
+        /// The X-coordinate (in view space) of <paramref name=" gridTileX"/>.
         /// </returns>
         public int GetViewTileX(int gridTileX)
         {
@@ -397,8 +379,7 @@ namespace Maseya.Editors.TileMaps
         /// The Y-coordinate of the data grid cell.
         /// </param>
         /// <returns>
-        /// The Y-coordinate (in view space) of <paramref name="
-        /// gridTileY"/>.
+        /// The Y-coordinate (in view space) of <paramref name=" gridTileY"/>.
         /// </returns>
         public int GetViewTileY(int gridTileY)
         {
@@ -412,8 +393,7 @@ namespace Maseya.Editors.TileMaps
         /// The location of the data grid cell.
         /// </param>
         /// <returns>
-        /// The location (in view space) of <paramref name="
-        /// gridTile"/>.
+        /// The location (in view space) of <paramref name=" gridTile"/>.
         /// </returns>
         public Point GetViewTile(Point gridTile)
         {
@@ -422,8 +402,8 @@ namespace Maseya.Editors.TileMaps
 
         /// <summary>
         /// Sets the <see cref="Size.Width"/> property of <see cref="
-        /// gridSize"/> without raising <see cref="TileMap.
-        /// GridSizeChanged"/> event.
+        /// gridSize"/> without raising <see cref="TileMap. GridSizeChanged"/>
+        /// event.
         /// </summary>
         /// <param name="value">
         /// The new grid width.
@@ -444,8 +424,8 @@ namespace Maseya.Editors.TileMaps
 
         /// <summary>
         /// Sets the <see cref="Size.Height"/> property of <see cref="
-        /// gridSize"/> without raising <see cref="TileMap.
-        /// GridSizeChanged"/> event.
+        /// gridSize"/> without raising <see cref="TileMap. GridSizeChanged"/>
+        /// event.
         /// </summary>
         /// <param name="value">
         /// The new grid height.
