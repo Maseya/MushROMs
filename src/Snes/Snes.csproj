@@ -20,11 +20,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>Release\Debug\Snes.xml</DocumentationFile>
     <OutputPath>$(Configuration)\Debug</OutputPath>
+    <NoWarn>1701;1702;CS1591;</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>Debug\Debug\Snes.xml</DocumentationFile>
     <OutputPath>$(Configuration)\Debug</OutputPath>
+    <NoWarn>1701;1702;CS1591;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
