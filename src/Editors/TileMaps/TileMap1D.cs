@@ -7,7 +7,9 @@
 namespace Maseya.Editors.TileMaps
 {
     using System;
+    using System.ComponentModel;
     using System.Drawing;
+    using static System.ComponentModel.DesignerSerializationVisibility;
     using static System.Math;
     using static Helper.ThrowHelper;
 
@@ -26,10 +28,15 @@ namespace Maseya.Editors.TileMaps
         /// </summary>
         private int zeroTile;
 
-        /// <summary>
-        /// The index of the data grid cell the user is on.
-        /// </summary>
-        private int activeGridTile;
+        public TileMap1D()
+            : base()
+        {
+        }
+
+        public TileMap1D(IContainer container)
+            : base(container)
+        {
+        }
 
         /// <summary>
         /// Gets or sets the length of the data grid.
@@ -37,6 +44,8 @@ namespace Maseya.Editors.TileMaps
         /// <exception cref="ArgumentOutOfRangeException">
         /// A value less than zero is set.
         /// </exception>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public int GridSize
         {
             get
@@ -63,6 +72,8 @@ namespace Maseya.Editors.TileMaps
         /// <exception cref="ArgumentOutOfRangeException">
         /// A value less than zero is set.
         /// </exception>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public int ZeroTile
         {
             get
@@ -83,47 +94,10 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the index of the data grid cell the user is on.
-        /// </summary>
-        public int ActiveGridTile
-        {
-            get
-            {
-                return activeGridTile;
-            }
-
-            set
-            {
-                if (ActiveGridTile == value)
-                {
-                    return;
-                }
-
-                activeGridTile = value;
-                OnActiveGridTileChanged(EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the view location (in cell coordinates) of the data
-        /// grid cell the user is on.
-        /// </summary>
-        public override Point ActiveViewTile
-        {
-            get
-            {
-                return GetViewTile(ActiveGridTile);
-            }
-
-            set
-            {
-                ActiveGridTile = GetGridTile(value);
-            }
-        }
-
-        /// <summary>
         /// Gets the number of data grid cells present in the view area.
         /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public int ViewableTiles
         {
             get
@@ -366,6 +340,11 @@ namespace Maseya.Editors.TileMaps
                 viewTileY,
                 ViewWidth,
                 ZeroTile);
+        }
+
+        public override bool ViewTileIsInGrid(Point viewTile)
+        {
+            return TileIsInGrid(GetGridTile(viewTile));
         }
 
         /// <summary>
