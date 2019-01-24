@@ -98,11 +98,6 @@ namespace Maseya.Snes
             }
         }
 
-        private IList<byte> Source
-        {
-            get;
-        }
-
         int ICollection<byte>.Count
         {
             get
@@ -160,6 +155,11 @@ namespace Maseya.Snes
         }
 
         object ICollection.SyncRoot
+        {
+            get;
+        }
+
+        private IList<byte> Source
         {
             get;
         }
