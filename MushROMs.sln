@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Editors", "src\Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snes.Controls", "src\Snes.Controls\Snes.Controls.csproj", "{93D3B636-1FB7-4372-A213-87F0A23DF544}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smb1", "src\Smb1\Smb1.csproj", "{B056436F-11ED-4003-927C-A75DD071AF7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{93D3B636-1FB7-4372-A213-87F0A23DF544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93D3B636-1FB7-4372-A213-87F0A23DF544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93D3B636-1FB7-4372-A213-87F0A23DF544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B056436F-11ED-4003-927C-A75DD071AF7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B056436F-11ED-4003-927C-A75DD071AF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B056436F-11ED-4003-927C-A75DD071AF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B056436F-11ED-4003-927C-A75DD071AF7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
