@@ -34,15 +34,6 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the location of the data grid cell the user is on.
-        /// </summary>
-        Point ActiveGridTile
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets the size of the data grid cells shown in the view area.
         /// </summary>
         Size ViewableTiles
