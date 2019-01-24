@@ -7,23 +7,20 @@
 namespace Maseya.Editors.TileMaps
 {
     using System;
+    using System.ComponentModel;
     using System.Drawing;
+    using static System.ComponentModel.DesignerSerializationVisibility;
     using static Helper.ThrowHelper;
 
     /// <summary>
     /// Provides a base implementation of representing data as a tilemap.
     /// </summary>
-    public abstract class TileMap : ITileMap
+    public abstract class TileMap : Component, ITileMap
     {
         /// <summary>
         /// The default value to assign to <see cref="tileSize"/>.
         /// </summary>
         public static readonly Size FallbackTileSize = new Size(8, 8);
-
-        /// <summary>
-        /// The default value to assign to <see cref="zoomSize"/>.
-        /// </summary>
-        public static readonly Size FallbackZoomSize = new Size(2, 2);
 
         /// <summary>
         /// The default value to assign to <see cref="viewSize"/>.
@@ -37,11 +34,6 @@ namespace Maseya.Editors.TileMaps
         private Size tileSize;
 
         /// <summary>
-        /// The horizontal and vertical zoom factors of a tilemap cell.
-        /// </summary>
-        private Size zoomSize;
-
-        /// <summary>
         /// The height and width, in cell coordinates, of the tilemap view
         /// area.
         /// </summary>
@@ -53,8 +45,27 @@ namespace Maseya.Editors.TileMaps
         protected TileMap()
         {
             tileSize = FallbackTileSize;
-            zoomSize = FallbackZoomSize;
             viewSize = FallbackViewSize;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TileMap"/> class.
+        /// </summary>
+        /// <param name="container">
+        /// The <see cref="IContainer"/> to add this <see cref="TileMap"/> to.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="container"/> is <see langword="null"/>.
+        /// </exception>
+        protected TileMap(IContainer container = null)
+            : this()
+        {
+            if (container is null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
+            container.Add(this);
         }
 
         public event EventHandler GridSizeChanged;
@@ -65,19 +76,9 @@ namespace Maseya.Editors.TileMaps
         public event EventHandler ZeroTileChanged;
 
         /// <summary>
-        /// Occurs when active tile changes.
-        /// </summary>
-        public event EventHandler ActiveGridTileChanged;
-
-        /// <summary>
         /// Occurs when <see cref="TileSize"/> changes.
         /// </summary>
         public event EventHandler TileSizeChanged;
-
-        /// <summary>
-        /// Occurs when <see cref="ZoomSize"/> changes.
-        /// </summary>
-        public event EventHandler ZoomSizeChanged;
 
         /// <summary>
         /// Occurs when <see cref="ViewSize"/> changes.
@@ -113,6 +114,8 @@ namespace Maseya.Editors.TileMaps
         /// <exception cref="ArgumentOutOfRangeException">
         /// The value set is less than or equal to zero.
         /// </exception>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public int TileWidth
         {
             get
@@ -139,6 +142,8 @@ namespace Maseya.Editors.TileMaps
         /// <exception cref="ArgumentOutOfRangeException">
         /// The value set is less than or equal to zero.
         /// </exception>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public int TileHeight
         {
             get
@@ -155,78 +160,6 @@ namespace Maseya.Editors.TileMaps
 
                 SetTileHeightInternal(value);
                 OnViewSizeChanged(EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the horizontal and vertical zoom factors of a tilemap
-        /// cell.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The value set is less than or equal to zero.
-        /// </exception>
-        public Size ZoomSize
-        {
-            get
-            {
-                return zoomSize;
-            }
-
-            set
-            {
-                SetZoomWidthInternal(value.Width);
-                SetZoomHeightInternal(value.Height);
-                OnZoomSizeChanged(EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the horizontal zoom factor a tilemap cell.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The value set is less than or equal to zero.
-        /// </exception>
-        public int ZoomWidth
-        {
-            get
-            {
-                return ZoomSize.Width;
-            }
-
-            set
-            {
-                if (value == ZoomWidth)
-                {
-                    return;
-                }
-
-                SetZoomWidthInternal(value);
-                OnZoomSizeChanged(EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the vertical zoom factor of a tilemap cell.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The value set is less than or equal to zero.
-        /// </exception>
-        public int ZoomHeight
-        {
-            get
-            {
-                return ZoomSize.Height;
-            }
-
-            set
-            {
-                if (value == ZoomHeight)
-                {
-                    return;
-                }
-
-                SetZoomHeightInternal(value);
-                OnZoomSizeChanged(EventArgs.Empty);
             }
         }
 
@@ -259,6 +192,8 @@ namespace Maseya.Editors.TileMaps
         /// <exception cref="ArgumentOutOfRangeException">
         /// The value set is less than or equal to zero.
         /// </exception>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public int ViewWidth
         {
             get
@@ -285,6 +220,8 @@ namespace Maseya.Editors.TileMaps
         /// <exception cref="ArgumentOutOfRangeException">
         /// The value set is less than or equal to zero.
         /// </exception>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public int ViewHeight
         {
             get
@@ -305,41 +242,36 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets the height and width, in pixels, of a tilemap cell.
+        /// Gets the width, in pixels, of the viewable tilemap area.
         /// </summary>
-        public Size CellSize
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
+        public int Width
         {
             get
             {
-                return new Size(CellWidth, CellHeight);
+                return TileWidth * ViewWidth;
             }
         }
 
         /// <summary>
-        /// Gets the height, in pixels, of a tilemap cell.
+        /// Gets the height, in pixels, of the viewable tilemap area.
         /// </summary>
-        public int CellWidth
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
+        public int Height
         {
             get
             {
-                return TileWidth * ZoomWidth;
-            }
-        }
-
-        /// <summary>
-        /// Gets the width, in pixels, of a tilemap cell.
-        /// </summary>
-        public int CellHeight
-        {
-            get
-            {
-                return TileHeight * ZoomHeight;
+                return TileHeight * ViewHeight;
             }
         }
 
         /// <summary>
         /// Gets the height and width, in pixels, of the viewable tilemap area.
         /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public Size Size
         {
             get
@@ -349,55 +281,18 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets the width, in pixels, of the viewable tilemap area.
-        /// </summary>
-        public int Width
-        {
-            get
-            {
-                return CellWidth * ViewWidth;
-            }
-        }
-
-        /// <summary>
-        /// Gets the height, in pixels, of the viewable tilemap area.
-        /// </summary>
-        public int Height
-        {
-            get
-            {
-                return CellHeight * ViewHeight;
-            }
-        }
-
-        /// <summary>
-        /// When overridden in a derived class, gets or sets the view location
-        /// (in cell coordinates) of the data grid cell the user is on.
-        /// </summary>
-        public abstract Point ActiveViewTile
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets a tilemap cell coordinate from a pixel coordinate.
         /// </summary>
         /// <param name="pixel">
         /// The pixel coordinate to convert.
         /// </param>
-        /// <param name="zoom">
-        /// If <see langword="true"/>, the result will be scaled by <see
-        /// cref="ZoomSize"/>; otherwise, no scaling occurs.
-        /// </param>
         /// <returns>
         /// The tilemap cell coordinate of <paramref name="pixel"/>.
         /// </returns>
-        public Point GetCellCoordinateFromPixel(Point pixel, bool zoom)
+        public Point GetViewTileFromPixel(Point pixel)
         {
-            var size = zoom ? CellSize : TileSize;
-            var x = pixel.X / size.Width;
-            var y = pixel.Y / size.Height;
+            var x = pixel.X / TileWidth;
+            var y = pixel.Y / TileHeight;
 
             return new Point(x, y);
         }
@@ -408,18 +303,13 @@ namespace Maseya.Editors.TileMaps
         /// <param name="tile">
         /// The tilemap cell coordinate to convert.
         /// </param>
-        /// <param name="zoom">
-        /// If <see langword="true"/>, the result will be scaled by <see
-        /// cref="ZoomSize"/>; otherwise, no scaling occurs.
-        /// </param>
         /// <returns>
         /// The pixel coordinate of <paramref name="tile"/>.
         /// </returns>
-        public Point GetPixelFromViewTile(Point tile, bool zoom)
+        public Point GetPixelFromViewTile(Point tile)
         {
-            var size = zoom ? CellSize : TileSize;
-            var x = tile.X * size.Width;
-            var y = tile.Y * size.Height;
+            var x = tile.X * TileWidth;
+            var y = tile.Y * TileHeight;
 
             return new Point(x, y);
         }
@@ -441,6 +331,8 @@ namespace Maseya.Editors.TileMaps
             return rectangle.Contains(viewTile);
         }
 
+        public abstract bool ViewTileIsInGrid(Point point);
+
         /// <summary>
         /// Raises the <see cref="TileSizeChanged"/> event.
         /// </summary>
@@ -450,17 +342,6 @@ namespace Maseya.Editors.TileMaps
         protected virtual void OnTileSizeChanged(EventArgs e)
         {
             TileSizeChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="ZoomSizeChanged"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
-        /// </param>
-        protected virtual void OnZoomSizeChanged(EventArgs e)
-        {
-            ZoomSizeChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -494,17 +375,6 @@ namespace Maseya.Editors.TileMaps
         protected virtual void OnZeroTileChanged(EventArgs e)
         {
             ZeroTileChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="ActiveGridTileChanged"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
-        /// </param>
-        protected virtual void OnActiveGridTileChanged(EventArgs e)
-        {
-            ActiveGridTileChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -583,40 +453,6 @@ namespace Maseya.Editors.TileMaps
 
         /// <summary>
         /// Sets the <see cref="Size.Width"/> property of <see cref="
-        /// zoomSize"/> without raising the <see cref=" ZoomSizeChanged"/>
-        /// event.
-        /// </summary>
-        /// <param name="value">
-        /// The new tile width.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="value"/> is less than or equal to zero.
-        /// </exception>
-        private void SetZoomWidthInternal(int value)
-        {
-            AssertGreaterThanZero(value);
-            zoomSize.Width = value;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="Size.Height"/> property of <see cref="
-        /// zoomSize"/> without raising the <see cref=" ZoomSizeChanged"/>
-        /// event.
-        /// </summary>
-        /// <param name="value">
-        /// The new tile width.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="value"/> is less than or equal to zero.
-        /// </exception>
-        private void SetZoomHeightInternal(int value)
-        {
-            AssertGreaterThanZero(value);
-            zoomSize.Height = value;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="Size.Width"/> property of <see cref="
         /// viewSize"/> without raising the <see cref=" ViewSizeChanged"/>
         /// event.
         /// </summary>
@@ -634,7 +470,7 @@ namespace Maseya.Editors.TileMaps
 
         /// <summary>
         /// Sets the <see cref="Size.Height"/> property of <see cref="
-        /// zoomSize"/> without raising the <see cref=" ViewSizeChanged"/>
+        /// viewSize"/> without raising the <see cref=" ViewSizeChanged"/>
         /// event.
         /// </summary>
         /// <param name="value">
