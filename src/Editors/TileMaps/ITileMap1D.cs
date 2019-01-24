@@ -6,6 +6,8 @@
 
 namespace Maseya.Editors.TileMaps
 {
+    using System.Drawing;
+
     /// <summary>
     /// Defines methods and properties that represent a one-dimensional array
     /// of data as a tilemap.
@@ -31,20 +33,15 @@ namespace Maseya.Editors.TileMaps
         }
 
         /// <summary>
-        /// Gets or sets the index of the data grid cell the user is on.
-        /// </summary>
-        int ActiveGridTile
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets the number of data grid cells present in the view area.
         /// </summary>
         int ViewableTiles
         {
             get;
         }
+
+        int GetGridTile(Point viewTile);
+
+        Point GetViewTile(int gridTile);
     }
 }
