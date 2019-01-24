@@ -14,6 +14,6 @@ namespace Maseya.Snes
         None = 0,
         Horizontal = 1,
         Veritcal = 2,
-        Both = Horizontal | Veritcal
+        Both = Horizontal | Veritcal,
     }
 }

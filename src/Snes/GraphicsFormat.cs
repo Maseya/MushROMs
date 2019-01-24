@@ -21,6 +21,6 @@ namespace Maseya.Snes
         Format4BppMsx2 = 0x34,
         Format4Bpp8x8 = 0x44,
         Format8BppSnes = 0x08,
-        Format8BppMode7 = 0x78
+        Format8BppMode7 = 0x78,
     }
 }
