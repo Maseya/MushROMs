@@ -44,3 +44,9 @@
     "StyleCop.CSharp.NamingRules",
     "SA1309:Field names must not begin with underscore",
     Justification = "Using SX1309")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1202:Elements should be ordered by access",
+    Justification = "CodeMaid puts `private protected` before `protected`.",
+    Scope = "member",
+    Target = "~M:Maseya.Editors.TileMaps.TileMap.OnActiveGridTileChanged(System.EventArgs)")]
