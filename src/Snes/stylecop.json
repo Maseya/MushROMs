@@ -9,10 +9,10 @@
     "settings": {
         "documentationRules": {
             "companyName": "Public Domain",
-            "copyrightText": "    Copyright (c) {year} {name}. All rights reserved. Licensed\r\n    under {licenseName}. See {licenseFile} in project\r\n    root for full license information, or visit\r\n    {licenseSite}",
+            "copyrightText": "    Copyright (c) {year} {name}. All rights reserved. Licensed under\n    {licenseName}. See {licenseFile} in project root for full\n    license information, or visit {licenseSite}",
             "xmlHeader": true,
             "variables": {
-                "year": "2018",
+                "year": "2019",
                 "name": "Nelson Garcia",
                 "licenseName": "GNU Affero General Public License",
                 "licenseFile": "LICENSE",
