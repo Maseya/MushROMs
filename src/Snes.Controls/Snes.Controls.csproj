@@ -83,11 +83,6 @@
       <DependentUpon>PaletteEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -128,75 +123,10 @@
     <EmbeddedResource Include="PaletteEditorForm.resx">
       <DependentUpon>PaletteEditorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\CanvasScaleHS.png" />
     <AdditionalFiles Include="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CopyHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CutHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DeleteHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Edit_RedoHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Edit_UndoHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Help.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mnuBlend.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mnuColorize.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mnuGrayscale.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mnuHorizontalGradient.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mnuInvert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mnuVerticalGradient.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NoteHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\OpenFile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\openHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\paletteexample.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PasteHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SaveAllHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\saveHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PaletteBlend.ico" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.61\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
