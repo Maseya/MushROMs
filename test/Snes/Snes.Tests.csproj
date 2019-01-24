@@ -67,8 +67,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj" />
-    <ProjectReference Include="..\Editors\Editors.csproj" />
-    <ProjectReference Include="..\Snes\Snes.csproj" />
+    <ProjectReference Include="..\..\src\Editors\Editors.csproj" />
+    <ProjectReference Include="..\..\src\Snes\Snes.csproj" />
   </ItemGroup>
 
 </Project>
