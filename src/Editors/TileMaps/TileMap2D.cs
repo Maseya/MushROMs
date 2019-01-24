@@ -17,7 +17,6 @@ namespace Maseya.Editors.TileMaps
     {
         private Size gridSize;
         private Point zeroTile;
-        private Point activeGridTile;
 
         /// <summary>
         /// Gets or sets the size of the data grid.
@@ -137,45 +136,6 @@ namespace Maseya.Editors.TileMaps
 
                 zeroTile.Y = value;
                 OnZeroTileChanged(EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the location of the data grid cell the user is on.
-        /// </summary>
-        public Point ActiveGridTile
-        {
-            get
-            {
-                return activeGridTile;
-            }
-
-            set
-            {
-                if (ActiveGridTile == value)
-                {
-                    return;
-                }
-
-                activeGridTile = value;
-                OnActiveGridTileChanged(EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the view location (in cell coordinates) of the data
-        /// grid cell the user is on.
-        /// </summary>
-        public override Point ActiveViewTile
-        {
-            get
-            {
-                return GetViewTile(ActiveGridTile);
-            }
-
-            set
-            {
-                ActiveGridTile = GetGridTile(value);
             }
         }
 
@@ -398,6 +358,11 @@ namespace Maseya.Editors.TileMaps
         public Point GetViewTile(Point gridTile)
         {
             return GetViewTile(gridTile, ZeroTile);
+        }
+
+        public override bool ViewTileIsInGrid(Point viewTile)
+        {
+            return TileIsInGrid(GetGridTile(viewTile));
         }
 
         /// <summary>
