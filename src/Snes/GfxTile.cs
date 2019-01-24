@@ -210,7 +210,7 @@ namespace Maseya.Snes
 
         bool IList.Contains(object value)
         {
-            return Contains((byte)value);
+            return value is byte item ? Contains(item) : false;
         }
 
         public void CopyTo(byte[] array, int arrayIndex)
@@ -284,7 +284,7 @@ namespace Maseya.Snes
 
         int IList.IndexOf(object value)
         {
-            return IndexOf((byte)value);
+            return value is byte item ? IndexOf(item) : -1;
         }
 
         void ICollection<byte>.Add(byte item)
