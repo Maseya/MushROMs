@@ -9,7 +9,7 @@
     <Authors>Nelson Garcia</Authors>
     <Company>Maseya</Company>
     <Description>C# .NET Class Library for creating 2D game editors.</Description>
-    <Copyright>Copyright (c) 2018 Nelson Garcia</Copyright>
+    <Copyright>Copyright (c) 2019 Nelson Garcia</Copyright>
     <PackageLicenseUrl>https://www.gnu.org/licenses/#AGPL</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Maseya/Editors</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Maseya/Editors</RepositoryUrl>
@@ -31,6 +31,21 @@
     <DocumentationFile>bin\Debug\Editors.xml</DocumentationFile>
     <OutputPath>bin\$(Configuration)</OutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.1-beta.61">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj" />
