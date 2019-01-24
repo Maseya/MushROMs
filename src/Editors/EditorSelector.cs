@@ -9,25 +9,17 @@ namespace Maseya.Editors
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using static System.ComponentModel.DesignerSerializationVisibility;
     using static System.IO.Path;
-    using IEditorDictionary = System.Collections.Generic.
-        IDictionary<string, IEditor>;
-    using IReadOnlyEditorDictionary = System.Collections.Generic.
-        IReadOnlyDictionary<string, IEditor>;
-    using PathEditorPair = System.Collections.Generic.
-        KeyValuePair<string, IEditor>;
+    using IEditorDictionary = System.Collections.Generic.IDictionary<string, Maseya.Editors.IEditor>;
+    using IReadOnlyEditorDictionary = System.Collections.Generic.IReadOnlyDictionary<string, Maseya.Editors.IEditor>;
+    using PathEditorPair = System.Collections.Generic.KeyValuePair<string, Maseya.Editors.IEditor>;
 
     /// <summary>
     /// Provides a configurable collection of <see cref="IEditor"/> instances.
     /// </summary>
-    /// <remarks>
-    /// The purpose of <see cref="EditorSelector"/> is to provide a UI-agnostic
-    /// way of managing the many instances of <see cref=" IEditor"/> that a
-    /// user may be working with at once. Instances are tracked by their <see
-    /// cref="IEditor.Path"/> property such that if two editors have the same
-    /// file path, they must be the same editor.
-    /// </remarks>
-    public class EditorSelector
+    public class EditorSelector : Component
     {
         /// <summary>
         /// The <see cref="IEditor"/> that is considered to be actively in use
@@ -42,6 +34,17 @@ namespace Maseya.Editors
         public EditorSelector()
         {
             Items = new EditorDictionary(this);
+        }
+
+        public EditorSelector(IContainer container)
+            : this()
+        {
+            if (container is null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
+            container.Add(this);
         }
 
         /// <summary>
@@ -71,6 +74,8 @@ namespace Maseya.Editors
         /// Gets the collection of <see cref="IEditor"/> instances that this
         /// <see cref="EditorSelector"/> can choose between.
         /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public EditorDictionary Items
         {
             get;
@@ -85,6 +90,8 @@ namespace Maseya.Editors
         /// an <see cref="IEditor"/> is set that does not exist in <see
         /// cref="Items"/>, then it is added to the collection first.
         /// </remarks>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public IEditor CurrentEditor
         {
             get
@@ -195,7 +202,7 @@ namespace Maseya.Editors
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="
-            /// EditorDictionary"/> with the specified <see cref="
+            /// EditorDictionary"/> class with the specified <see cref="
             /// EditorSelector"/> as its parent.
             /// </summary>
             /// <param name="editorSelector">
@@ -320,7 +327,7 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Gets the interface implementation of <see cref=" Editors"/>
+            /// Gets the interface implementation of <see cref="Editors"/>.
             /// </summary>
             /// <remarks>
             /// This property is just a type caster for the various areas where
