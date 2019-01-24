@@ -12,10 +12,6 @@ namespace Maseya.Snes
 
     public abstract class GfxTileConverter
     {
-        private const int DotsPerPlane = GfxTile.DotsPerPlane;
-        private const int PlanesPerTile = GfxTile.PlanesPerTile;
-        private const int DotsPerTile = GfxTile.DotsPerTile;
-
         public static readonly GfxTileConverter Format1Bpp8x8 =
             new Format1BppTileConverter();
 
@@ -58,6 +54,10 @@ namespace Maseya.Snes
         public static readonly GfxTileConverter Format8BppMode7 =
             new Format8BppMode7TileConverter();
 
+        private const int DotsPerPlane = GfxTile.DotsPerPlane;
+        private const int PlanesPerTile = GfxTile.PlanesPerTile;
+        private const int DotsPerTile = GfxTile.DotsPerTile;
+
         private static readonly Dictionary<GraphicsFormat, GfxTileConverter>
             Converters = new Dictionary<GraphicsFormat, GfxTileConverter>()
             {
@@ -76,21 +76,6 @@ namespace Maseya.Snes
                 { GraphicsFormat.Format8BppSnes, Format8BppSnes },
                 { GraphicsFormat.Format8BppMode7, Format8BppMode7 },
             };
-
-        public abstract byte ReadPixel(
-            IList<byte> bytes,
-            int byteIndex,
-            int pixelIndex);
-
-        public abstract void WritePixel(
-            byte pixel,
-            IList<byte> bytes,
-            int byteIndex,
-            int pixelIndex);
-
-        public abstract IEnumerable<byte> GetPixels(IEnumerable<byte> bytes);
-
-        public abstract IEnumerable<byte> GetBytes(IEnumerable<byte> pixels);
 
         public static GfxTileConverter GetTileConverter(
             GraphicsFormat format)
@@ -173,6 +158,21 @@ namespace Maseya.Snes
         {
             return BytesPerPlane(format) * PlanesPerTile;
         }
+
+        public abstract byte ReadPixel(
+            IList<byte> bytes,
+            int byteIndex,
+            int pixelIndex);
+
+        public abstract void WritePixel(
+            byte pixel,
+            IList<byte> bytes,
+            int byteIndex,
+            int pixelIndex);
+
+        public abstract IEnumerable<byte> GetPixels(IEnumerable<byte> bytes);
+
+        public abstract IEnumerable<byte> GetBytes(IEnumerable<byte> pixels);
 
         private static byte ReadBit(int value, int bit)
         {
@@ -295,12 +295,14 @@ namespace Maseya.Snes
                     pixel & 2);
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -308,22 +310,31 @@ namespace Maseya.Snes
 
         private class Format2BppGbTileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -331,22 +342,31 @@ namespace Maseya.Snes
 
         private class Format2BppNgpTileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -354,22 +374,31 @@ namespace Maseya.Snes
 
         private class Format2BppVbTileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -377,22 +406,31 @@ namespace Maseya.Snes
 
         private class Format3BppSnesTileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -400,22 +438,31 @@ namespace Maseya.Snes
 
         private class Format3Bpp8x8TileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -423,22 +470,31 @@ namespace Maseya.Snes
 
         private class Format4BppSnesTileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -446,22 +502,31 @@ namespace Maseya.Snes
 
         private class Format4BppGbaTileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -469,22 +534,31 @@ namespace Maseya.Snes
 
         private class Format4BppSmsTileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -492,22 +566,31 @@ namespace Maseya.Snes
 
         private class Format4BppMsx2TileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -515,22 +598,31 @@ namespace Maseya.Snes
 
         private class Format4Bpp8x8TileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -538,22 +630,31 @@ namespace Maseya.Snes
 
         private class Format8BppSnesTileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override void WritePixel(byte pixel, IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override void WritePixel(
+                byte pixel,
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetPixels(IEnumerable<byte> bytes)
+            public override IEnumerable<byte> GetPixels(
+                IEnumerable<byte> bytes)
             {
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<byte> GetBytes(IEnumerable<byte> pixels)
+            public override IEnumerable<byte> GetBytes(
+                IEnumerable<byte> pixels)
             {
                 throw new NotImplementedException();
             }
@@ -561,7 +662,10 @@ namespace Maseya.Snes
 
         private class Format8BppMode7TileConverter : GfxTileConverter
         {
-            public override byte ReadPixel(IList<byte> bytes, int byteIndex, int pixelIndex)
+            public override byte ReadPixel(
+                IList<byte> bytes,
+                int byteIndex,
+                int pixelIndex)
             {
                 return bytes[byteIndex + pixelIndex];
             }
