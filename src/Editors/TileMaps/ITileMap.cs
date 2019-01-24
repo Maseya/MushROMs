@@ -6,13 +6,23 @@
 
 namespace Maseya.Editors.TileMaps
 {
+    using System;
+    using System.ComponentModel;
     using System.Drawing;
 
     /// <summary>
     /// Defines methods and properties that represent data as a tilemap grid.
     /// </summary>
-    public interface ITileMap
+    public interface ITileMap : IComponent
     {
+        event EventHandler ViewSizeChanged;
+
+        event EventHandler TileSizeChanged;
+
+        event EventHandler GridSizeChanged;
+
+        event EventHandler ZeroTileChanged;
+
         /// <summary>
         /// Gets or sets the height and width, in cell coordinates, of the
         /// tilemap of the tilemap view area.
@@ -22,5 +32,18 @@ namespace Maseya.Editors.TileMaps
             get;
             set;
         }
+
+        Size TileSize
+        {
+            get;
+            set;
+        }
+
+        Size Size
+        {
+            get;
+        }
+
+        bool ViewTileIsInGrid(Point viewTile);
     }
 }
