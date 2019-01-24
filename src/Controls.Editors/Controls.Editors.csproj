@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{58852581-9311-4D18-8E0B-E0B264C2BC8C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Maseya.Controls.Editors</RootNamespace>
+    <AssemblyName>Controls.Editors</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\MushROMs.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChildEditorWindowHelper.cs" />
+    <Compile Include="CreateEditorDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CreateEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateEditorForm.Designer.cs">
+      <DependentUpon>CreateEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditorWindowEventArgs.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="NewFileHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpenFileHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpenWithDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpenWithForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpenWithForm.Designer.cs">
+      <DependentUpon>OpenWithForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TileMap1DControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TileMap1DScrollHelper.cs" />
+    <Compile Include="TileMap2DScrollHelper.cs" />
+    <Compile Include="TileMapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TileMapScrollHelper.cs" />
+    <Compile Include="TileMapResizeMode.cs" />
+    <Compile Include="TileMapSelectionDrawer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Helper\src\Controls\Controls.csproj">
+      <Project>{d3c13b99-e4f8-438f-aae1-c2fd8897a90a}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj">
+      <Project>{e69c06d0-0ac5-4614-b310-c2ffd311e270}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Editors\Editors.csproj">
+      <Project>{0492c2f5-61cf-4c18-99b5-aeb74e98162a}</Project>
+      <Name>Editors</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CreateEditorForm.resx">
+      <DependentUpon>CreateEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpenWithForm.resx">
+      <DependentUpon>OpenWithForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.61\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.61\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
