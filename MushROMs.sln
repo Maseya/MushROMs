@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snes", "src\Snes\Snes.cspro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snes.Tests", "test\Snes\Snes.Tests.csproj", "{C1479663-0D0E-43F0-B90A-63385F027474}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nes", "src\Nes\Nes.csproj", "{DD670161-18BA-44AD-A10B-23D6C2AE4BA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{C1479663-0D0E-43F0-B90A-63385F027474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1479663-0D0E-43F0-B90A-63385F027474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1479663-0D0E-43F0-B90A-63385F027474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD670161-18BA-44AD-A10B-23D6C2AE4BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD670161-18BA-44AD-A10B-23D6C2AE4BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD670161-18BA-44AD-A10B-23D6C2AE4BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD670161-18BA-44AD-A10B-23D6C2AE4BA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
