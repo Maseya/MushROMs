@@ -7,7 +7,7 @@
 namespace Maseya.Editors
 {
     using System;
-    using static System.IO.Path;
+    using Maseya.Helper;
 
     /// <summary>
     /// Provides properties and methods for general design-editing
@@ -15,20 +15,19 @@ namespace Maseya.Editors
     /// </summary>
     public interface IEditor
     {
-        /// <summary>
-        /// Gets or sets the file path that this <see cref="IEditor"/> will by
-        /// default read from and write to during any file operations.
-        /// </summary>
-        /// <inheritdoc cref="GetFullPath(String)" select="exception"/>
-        ///
+        event EventHandler<CancelEventArgs> SelectionChanging;
+
+        event EventHandler SelectionChanged;
+
+        event EventHandler PathChanged;
+
         string Path
         {
             get;
-            set;
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="IEditor"/> can invoke <see cref="Undo"/>.
         /// </summary>
         bool CanUndo
@@ -37,7 +36,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="IEditor"/> can invoke <see cref="Redo"/>.
         /// </summary>
         bool CanRedo
@@ -46,7 +45,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="IEditor"/> can invoke <see cref="Cut"/>.
         /// </summary>
         bool CanCut
@@ -55,7 +54,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="IEditor"/> can invoke <see cref="Copy"/>.
         /// </summary>
         bool CanCopy
@@ -64,7 +63,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="IEditor"/> can invoke <see cref="Paste"/>.
         /// </summary>
         bool CanPaste
@@ -73,7 +72,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="IEditor"/> can invoke <see cref="Delete"/>.
         /// </summary>
         bool CanDelete
@@ -82,7 +81,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="IEditor"/> can invoke <see cref="SelectAll"/>.
         /// </summary>
         bool CanSelectAll

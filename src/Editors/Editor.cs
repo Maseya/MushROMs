@@ -11,7 +11,6 @@ namespace Maseya.Editors
     using System.IO;
     using Maseya.Helper;
     using static System.IO.Path;
-    using SR = Helper.StringHelper;
 
     /// <summary>
     /// Provides a generic implementation of <see cref="IEditor"/>.
@@ -19,16 +18,16 @@ namespace Maseya.Editors
     public abstract class Editor : IEditor
     {
         /// <summary>
-        /// The file path that this <see cref="Editor"/> will by default read
-        /// from and write to during any file operations.
-        /// </summary>
-        private string _path;
-
-        /// <summary>
         /// The current untitled number of each extension.
         /// </summary>
         private static readonly Dictionary<string, int> UntitledNumbers =
             new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// The file path that this <see cref="Editor"/> will by default read
+        /// from and write to during any file operations.
+        /// </summary>
+        private string _path;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Editor"/> class.
@@ -50,22 +49,41 @@ namespace Maseya.Editors
         /// </summary>
         public event EventHandler PathChanged;
 
-        /// <summary>
-        /// Occurs when <see cref="WriteData(Action, Action)"/> is invoked.
-        /// </summary>
-        public event EventHandler DataModified;
+        public event EventHandler<CancelEventArgs> BeginUndo;
 
-        /// <summary>
-        /// Occurs when <see cref="CanUndo"/> is <see langword="true"/> and
-        /// <see cref="Undo"/> is called.
-        /// </summary>
-        public event EventHandler UndoApplied;
+        public event EventHandler UndoComplete;
 
-        /// <summary>
-        /// Occurs when <see cref="CanRedo"/> is <see langword="true"/> and
-        /// <see cref="Redo"/> is called.
-        /// </summary>
-        public event EventHandler RedoApplied;
+        public event EventHandler<CancelEventArgs> BeginRedo;
+
+        public event EventHandler RedoComplete;
+
+        public event EventHandler<CancelEventArgs> BeginCut;
+
+        public event EventHandler CutComplete;
+
+        public event EventHandler<CancelEventArgs> BeginCopy;
+
+        public event EventHandler CopyComplete;
+
+        public event EventHandler<CancelEventArgs> BeginPaste;
+
+        public event EventHandler PasteComplete;
+
+        public event EventHandler<CancelEventArgs> BeginDelete;
+
+        public event EventHandler DeleteComplete;
+
+        public event EventHandler<CancelEventArgs> BeginSelectAll;
+
+        public event EventHandler SelectAllComplete;
+
+        public event EventHandler<CancelEventArgs> SelectionChanging;
+
+        public event EventHandler SelectionChanged;
+
+        public event EventHandler<CancelEventArgs> BeginWriteData;
+
+        public event EventHandler WriteDataComplete;
 
         /// <summary>
         /// Gets or sets the file path that this <see cref="Editor"/> will by
@@ -99,7 +117,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="Editor"/> can invoke <see cref="Undo"/>.
         /// </summary>
         public virtual bool CanUndo
@@ -111,7 +129,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="Editor"/> can invoke <see cref="Redo"/>.
         /// </summary>
         public virtual bool CanRedo
@@ -123,7 +141,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="Editor"/> can invoke <see cref="Cut"/>.
         /// </summary>
         public virtual bool CanCut
@@ -135,51 +153,44 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="Editor"/> can invoke <see cref="Copy"/>.
         /// </summary>
-        public virtual bool CanCopy
+        public abstract bool CanCopy
         {
-            get
-            {
-                return false;
-            }
+            get;
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="Editor"/> can invoke <see cref="Paste"/>.
         /// </summary>
-        public virtual bool CanPaste
+        public abstract bool CanPaste
         {
-            get
-            {
-                return false;
-            }
+            get;
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="Editor"/> can invoke <see cref="Delete"/>.
         /// </summary>
-        public virtual bool CanDelete
+        public abstract bool CanDelete
         {
-            get
-            {
-                return false;
-            }
+            get;
         }
 
         /// <summary>
-        /// Gets a value that determines whether this instance of <see
+        /// Gets a value indicating whether this instance of <see
         /// cref="Editor"/> can invoke <see cref="SelectAll"/>.
         /// </summary>
-        public virtual bool CanSelectAll
+        public abstract bool CanSelectAll
         {
-            get
-            {
-                return false;
-            }
+            get;
+        }
+
+        public abstract bool CanInsert
+        {
+            get;
         }
 
         /// <summary>
@@ -192,6 +203,46 @@ namespace Maseya.Editors
         }
 
         /// <summary>
+        /// Gets a path name to place a new, untitled file.
+        /// </summary>
+        /// <param name="name">
+        /// The file name to use for the new file.
+        /// </param>
+        /// <param name="extension">
+        /// The file extension the new file should have.
+        /// </param>
+        /// <returns>
+        /// A string to the first path generated that does not already exist.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="name"/> or <paramref name="extension"/> is <see
+        /// langword="null"/>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="extension"/> contains one or more of the invalid
+        /// path characters defined in <see cref=" InvalidPathChars"/>.
+        /// </exception>
+        public static string GetUntitledPath(string name, string extension)
+        {
+            if (!UntitledNumbers.TryGetValue(extension, out var number))
+            {
+                number = 0;
+            }
+
+            string path;
+            do
+            {
+                number++;
+                path = Combine(
+                    $"{name}{number:D2}{GetExtension(extension)}");
+            }
+            while (File.Exists(path));
+
+            UntitledNumbers[extension] = number;
+            return path;
+        }
+
+        /// <summary>
         /// Undoes the last call to <see cref="WriteData(Action, Action)"/>.
         /// </summary>
         public void Undo()
@@ -201,8 +252,15 @@ namespace Maseya.Editors
                 return;
             }
 
+            var e = new CancelEventArgs();
+            OnBeginUndo(e);
+            if (e.Cancel)
+            {
+                return;
+            }
+
             History.Undo();
-            OnUndoApplied(EventArgs.Empty);
+            OnUndoComplete(EventArgs.Empty);
         }
 
         /// <summary>
@@ -215,19 +273,18 @@ namespace Maseya.Editors
                 return;
             }
 
+            var e = new CancelEventArgs();
+            OnBeginRedo(e);
+            if (e.Cancel)
+            {
+                return;
+            }
+
             History.Redo();
-            OnRedoApplied(EventArgs.Empty);
+            OnRedoComplete(EventArgs.Empty);
         }
 
-        /// <summary>
-        /// Copies the current selection of data by calling <see cref="Copy"/>,
-        /// and then deletes the selection by calling <see cref="Delete"/>.
-        /// </summary>
-        public virtual void Cut()
-        {
-            Copy();
-            Delete();
-        }
+        public abstract void Cut();
 
         /// <summary>
         /// When overridden in a derived class, copies the current selection of
@@ -270,6 +327,13 @@ namespace Maseya.Editors
         /// </exception>
         public void WriteData(Action action, Action undo = null)
         {
+            var e = new CancelEventArgs();
+            OnBeginWriteData(e);
+            if (e.Cancel)
+            {
+                return;
+            }
+
             if (action is null)
             {
                 throw new ArgumentNullException(nameof(action));
@@ -281,61 +345,7 @@ namespace Maseya.Editors
             }
 
             action();
-            OnDataModified(EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Gets the string representation of this <see cref="Editor"/>
-        /// instance.
-        /// </summary>
-        /// <returns>
-        /// The file name of <see cref="Path"/>.
-        /// </returns>
-        public override string ToString()
-        {
-            return GetFileName(Path);
-        }
-
-        /// <summary>
-        /// Gets a path name to place a new, untitled file.
-        /// </summary>
-        /// <param name="name">
-        /// The file name to use for the new file.
-        /// </param>
-        /// <param name="extension">
-        /// The file extension the new file should have.
-        /// </param>
-        /// <returns>
-        /// A string to the first path generated that does not already exist.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="name"/> or <paramref name="extension"/> is <see
-        /// langword="null"/>.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="extension"/> contains one or more of the invalid
-        /// path characters defined in <see cref=" InvalidPathChars"/>.
-        /// </exception>
-        public static string GetUntitledPath(string name, string extension)
-        {
-            if (!UntitledNumbers.TryGetValue(extension, out var number))
-            {
-                number = 0;
-            }
-
-            string path;
-            do
-            {
-                number++;
-                path = Combine(
-                    name,
-                    SR.GetString(number),
-                    GetExtension(extension));
-            }
-            while (File.Exists(path));
-
-            UntitledNumbers[extension] = number;
-            return path;
+            OnWriteDataComplete(EventArgs.Empty);
         }
 
         /// <summary>
@@ -349,37 +359,94 @@ namespace Maseya.Editors
             PathChanged?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="UndoApplied"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
-        /// </param>
-        protected virtual void OnUndoApplied(EventArgs e)
+        protected virtual void OnBeginUndo(CancelEventArgs e)
         {
-            UndoApplied?.Invoke(this, e);
+            BeginUndo?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="RedoApplied"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
-        /// </param>
-        protected virtual void OnRedoApplied(EventArgs e)
+        protected virtual void OnUndoComplete(EventArgs e)
         {
-            RedoApplied?.Invoke(this, e);
+            UndoComplete?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DataModified"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
-        /// </param>
-        protected virtual void OnDataModified(EventArgs e)
+        protected virtual void OnBeginRedo(CancelEventArgs e)
         {
-            DataModified?.Invoke(this, e);
+            BeginRedo?.Invoke(this, e);
+        }
+
+        protected virtual void OnRedoComplete(EventArgs e)
+        {
+            RedoComplete?.Invoke(this, e);
+        }
+
+        protected virtual void OnBeginCut(CancelEventArgs e)
+        {
+            BeginCut?.Invoke(this, e);
+        }
+
+        protected virtual void OnCutComplete(EventArgs e)
+        {
+            CutComplete?.Invoke(this, e);
+        }
+
+        protected virtual void OnBeginCopy(CancelEventArgs e)
+        {
+            BeginCopy?.Invoke(this, e);
+        }
+
+        protected virtual void OnCopyComplete(EventArgs e)
+        {
+            CopyComplete?.Invoke(this, e);
+        }
+
+        protected virtual void OnBeginPaste(CancelEventArgs e)
+        {
+            BeginPaste?.Invoke(this, e);
+        }
+
+        protected virtual void OnPasteComplete(EventArgs e)
+        {
+            PasteComplete?.Invoke(this, e);
+        }
+
+        protected virtual void OnBeginDelete(CancelEventArgs e)
+        {
+            BeginDelete?.Invoke(this, e);
+        }
+
+        protected virtual void OnDeleteComplete(EventArgs e)
+        {
+            DeleteComplete?.Invoke(this, e);
+        }
+
+        protected virtual void OnBeginSelectAll(CancelEventArgs e)
+        {
+            BeginSelectAll?.Invoke(this, e);
+        }
+
+        protected virtual void OnSelectAllComplete(EventArgs e)
+        {
+            SelectAllComplete?.Invoke(this, e);
+        }
+
+        protected virtual void OnSelectionChanging(CancelEventArgs e)
+        {
+            SelectionChanging?.Invoke(this, e);
+        }
+
+        protected virtual void OnSelectionChanged(EventArgs e)
+        {
+            SelectionChanged?.Invoke(this, e);
+        }
+
+        protected virtual void OnBeginWriteData(CancelEventArgs e)
+        {
+            BeginWriteData?.Invoke(this, e);
+        }
+
+        protected virtual void OnWriteDataComplete(EventArgs e)
+        {
+            WriteDataComplete?.Invoke(this, e);
         }
     }
 }
