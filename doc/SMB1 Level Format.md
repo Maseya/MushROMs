@@ -789,6 +789,7 @@ Subcommand | Description
 --- | ---
 0x00 | Vertical rope for lift
 0x10 | Vertical rope for pulley lift
+0x12 | Place an empty tile out of bounds at Y=15 (never used)
 0x20 | End-of-level castle
 0x28 | Vertically extendable square castle ceiling tiles (caps ceiling edges)
 0x30 | Stone stairs
