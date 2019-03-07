@@ -791,18 +791,18 @@ Subcommand | Description
 0x10 | Vertical rope for pulley lift
 0x20 | End-of-level castle
 0x28 | Vertically extendable square castle ceiling tiles (caps ceiling edges)
-0x30 | End-of-level ascending block stairs
+0x30 | Stone stairs
 0x32 | Descending steps at beginning of castle areas
 0x34 | Rectangular ceiling tiles in castles
 0x36 | Right edge for castle floor (recommend L = 0)
 0x38 | Left edge for castle floor (recommend L = 0)
 0x3A | Bottom left inverted corner for castle floor (recommend L = 1)
-0x3C | Bottom right inverted corner for catle floor (L > 0 renders castle floor too)
+0x3C | Bottom right inverted corner for castle floor (L > 0 renders castle floor too)
 0x3E | Vertical sea blocks for underwater areas
-0x40 | Entedable reverse L pipe
-0x50 | Vertical balls/rope/vin for climbing
-0x60 | Nothing
-0x70 | Nothing
+0x40 | Enterable J-pipe
+0x50 | Vertical balls/rope/vine for climbing
 
 The Y-coordinate is disregarded for Subcommands whose low four bits are zero.
-Subcommands not included in the table cause undefined behavior.
+
+Subcommands can only have an even value. Values not listed in the table less
+than `$50` do nothing. Values greater than `$50` cause undefined behavior.
