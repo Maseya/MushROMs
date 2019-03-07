@@ -772,7 +772,7 @@ areas).
 
 Byte 1 | Byte 2 | Byte 3
 --- | --- | ---
-X X X X 1 1 1 1 | Y Y Y Y L L L L | P S S S S S S S
+X X X X 1 1 1 1 | Y Y Y Y L L L L | P S S S S S S 0
 
 **X**: 4 bits determining the X-coordinate of the object relative to the
 current page (in 16 pixel increments).
@@ -788,23 +788,22 @@ coordinates.
 Subcommand | Description
 --- | ---
 0x00 | Vertical rope for lift
-0x10 | Vertical rope for pulley lift
-0x12 | Place an empty tile out of bounds at Y=15 (never used)
-0x20 | End-of-level castle
-0x28 | Vertically extendable square castle ceiling tiles (caps ceiling edges)
-0x30 | Stone stairs
-0x32 | Descending steps at beginning of castle areas
-0x34 | Rectangular ceiling tiles in castles
-0x36 | Right edge for castle floor (recommend L = 0)
-0x38 | Left edge for castle floor (recommend L = 0)
-0x3A | Bottom left inverted corner for castle floor (recommend L = 1)
-0x3C | Bottom right inverted corner for castle floor (L > 0 renders castle floor too)
-0x3E | Vertical sea blocks for underwater areas
-0x40 | Enterable J-pipe
-0x50 | Vertical balls/rope/vine for climbing
+0x08 | Vertical rope for pulley lift
+0x09 | Place an empty tile out of bounds at Y=15 (never used)
+0x10 | End-of-level castle
+0x14 | Vertically extendable square castle ceiling tiles (caps ceiling edges)
+0x18 | Stone stairs
+0x19 | Descending steps at beginning of castle areas
+0x1A | Rectangular ceiling tiles in castles
+0x1B | Right edge for castle floor (recommend L = 0)
+0x1C | Left edge for castle floor (recommend L = 0)
+0x1D | Bottom left inverted corner for castle floor (recommend L = 1)
+0x1E | Bottom right inverted corner for castle floor (L > 0 renders castle floor too)
+0x1F | Vertical sea blocks for underwater areas
+0x20 | Enterable J-pipe
+0x28 | Vertical balls/rope/vine for climbing
 
 The Y-coordinate is disregarded for Subcommands whose low four bits are zero.
 
-Subcommands can only have an even value. Odd values cause undefined behavior.
-Values not listed in the table less than `$50` do nothing. Values greater than
-`$50` cause undefined behavior.
+Values not listed in the table less than `$30` do nothing. Values greater than
+or equal to `$30` cause undefined behavior.
