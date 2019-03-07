@@ -805,5 +805,6 @@ Subcommand | Description
 
 The Y-coordinate is disregarded for Subcommands whose low four bits are zero.
 
-Subcommands can only have an even value. Values not listed in the table less
-than `$50` do nothing. Values greater than `$50` cause undefined behavior.
+Subcommands can only have an even value. Odd values cause undefined behavior.
+Values not listed in the table less than `$50` do nothing. Values greater than
+`$50` cause undefined behavior.
