@@ -18,15 +18,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>Release\Debug\Snes.xml</DocumentationFile>
-    <OutputPath>$(Configuration)\Debug</OutputPath>
+    <DocumentationFile>bin\Release\Snes.xml</DocumentationFile>
+    <OutputPath>bin\$(Configuration)</OutputPath>
     <NoWarn>1701;1702;CS1591;</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>Debug\Debug\Snes.xml</DocumentationFile>
-    <OutputPath>$(Configuration)\Debug</OutputPath>
+    <DocumentationFile>bin\Debug\Snes.xml</DocumentationFile>
+    <OutputPath>bin\$(Configuration)</OutputPath>
     <NoWarn>1701;1702;CS1591;</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -46,7 +48,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj" />
+    <ProjectReference Include="..\Editors.Collections\Editors.Collections.csproj" />
     <ProjectReference Include="..\Editors\Editors.csproj" />
+    <ProjectReference Include="..\Nes\Nes.csproj" />
   </ItemGroup>
 
 </Project>

@@ -14,5 +14,15 @@ namespace Maseya.MushROMs
         {
             InitializeComponent();
         }
+
+        private void AboutDialog_KeyDown(object sender, KeyEventArgs e)
+        {
+            // We don't have a `Cancel` button so we need to manually implement
+            // this closing logic.
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }

@@ -114,12 +114,20 @@ namespace Maseya.Editors
                 }
 
                 // Add this editor if it does not exist.
-                Items[value.Path] = value;
+                if (!Items.ContainsKey(value.Path))
+                {
+                    Items.Add(value.Path, value);
+                }
 
                 currentEditor = value;
                 var e = new EditorEventArgs(value);
                 OnCurrentEditorChanged(e);
             }
+        }
+
+        public void RemoveCurrentEditor()
+        {
+            Items.Remove(CurrentEditor);
         }
 
         /// <summary>
@@ -187,9 +195,9 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Represents a collection of file path keys and <see cref="
-        /// IEditor"/> values that raise <see cref="EditorSelector"/> events
-        /// when items are added or removed.
+        /// Represents a collection of file path keys and <see cref="IEditor"/>
+        /// values that raise <see cref="EditorSelector"/> events when items
+        /// are added or removed.
         /// </summary>
         /// <remarks>
         /// The dictionary keys can be either a relative or full path <see
@@ -421,7 +429,7 @@ namespace Maseya.Editors
             }
 
             /// <summary>
-            /// Adds the specified file path key and <see cref=" IEditor"/>
+            /// Adds the specified file path key and <see cref="IEditor"/>
             /// value to the <see cref="EditorDictionary"/>.
             /// </summary>
             /// <param name="key">
@@ -595,6 +603,17 @@ namespace Maseya.Editors
                 return false;
             }
 
+            public bool Remove(IEditor editor)
+            {
+                if (editor is null)
+                {
+                    throw new ArgumentNullException(nameof(editor));
+                }
+
+                return (this as ICollection<PathEditorPair>).Remove(
+                    new PathEditorPair(editor.Path, editor));
+            }
+
             /// <inheritdoc/>
             ///
             bool ICollection<PathEditorPair>.Remove(PathEditorPair item)
@@ -621,7 +640,7 @@ namespace Maseya.Editors
             /// The file path of the value to get.
             /// </param>
             /// <param name="value">
-            /// When this method returns, contains the <see cref=" IEditor"/>
+            /// When this method returns, contains the <see cref="IEditor"/>
             /// associated with <paramref name="key"/>, if it is found;
             /// otherwise <see langword="null"/> is returned. This parameter is
             /// passed uninitialized.

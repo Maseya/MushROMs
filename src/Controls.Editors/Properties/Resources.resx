@@ -117,22 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChromaText" xml:space="preserve">
-    <value>Chroma:</value>
+  <data name="OpenEditorFileDialogExtensionEntryFormat" xml:space="preserve">
+    <value>*{0};</value>
+    <comment>0: extension</comment>
   </data>
-  <data name="LightnessText" xml:space="preserve">
-    <value>Lightness:</value>
+  <data name="OpenEditorFileDialogExtensionListFormat" xml:space="preserve">
+    <value>{0};</value>
+    <comment>0: extension</comment>
   </data>
-  <data name="LumaText" xml:space="preserve">
-    <value>Luma:</value>
+  <data name="OpenEditorFileDialogFilterFormat" xml:space="preserve">
+    <value>All Editors|{0}|{1}All files (*.*)|*.*</value>
+    <comment>0: extension list; 1: base filter</comment>
   </data>
-  <data name="SaturationText" xml:space="preserve">
-    <value>Saturation:</value>
-  </data>
-  <data name="TileMapFileDescription" xml:space="preserve">
-    <value>A TileMap creates arranged tiled of the graphics pixel map.</value>
-  </data>
-  <data name="TileMapFileType" xml:space="preserve">
-    <value>Tilemap File</value>
+  <data name="OpenEditorFileDialogRowFormat" xml:space="preserve">
+    <value>{0} ({1})|{1}|</value>
+    <comment>0: filter description; 1: extensions</comment>
   </data>
 </root>

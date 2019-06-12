@@ -133,7 +133,7 @@
     <value>Both</value>
   </data>
   <data name="tbxAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>482, 387</value>
+    <value>482, 321</value>
   </data>
   <data name="tbxAbout.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -148,6 +148,14 @@ https://github.com/Maseya/MushROMs
 
 Maintainer:
 Nelson Garcia (SWR; bonimy)
+
+Contributors:
+Ersanio: Super Mario All-Stars disassembly and documentation (and overall motivator)
+randomdude999: LZ Compression documentation
+Pixelator: GFX Editor icon
+
+Discord:
+https://discord.gg/hVfY7PP
 
 License:
 MushROMs: Super Nintendo game editing libraries and tools Copyright (C) 2019 Nelson Garcia
@@ -171,7 +179,7 @@ This program is free software: you can redistribute it and/or modify it under th
     <value>Bottom, Right</value>
   </data>
   <data name="btnOK.Location" type="System.Drawing.Point, System.Drawing">
-    <value>420, 406</value>
+    <value>420, 340</value>
   </data>
   <data name="btnOK.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -201,7 +209,17 @@ This program is free software: you can redistribute it and/or modify it under th
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>507, 441</value>
+    <value>507, 375</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAApKSkAABCtABgI9wB7Y/8AhLX/AP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAZmYAAAAAZmZmAEVVVVQGZmYEVVVVVUBmZgRVBVBVQGZgAEQEQEQABgERAAAAABEQASIRVVUR
+        IhAFIiVVVVIiUAVSNVVVUyVQBVI1VVVTJVAFIjNVVTMiUGASIzMzMiEGYBEiMzMiEQZmBVUiIlVQZmZg
+        BVEVUAZmZmZgAAAGZmbwDwAAwAcAAMADAADAAwAAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAB
+        AACAAQAAwAMAAOAHAAD4HwAA
+</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

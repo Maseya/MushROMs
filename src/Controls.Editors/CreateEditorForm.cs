@@ -8,7 +8,6 @@ namespace Maseya.Controls.Editors
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
     using Maseya.Editors.IO;
@@ -25,7 +24,7 @@ namespace Maseya.Controls.Editors
             dgvNewFileList.RowsAdded += (sender, e) => UpdateOkEnabled();
             dgvNewFileList.RowsRemoved += (sender, e) => UpdateOkEnabled();
 
-            Entries = new List<Entry>();
+            Associations = new List<NewFileIconAssociation>();
         }
 
         public CreateEditorCallback CreateEditorCallback
@@ -36,16 +35,16 @@ namespace Maseya.Controls.Editors
             }
         }
 
-        private List<Entry> Entries
+        private List<NewFileIconAssociation> Associations
         {
             get;
         }
 
-        private Entry CurrentEntry
+        private NewFileIconAssociation CurrentEntry
         {
             get
             {
-                return Entries[CurrentRowIndex];
+                return Associations[CurrentRowIndex];
             }
         }
 
@@ -73,21 +72,29 @@ namespace Maseya.Controls.Editors
             }
         }
 
-        public void AddEntry(
+        public void AddAssociation(
             Image fileIcon,
             string fileType,
             string description,
             Image previewImage,
             CreateEditorCallback createEditorCallback)
         {
-            var entry = new Entry(
-                fileIcon,
-                fileType,
-                description,
-                previewImage,
-                createEditorCallback);
+            var entry = new NewFileIconAssociation()
+            {
+                FileIcon = fileIcon,
+                FileType = fileType,
+                Description = description,
+                PreviewImage = previewImage,
+                CreateEditorCallback = createEditorCallback,
+            };
 
-            AddEntry(entry);
+            AddAssociation(entry);
+        }
+
+        public void AddAssociation(NewFileIconAssociation association)
+        {
+            Associations.Add(association);
+            Rows.Add(association.FileIcon, association.FileType);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -104,12 +111,6 @@ namespace Maseya.Controls.Editors
             }
 
             base.OnKeyDown(e);
-        }
-
-        private void AddEntry(Entry entry)
-        {
-            Entries.Add(entry);
-            Rows.Add(entry.FileIcon, entry.FileType);
         }
 
         private void SetRowBackColor(int rowIndex, Color color)
@@ -146,83 +147,6 @@ namespace Maseya.Controls.Editors
         {
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private class Entry : IComponent
-        {
-            public Entry(
-                Image fileIcon,
-                string fileType,
-                string description,
-                Image previewImage,
-                CreateEditorCallback createEditorCallback)
-            {
-                if (String.IsNullOrEmpty(fileType))
-                {
-                    throw new ArgumentNullException(nameof(fileType));
-                }
-
-                FileIcon = fileIcon != null
-                    ? new Bitmap(fileIcon)
-                    : new Bitmap(1, 1);
-
-                PreviewImage = previewImage != null
-                    ? new Bitmap(previewImage)
-                    : new Bitmap(1, 1);
-
-                FileType = fileType;
-                Description = description;
-
-                CreateEditorCallback = createEditorCallback
-                    ?? throw new ArgumentNullException(
-                        nameof(createEditorCallback));
-            }
-
-            public event EventHandler Disposed;
-
-            public Bitmap FileIcon
-            {
-                get;
-            }
-
-            public string FileType
-            {
-                get;
-            }
-
-            public string Description
-            {
-                get;
-            }
-
-            public Bitmap PreviewImage
-            {
-                get;
-            }
-
-            public CreateEditorCallback CreateEditorCallback
-            {
-                get;
-            }
-
-            public ISite Site
-            {
-                get;
-                set;
-            }
-
-            public override string ToString()
-            {
-                return FileType;
-            }
-
-            public void Dispose()
-            {
-                FileIcon.Dispose();
-                PreviewImage.Dispose();
-
-                Disposed?.Invoke(this, EventArgs.Empty);
-            }
         }
     }
 }

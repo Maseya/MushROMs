@@ -38,6 +38,15 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug</OutputPath>
+    <DocumentationFile>bin\Debug\Editors.Tests.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1591;</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\Release</OutputPath>
+    <DocumentationFile>bin\Release\Editors.Tests.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1591;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,7 +9,7 @@ namespace Maseya.Editors
     using System;
 
     /// <summary>
-    /// Provides data for events that add and remove <see cref=" IEditor"/>
+    /// Provides data for events that add and remove <see cref=" Editor"/>
     /// references.
     /// </summary>
     public class EditorEventArgs : EventArgs
@@ -31,7 +31,7 @@ namespace Maseya.Editors
         }
 
         /// <summary>
-        /// Gets the <see cref="IEditor"/> that is being added or removed.
+        /// Gets the <see cref="Editor"/> that is being added or removed.
         /// </summary>
         public IEditor Editor
         {

@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		MushROMs.ruleset = MushROMs.ruleset
 		MushROMs.sln.licenseheader = MushROMs.sln.licenseheader
 		README.md = README.md
+		SMB1-area-decode.md = SMB1-area-decode.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Editors", "src\Editors\Editors.csproj", "{0492C2F5-61CF-4C18-99B5-AEB74E98162A}"
@@ -39,6 +40,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smb1", "src\Smb1\Smb1.csproj", "{B056436F-11ED-4003-927C-A75DD071AF7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MushROMs", "src\MushROMs\MushROMs.csproj", "{F7E20BF9-2C8B-4A56-A5CD-88C8A9780CEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smas", "src\Smas\Smas.csproj", "{5FB0CCA0-E862-42AC-89FC-FDBD183E79D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.TileMaps", "src\Controls.TileMaps\Controls.TileMaps.csproj", "{D984A9B4-95F5-4E19-A55E-D4665EE68D97}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TileMaps", "src\TileMaps\TileMaps.csproj", "{8A1E5259-8123-4945-B59C-CAAE66844FD3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Editors.Collections", "src\Editors.Collections\Editors.Collections.csproj", "{F9134A93-8AD6-4C12-A24A-7F245A9B5222}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brutario", "src\Brutario\Brutario.csproj", "{9FD33FA9-1375-4FC0-BBA9-61753BA7A150}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +105,26 @@ Global
 		{F7E20BF9-2C8B-4A56-A5CD-88C8A9780CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7E20BF9-2C8B-4A56-A5CD-88C8A9780CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7E20BF9-2C8B-4A56-A5CD-88C8A9780CEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FB0CCA0-E862-42AC-89FC-FDBD183E79D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FB0CCA0-E862-42AC-89FC-FDBD183E79D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FB0CCA0-E862-42AC-89FC-FDBD183E79D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FB0CCA0-E862-42AC-89FC-FDBD183E79D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D984A9B4-95F5-4E19-A55E-D4665EE68D97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D984A9B4-95F5-4E19-A55E-D4665EE68D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D984A9B4-95F5-4E19-A55E-D4665EE68D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D984A9B4-95F5-4E19-A55E-D4665EE68D97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A1E5259-8123-4945-B59C-CAAE66844FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A1E5259-8123-4945-B59C-CAAE66844FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A1E5259-8123-4945-B59C-CAAE66844FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A1E5259-8123-4945-B59C-CAAE66844FD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9134A93-8AD6-4C12-A24A-7F245A9B5222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9134A93-8AD6-4C12-A24A-7F245A9B5222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9134A93-8AD6-4C12-A24A-7F245A9B5222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9134A93-8AD6-4C12-A24A-7F245A9B5222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FD33FA9-1375-4FC0-BBA9-61753BA7A150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD33FA9-1375-4FC0-BBA9-61753BA7A150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FD33FA9-1375-4FC0-BBA9-61753BA7A150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FD33FA9-1375-4FC0-BBA9-61753BA7A150}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

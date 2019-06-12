@@ -20,10 +20,16 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <OutputPath>bin\Release</OutputPath>
+    <DocumentationFile>bin\Release\Smb1.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1591;</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\Smb1.xml</DocumentationFile>
+    <OutputPath>bin\Debug</OutputPath>
+    <NoWarn>1701;1702;CS1591;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

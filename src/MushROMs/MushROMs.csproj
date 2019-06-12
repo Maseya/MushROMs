@@ -39,6 +39,8 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
     <CodeAnalysisRuleSet>..\..\MushROMs.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Debug\MushROMs.xml</DocumentationFile>
+    <NoWarn>CS1591;</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,6 +52,8 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
     <CodeAnalysisRuleSet>..\..\MushROMs.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\MushROMs.xml</DocumentationFile>
+    <NoWarn>CS1591;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -71,15 +75,29 @@
     <Compile Include="AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core.cs">
+    <Compile Include="EditorFormEventArgs.cs" />
+    <Compile Include="EditorFormHelper.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Core.Designer.cs">
-      <DependentUpon>Core.cs</DependentUpon>
+    <Compile Include="EditMenuHelper.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EditorFormEventArgs.cs" />
-    <Compile Include="EditorFormHelper.cs" />
+    <Compile Include="EditMenuHelper.Designer.cs">
+      <DependentUpon>EditMenuHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditorFormHelper.Designer.cs">
+      <DependentUpon>EditorFormHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileMenuHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FileMenuHelper.Designer.cs">
+      <DependentUpon>FileMenuHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Glyph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,11 +106,36 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecentFileCollection.cs" />
+    <Compile Include="RecentFileToolStripItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RecentFileToolStripItem.Designer.cs">
+      <DependentUpon>RecentFileToolStripItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResizeGlyphs.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ResizeGlyphs.Designer.cs">
+      <DependentUpon>ResizeGlyphs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core.resx">
-      <DependentUpon>Core.cs</DependentUpon>
+    <EmbeddedResource Include="EditMenuHelper.resx">
+      <DependentUpon>EditMenuHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditorFormHelper.resx">
+      <DependentUpon>EditorFormHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileMenuHelper.resx">
+      <DependentUpon>FileMenuHelper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -107,6 +150,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RecentFileToolStripItem.resx">
+      <DependentUpon>RecentFileToolStripItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResizeGlyphs.resx">
+      <DependentUpon>ResizeGlyphs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -192,9 +244,29 @@
       <Project>{58852581-9311-4d18-8e0b-e0b264c2bc8c}</Project>
       <Name>Controls.Editors</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Controls.TileMaps\Controls.TileMaps.csproj">
+      <Project>{d984a9b4-95f5-4e19-a55e-d4665ee68d97}</Project>
+      <Name>Controls.TileMaps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Editors.Collections\Editors.Collections.csproj">
+      <Project>{f9134a93-8ad6-4c12-a24a-7f245a9b5222}</Project>
+      <Name>Editors.Collections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Editors\Editors.csproj">
       <Project>{0492c2f5-61cf-4c18-99b5-aeb74e98162a}</Project>
       <Name>Editors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nes\Nes.csproj">
+      <Project>{dd670161-18ba-44ad-a10b-23d6c2ae4ba4}</Project>
+      <Name>Nes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smas\Smas.csproj">
+      <Project>{5fb0cca0-e862-42ac-89fc-fdbd183e79d5}</Project>
+      <Name>Smas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smb1\Smb1.csproj">
+      <Project>{b056436f-11ed-4003-927c-a75dd071af7d}</Project>
+      <Name>Smb1</Name>
     </ProjectReference>
     <ProjectReference Include="..\Snes.Controls\Snes.Controls.csproj">
       <Project>{93d3b636-1fb7-4372-a213-87f0a23df544}</Project>
@@ -203,6 +275,10 @@
     <ProjectReference Include="..\Snes\Snes.csproj">
       <Project>{81764abf-92dd-4afe-b258-3c5473a722d6}</Project>
       <Name>Snes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TileMaps\TileMaps.csproj">
+      <Project>{8a1e5259-8123-4945-b59c-caae66844fd3}</Project>
+      <Name>TileMaps</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

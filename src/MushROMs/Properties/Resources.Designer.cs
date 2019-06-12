@@ -121,24 +121,6 @@ namespace Maseya.MushROMs.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The graphics are a pixel map for the editor..
-        /// </summary>
-        internal static string GfxFileDescription {
-            get {
-                return ResourceManager.GetString("GfxFileDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to GFX File.
-        /// </summary>
-        internal static string GfxFileType {
-            get {
-                return ResourceManager.GetString("GfxFileType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Help {
@@ -239,24 +221,6 @@ namespace Maseya.MushROMs.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A palette is the indexed color data the editor will use..
-        /// </summary>
-        internal static string PaletteFileDescription {
-            get {
-                return ResourceManager.GetString("PaletteFileDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Palette File.
-        /// </summary>
-        internal static string PaletteFileType {
-            get {
-                return ResourceManager.GetString("PaletteFileType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap PasteHS {
@@ -293,24 +257,6 @@ namespace Maseya.MushROMs.Properties {
             get {
                 object obj = ResourceManager.GetObject("saveHS", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A TileMap creates arranged tiled of the graphics pixel map..
-        /// </summary>
-        internal static string TileMapFileDescription {
-            get {
-                return ResourceManager.GetString("TileMapFileDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tilemap File.
-        /// </summary>
-        internal static string TileMapFileType {
-            get {
-                return ResourceManager.GetString("TileMapFileType", resourceCulture);
             }
         }
     }

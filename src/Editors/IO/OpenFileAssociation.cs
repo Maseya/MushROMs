@@ -6,38 +6,51 @@
 
 namespace Maseya.Editors.IO
 {
-    public class OpenFileAssociation
+    using System;
+    using System.ComponentModel;
+    using static System.ComponentModel.DesignerSerializationVisibility;
+
+    public class OpenFileAssociation : Component
     {
-        public OpenFileAssociation(
-            string extension,
-            string description,
-            string editorClass,
-            OpenEditorCallback openEditorCallback)
+        public OpenFileAssociation()
         {
-            Extension = extension;
-            Description = description;
-            EditorClass = editorClass;
-            OpenEditorCallback = openEditorCallback;
+        }
+
+        public OpenFileAssociation(IContainer container)
+            : this()
+        {
+            if (container is null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
+            container.Add(this);
         }
 
         public string Extension
         {
             get;
+            set;
         }
 
         public string Description
         {
             get;
+            set;
         }
 
         public string EditorClass
         {
             get;
+            set;
         }
 
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
         public OpenEditorCallback OpenEditorCallback
         {
             get;
+            set;
         }
 
         public override string ToString()

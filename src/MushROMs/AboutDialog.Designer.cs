@@ -58,14 +58,14 @@ namespace Maseya.MushROMs
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.tbxAbout);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutDialog";
-            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.TopMost = true;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AboutDialog_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

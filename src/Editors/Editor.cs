@@ -11,9 +11,10 @@ namespace Maseya.Editors
     using System.IO;
     using Maseya.Helper;
     using static System.IO.Path;
+    using SR = Maseya.Helper.StringHelper;
 
     /// <summary>
-    /// Provides a generic implementation of <see cref="IEditor"/>.
+    /// Provides a generic implementation of an editor.
     /// </summary>
     public abstract class Editor : IEditor
     {
@@ -202,29 +203,15 @@ namespace Maseya.Editors
             get;
         }
 
-        /// <summary>
-        /// Gets a path name to place a new, untitled file.
-        /// </summary>
-        /// <param name="name">
-        /// The file name to use for the new file.
-        /// </param>
-        /// <param name="extension">
-        /// The file extension the new file should have.
-        /// </param>
-        /// <returns>
-        /// A string to the first path generated that does not already exist.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="name"/> or <paramref name="extension"/> is <see
-        /// langword="null"/>.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="extension"/> contains one or more of the invalid
-        /// path characters defined in <see cref=" InvalidPathChars"/>.
-        /// </exception>
-        public static string GetUntitledPath(string name, string extension)
+        private bool SuspendedUndo
         {
-            if (!UntitledNumbers.TryGetValue(extension, out var number))
+            get;
+            set;
+        }
+
+        public static string GetUntitledPath(string format, int limit = 0)
+        {
+            if (!UntitledNumbers.TryGetValue(format, out var number))
             {
                 number = 0;
             }
@@ -233,12 +220,11 @@ namespace Maseya.Editors
             do
             {
                 number++;
-                path = Combine(
-                    $"{name}{number:D2}{GetExtension(extension)}");
+                path = SR.GetString(format, limit);
             }
-            while (File.Exists(path));
+            while (File.Exists(path) && (limit > 0 || number <= limit));
 
-            UntitledNumbers[extension] = number;
+            UntitledNumbers[format] = number;
             return path;
         }
 
@@ -311,6 +297,32 @@ namespace Maseya.Editors
         public abstract void SelectAll();
 
         /// <summary>
+        /// Temporarily postpone writing to history.
+        /// </summary>
+        public void SuspendUndo()
+        {
+            if (SuspendedUndo)
+            {
+                throw new InvalidOperationException();
+            }
+
+            SuspendedUndo = true;
+        }
+
+        /// <summary>
+        /// Resume writing to history after undo is called.
+        /// </summary>
+        public void ResumeUndo()
+        {
+            if (!SuspendedUndo)
+            {
+                throw new InvalidOperationException();
+            }
+
+            SuspendedUndo = false;
+        }
+
+        /// <summary>
         /// Write to the data of this <see cref="Editor"/> instance in some way
         /// and optionally provide an undo action.
         /// </summary>
@@ -339,8 +351,13 @@ namespace Maseya.Editors
                 throw new ArgumentNullException(nameof(action));
             }
 
-            if (undo != null)
+            if (!SuspendedUndo)
             {
+                if (undo is null)
+                {
+                    throw new ArgumentNullException(nameof(undo));
+                }
+
                 History.Add(undo, action);
             }
 
@@ -367,6 +384,7 @@ namespace Maseya.Editors
         protected virtual void OnUndoComplete(EventArgs e)
         {
             UndoComplete?.Invoke(this, e);
+            OnWriteDataComplete(EventArgs.Empty);
         }
 
         protected virtual void OnBeginRedo(CancelEventArgs e)
@@ -377,6 +395,7 @@ namespace Maseya.Editors
         protected virtual void OnRedoComplete(EventArgs e)
         {
             RedoComplete?.Invoke(this, e);
+            OnWriteDataComplete(EventArgs.Empty);
         }
 
         protected virtual void OnBeginCut(CancelEventArgs e)
@@ -387,6 +406,7 @@ namespace Maseya.Editors
         protected virtual void OnCutComplete(EventArgs e)
         {
             CutComplete?.Invoke(this, e);
+            OnWriteDataComplete(EventArgs.Empty);
         }
 
         protected virtual void OnBeginCopy(CancelEventArgs e)
@@ -407,6 +427,7 @@ namespace Maseya.Editors
         protected virtual void OnPasteComplete(EventArgs e)
         {
             PasteComplete?.Invoke(this, e);
+            OnWriteDataComplete(EventArgs.Empty);
         }
 
         protected virtual void OnBeginDelete(CancelEventArgs e)
@@ -417,6 +438,7 @@ namespace Maseya.Editors
         protected virtual void OnDeleteComplete(EventArgs e)
         {
             DeleteComplete?.Invoke(this, e);
+            OnWriteDataComplete(EventArgs.Empty);
         }
 
         protected virtual void OnBeginSelectAll(CancelEventArgs e)

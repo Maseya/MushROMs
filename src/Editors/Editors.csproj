@@ -49,6 +49,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Helper\src\Helper\Helper.csproj" />
+    <ProjectReference Include="..\TileMaps\TileMaps.csproj" />
   </ItemGroup>
 
 </Project>

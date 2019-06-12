@@ -11,15 +11,21 @@ namespace Maseya.Controls.Editors
     using System.ComponentModel;
     using System.Text;
     using System.Windows.Forms;
+    using Maseya.Controls.Editors.Properties;
     using Maseya.Editors.IO;
     using static System.ComponentModel.DesignerSerializationVisibility;
+    using SR = Maseya.Helper.StringHelper;
 
     public class OpenFileHelper : OpenFileHelperBase
     {
         public OpenFileHelper()
             : base()
         {
-            OpenFileDialog = new OpenFileDialog();
+            OpenFileDialog = new OpenFileDialog
+            {
+                Multiselect = true,
+            };
+
             OpenWithDialog = new OpenWithDialog();
             OpenFileAssociations = new List<OpenFileAssociation>();
         }
@@ -64,11 +70,13 @@ namespace Maseya.Controls.Editors
                 string editorClass,
                 OpenEditorCallback openEditorCallback)
         {
-            var association = new OpenFileAssociation(
-                extension,
-                description,
-                editorClass,
-                openEditorCallback);
+            var association = new OpenFileAssociation()
+            {
+                Extension = extension,
+                Description = description,
+                EditorClass = editorClass,
+                OpenEditorCallback = openEditorCallback,
+            };
 
             AddOpenFileAssociation(association);
         }
@@ -81,6 +89,7 @@ namespace Maseya.Controls.Editors
             }
 
             OpenFileAssociations.Add(association);
+            OpenWithDialog.AddAssociation(association);
             AddAssociation(
                 association.Extension,
                 association.OpenEditorCallback);
@@ -111,6 +120,18 @@ namespace Maseya.Controls.Editors
         {
             Owner = owner;
             OpenFile(path, openEditor);
+        }
+
+        public void OpenFileWith(IWin32Window owner)
+        {
+            Owner = owner;
+            OpenFileAs();
+        }
+
+        public void OpenFileWith(IWin32Window owner, string path)
+        {
+            Owner = owner;
+            OpenFileAs(path);
         }
 
         protected override IEnumerable<string> UIChooseFiles()
@@ -149,36 +170,42 @@ namespace Maseya.Controls.Editors
             foreach (var kvp in dictionary)
             {
                 var exts = ExtensionList(kvp.Value);
-                filter.Append($"{kvp.Key} ({exts})");
-                filter.Append('|');
-                filter.Append(exts);
-                filter.Append('|');
+                var filterEntry = SR.GetUIString(
+                    Resources.OpenEditorFileDialogRowFormat,
+                    kvp.Key,
+                    exts);
 
-                allExts.Append(exts);
-                allExts.Append(';');
+                var extListEntry = SR.GetUIString(
+                    Resources.OpenEditorFileDialogExtensionListFormat,
+                    exts);
+
+                filter.Append(filterEntry);
+
+                allExts.Append(extListEntry);
             }
 
-            allExts.Remove(allExts.Length - 1, 1);
+            if (allExts.Length > 0)
+            {
+                allExts.Remove(allExts.Length - 1, 1);
+            }
 
-            var result = new StringBuilder();
-            result.Append("All Editors");
-            result.Append('|');
-            result.Append(allExts);
-            result.Append('|');
-            result.Append(filter);
-            result.Append("All files");
-            result.Append(" (*.*)|*.*");
+            var result = SR.GetUIString(
+                Resources.OpenEditorFileDialogFilterFormat,
+                allExts,
+                filter);
 
-            return result.ToString();
+            return result;
 
             string ExtensionList(IEnumerable<string> extensions)
             {
                 var sb = new StringBuilder();
                 foreach (var ext in extensions)
                 {
-                    sb.Append('*');
-                    sb.Append(ext);
-                    sb.Append(';');
+                    var entry = SR.GetUIString(
+                        Resources.OpenEditorFileDialogExtensionEntryFormat,
+                        ext);
+
+                    sb.Append(entry);
                 }
 
                 sb.Remove(sb.Length - 1, 1);

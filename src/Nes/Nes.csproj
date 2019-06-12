@@ -17,6 +17,20 @@
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>bin\$(Configuration)</OutputPath>
+    <DocumentationFile>bin\Release\Nes.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1591;</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>bin\$(Configuration)</OutputPath>
+    <DocumentationFile>bin\Debug\Nes.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1591;</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="stylecop.json" />
   </ItemGroup>

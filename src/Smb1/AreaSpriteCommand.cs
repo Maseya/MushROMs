@@ -202,34 +202,59 @@ namespace Maseya.Smb1
         }
 
         public static IEnumerable<AreaSpriteCommand> GetAreaData(
-            byte[] memory, int index, int count)
+            IEnumerable<byte> bytes)
         {
-            for (var i = 0; i < count; i++)
+            if (bytes is null)
             {
-                var value1 = memory[index + i++];
-                if (value1 == TerminationCode)
-                {
-                    yield break;
-                }
-
-                if ((value1 & 0x0F) == 0x0E)
-                {
-                    var value2 = memory[index + i++];
-                    if (i == count)
-                    {
-                        break;
-                    }
-
-                    yield return new AreaSpriteCommand(
-                        value1,
-                        value2,
-                        memory[index + i]);
-                }
-
-                yield return new AreaSpriteCommand(value1, memory[index + i]);
+                throw new ArgumentNullException(nameof(bytes));
             }
 
-            throw new ArgumentException();
+            using (var en = bytes.GetEnumerator())
+            {
+                while (en.MoveNext())
+                {
+                    if (en.Current == TerminationCode)
+                    {
+                        yield break;
+                    }
+
+                    if (IsThreeByteSpecifier(en.Current))
+                    {
+                        var list = new List<byte>(GetBytes(3));
+                        yield return new AreaSpriteCommand(
+                            list[0],
+                            list[1],
+                            list[2]);
+                    }
+                    else
+                    {
+                        var list = new List<byte>(GetBytes(2));
+                        yield return new AreaSpriteCommand(
+                            list[0],
+                            list[1]);
+                    }
+                }
+
+                IEnumerable<byte> GetBytes(int size)
+                {
+                    for (var i = 0; i < size; i++)
+                    {
+                        yield return en.Current;
+
+                        if (!en.MoveNext())
+                        {
+                            throw NoMoreBytesException();
+                        }
+                    }
+                }
+            }
+
+            throw NoMoreBytesException();
+
+            ArgumentException NoMoreBytesException()
+            {
+                return new ArgumentException();
+            }
         }
 
         public override bool Equals(object obj)
@@ -254,6 +279,11 @@ namespace Maseya.Smb1
         public override string ToString()
         {
             return SR.GetString($"({X}, {Y}): {Code}");
+        }
+
+        private static bool IsThreeByteSpecifier(int coordinates)
+        {
+            return (coordinates & 0x0F) == 0x0E;
         }
     }
 }

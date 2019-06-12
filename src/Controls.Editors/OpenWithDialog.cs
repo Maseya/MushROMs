@@ -59,5 +59,10 @@ namespace Maseya.Controls.Editors
                 editorClass,
                 openEditorCallback);
         }
+
+        public void AddAssociation(OpenFileAssociation association)
+        {
+            OpenWithForm.AddAssociation(association);
+        }
     }
 }

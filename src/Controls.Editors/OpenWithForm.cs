@@ -39,11 +39,13 @@ namespace Maseya.Controls.Editors
                 string editorClass,
                 OpenEditorCallback openEditorCallback)
         {
-            var association = new OpenFileAssociation(
-                extension,
-                description,
-                editorClass,
-                openEditorCallback);
+            var association = new OpenFileAssociation()
+            {
+                Extension = extension,
+                Description = description,
+                EditorClass = editorClass,
+                OpenEditorCallback = openEditorCallback,
+            };
 
             AddAssociation(association);
         }

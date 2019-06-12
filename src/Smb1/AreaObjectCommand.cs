@@ -175,25 +175,48 @@ namespace Maseya.Smb1
         }
 
         public static IEnumerable<AreaObjectCommand> GetAreaData(
-            byte[] memory, int index, int count)
+            IEnumerable<byte> bytes)
         {
-            for (var i = 0; i < count; i++)
+            if (bytes is null)
             {
-                var value1 = memory[index + i++];
-                if (value1 == TerminationCode)
-                {
-                    yield break;
-                }
-
-                if (i == count)
-                {
-                    break;
-                }
-
-                yield return new AreaObjectCommand(value1, memory[index + i]);
+                throw new ArgumentNullException(nameof(bytes));
             }
 
-            throw new ArgumentException();
+            using (var en = bytes.GetEnumerator())
+            {
+                while (en.MoveNext())
+                {
+                    if (en.Current == TerminationCode)
+                    {
+                        yield break;
+                    }
+
+                    var list = new List<byte>(GetBytes());
+                    yield return new AreaObjectCommand(
+                        list[0],
+                        list[1]);
+                }
+
+                IEnumerable<byte> GetBytes()
+                {
+                    for (var i = 0; i < Size; i++)
+                    {
+                        yield return en.Current;
+
+                        if (!en.MoveNext())
+                        {
+                            throw NoMoreBytesException();
+                        }
+                    }
+                }
+            }
+
+            throw NoMoreBytesException();
+
+            ArgumentException NoMoreBytesException()
+            {
+                return new ArgumentException();
+            }
         }
 
         public override bool Equals(object obj)

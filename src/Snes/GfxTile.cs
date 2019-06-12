@@ -7,334 +7,285 @@
 namespace Maseya.Snes
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using Format = GraphicsFormat;
 
-    public class GfxTile :
-            IList,
-            IList<byte>,
-            IReadOnlyList<byte>
+    public unsafe partial struct GfxTile
     {
-        public const int DotsPerPlane = 8;
-        public const int PlanesPerTile = DotsPerPlane;
-        public const int DotsPerTile = DotsPerPlane * PlanesPerTile;
+        public const int PixelsPerPlane = 8;
+        public const int PlanesPerTile = PixelsPerPlane;
+        public const int PixelsPerTile = PixelsPerPlane * PlanesPerTile;
+        public const int SizeOf = PixelsPerTile * sizeof(byte);
 
-        private GraphicsFormat _graphicsFormat;
-
-        public GfxTile(
-            IList<byte> source,
-            int startIndex,
-            GraphicsFormat graphicsFormat)
-        {
-            Source = source ??
-                throw new ArgumentNullException(nameof(source));
-        }
-
-        public int StartIndex
-        {
-            get;
-            set;
-        }
-
-        public GraphicsFormat GraphicsFormat
-        {
-            get
-            {
-                return _graphicsFormat;
-            }
-
-            set
-            {
-                if (!Enum.IsDefined(typeof(GraphicsFormat), (int)value))
-                {
-                    throw new InvalidEnumArgumentException(
-                        nameof(value),
-                        (int)value,
-                        typeof(GraphicsFormat));
-                }
-
-                _graphicsFormat = value;
-            }
-        }
-
-        public int BitsPerPixel
-        {
-            get
-            {
-                return GfxTileConverter.BitsPerPixel(GraphicsFormat);
-            }
-        }
-
-        public int BytesPerPlane
-        {
-            get
-            {
-                return GfxTileConverter.BytesPerPlane(GraphicsFormat);
-            }
-        }
-
-        public int ColorsPerPixel
-        {
-            get
-            {
-                return GfxTileConverter.ColorsPerPixel(GraphicsFormat);
-            }
-        }
-
-        public int BytesPerTile
-        {
-            get
-            {
-                return GfxTileConverter.BytesPerTile(GraphicsFormat);
-            }
-        }
-
-        public GfxTileConverter Converter
-        {
-            get
-            {
-                return GfxTileConverter.GetTileConverter(GraphicsFormat);
-            }
-        }
-
-        int ICollection<byte>.Count
-        {
-            get
-            {
-                return DotsPerTile;
-            }
-        }
-
-        int ICollection.Count
-        {
-            get
-            {
-                return DotsPerTile;
-            }
-        }
-
-        int IReadOnlyCollection<byte>.Count
-        {
-            get
-            {
-                return DotsPerTile;
-            }
-        }
-
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        bool ICollection<byte>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        object ICollection.SyncRoot
-        {
-            get;
-        }
-
-        private IList<byte> Source
-        {
-            get;
-        }
+        [CLSCompliant(false)]
+        public fixed byte Pixels[PixelsPerTile];
 
         public byte this[int index]
         {
             get
             {
-                return Converter.ReadPixel(this, StartIndex, index);
+                if (index < 0 || index >= PixelsPerTile)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
+                return Pixels[index];
             }
 
             set
             {
-                Converter.WritePixel(value, this, StartIndex, index);
-            }
-        }
-
-        object IList.this[int index]
-        {
-            get
-            {
-                return this[index];
-            }
-
-            set
-            {
-                this[index] = (byte)value;
-            }
-        }
-
-        public void Write(IEnumerable<byte> data)
-        {
-            Converter.GetBytes(data);
-        }
-
-        public bool Contains(byte value)
-        {
-            foreach (var x in this)
-            {
-                if (Equals(value, x))
+                if (index < 0 || index >= PixelsPerTile)
                 {
-                    return true;
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
+                Pixels[index] = value;
+            }
+        }
+
+        public GfxTile FlipX()
+        {
+            var result = default(GfxTile);
+
+            fixed (byte* src = Pixels)
+            {
+                var dst = result.Pixels;
+
+                for (var y = PlanesPerTile; --y >= 0;)
+                {
+                    var srcRow = src + (y * PixelsPerPlane);
+                    var dstRow = dst + (y * PixelsPerPlane);
+
+                    var i = 0;
+                    for (var x = PixelsPerPlane / 2; --x >= 0; i++)
+                    {
+                        dstRow[i] = srcRow[x];
+                        dstRow[x] = srcRow[i];
+                    }
                 }
             }
 
-            return false;
+            return result;
         }
 
-        bool IList.Contains(object value)
+        public GfxTile FlipY()
         {
-            return value is byte item ? Contains(item) : false;
-        }
+            var result = default(GfxTile);
 
-        public void CopyTo(byte[] array, int arrayIndex)
-        {
-            if (array is null)
+            fixed (byte* src = Pixels)
             {
-                throw new ArgumentNullException(nameof(array));
-            }
+                var dst = result.Pixels;
 
-            if (arrayIndex < 0 || arrayIndex >= array.Length)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            if (arrayIndex + DotsPerTile > array.Length)
-            {
-                throw new ArgumentException();
-            }
-
-            for (var i = 0; i < DotsPerTile; i++)
-            {
-                array[arrayIndex + i] = this[i];
-            }
-        }
-
-        void ICollection.CopyTo(Array array, int index)
-        {
-            if (array is null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-
-            if (index < 0 || index >= array.Length)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            if (index + DotsPerTile > array.Length)
-            {
-                throw new ArgumentException();
-            }
-
-            for (var i = 0; i < DotsPerTile; i++)
-            {
-                array.SetValue(index + i, this[i]);
-            }
-        }
-
-        public IEnumerator<byte> GetEnumerator()
-        {
-            return Converter.GetPixels(this).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public int IndexOf(byte value)
-        {
-            for (var i = 0; i < DotsPerTile; i++)
-            {
-                if (Equals(value, this[i]))
+                for (var x = PixelsPerPlane; --x >= 0;)
                 {
-                    return i;
+                    var srcPlane = src + x;
+                    var dstPlane = dst + x;
+
+                    const int HalfTileSize = PixelsPerTile / 2;
+
+                    for (var i = 0; i < HalfTileSize; i += PixelsPerPlane)
+                    {
+                        var j = HalfTileSize - i - PixelsPerPlane;
+                        dstPlane[i] = srcPlane[j];
+                        dstPlane[j] = srcPlane[i];
+                    }
                 }
             }
 
-            return -1;
+            return result;
         }
 
-        int IList.IndexOf(object value)
+        public GfxTile Rotate90()
         {
-            return value is byte item ? IndexOf(item) : -1;
+            var result = default(GfxTile);
+
+            fixed (byte* src = Pixels)
+            {
+                var dst = result.Pixels;
+
+                var i = 0;
+                var j = PixelsPerTile;
+                var k = PlanesPerTile;
+
+                for (var y = 0; y < PlanesPerTile / 2; y++)
+                {
+                    k--;
+                    j -= PixelsPerPlane;
+
+                    var n = 0;
+                    var m = PixelsPerTile;
+                    var o = PixelsPerPlane;
+
+                    for (var x = 0; x < PixelsPerPlane / 2; x++)
+                    {
+                        o--;
+                        m -= PixelsPerPlane;
+
+                        dst[i + x] = src[m + y];
+                        dst[m + y] = src[j + o];
+                        dst[j + o] = src[n + k];
+                        dst[n + k] = src[i + x];
+
+                        n += PixelsPerPlane;
+                    }
+
+                    i += PixelsPerPlane;
+                }
+            }
+
+            return result;
         }
 
-        void ICollection<byte>.Add(byte item)
+        public GfxTile Rotate180()
         {
-            throw new NotSupportedException();
+            var result = default(GfxTile);
+
+            fixed (byte* src = Pixels)
+            {
+                var dst = result.Pixels;
+
+                var i = 0;
+                var j = PixelsPerTile;
+
+                for (var y = 0; y < PlanesPerTile / 2; y++)
+                {
+                    j -= PixelsPerPlane;
+
+                    var n = 0;
+                    var o = PixelsPerPlane;
+
+                    for (var x = 0; x < PixelsPerPlane / 2; x++)
+                    {
+                        o--;
+
+                        dst[j + o] = src[i + x];
+                        dst[i + x] = src[j + o];
+
+                        n += PixelsPerPlane;
+                    }
+
+                    i += PixelsPerPlane;
+                }
+            }
+
+            return result;
         }
 
-        int IList.Add(object value)
+        public GfxTile Rotate270()
         {
-            throw new NotSupportedException();
+            var result = default(GfxTile);
+
+            fixed (byte* src = Pixels)
+            {
+                var dst = result.Pixels;
+
+                var i = 0;
+                var j = PixelsPerTile;
+                var k = PlanesPerTile;
+
+                for (var y = 0; y < PlanesPerTile / 2; y++)
+                {
+                    k--;
+                    j -= PixelsPerPlane;
+
+                    var n = 0;
+                    var m = PixelsPerTile;
+                    var o = PixelsPerPlane;
+
+                    for (var x = 0; x < PixelsPerPlane / 2; x++)
+                    {
+                        o--;
+                        m -= PixelsPerPlane;
+
+                        dst[m + y] = src[i + x];
+                        dst[j + o] = src[m + y];
+                        dst[n + k] = src[j + o];
+                        dst[i + x] = src[n + k];
+
+                        n += PixelsPerPlane;
+                    }
+
+                    i += PixelsPerPlane;
+                }
+            }
+
+            return result;
         }
 
-        void ICollection<byte>.Clear()
+        public GfxTile ReplaceColor(byte original, byte replacement)
         {
-            throw new NotSupportedException();
+            var result = default(GfxTile);
+
+            fixed (byte* src = Pixels)
+            {
+                var dst = result.Pixels;
+
+                for (var i = PixelsPerTile; --i >= 0;)
+                {
+                    var value = src[i];
+
+                    dst[i] = value == original ? replacement : value;
+                }
+            }
+
+            return result;
         }
 
-        void IList.Clear()
+        public GfxTile SwapColors(byte color1, byte color2)
         {
-            throw new NotSupportedException();
+            var result = default(GfxTile);
+
+            fixed (byte* src = Pixels)
+            {
+                var dst = result.Pixels;
+
+                for (var i = PixelsPerTile; --i >= 0;)
+                {
+                    var value = src[i];
+
+                    dst[i] = value == color1
+                        ? color2
+                        : value == color2
+                        ? color1
+                        : value;
+                }
+            }
+
+            return result;
         }
 
-        void IList<byte>.Insert(int index, byte item)
+        public GfxTile RotateColors(byte first, byte last, byte shift)
         {
-            throw new NotSupportedException();
-        }
+            var result = default(GfxTile);
+            var length = (byte)(last - first + 1);
 
-        void IList.Insert(int index, object value)
-        {
-            throw new NotSupportedException();
-        }
+            fixed (byte* src = Pixels)
+            {
+                var dst = result.Pixels;
 
-        bool ICollection<byte>.Remove(byte item)
-        {
-            throw new NotSupportedException();
-        }
+                for (var i = PixelsPerTile; --i >= 0;)
+                {
+                    var value = src[i];
 
-        void IList.Remove(object value)
-        {
-            throw new NotSupportedException();
-        }
+                    if (value >= first && value <= last)
+                    {
+                        value -= first;
+                        value += shift;
+                        if (length != 0)
+                        {
+                            value %= length;
+                        }
 
-        void IList<byte>.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
-        }
+                        value += first;
+                    }
 
-        void IList.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
+                    dst[i] = value;
+                }
+            }
+
+            return result;
         }
     }
 }

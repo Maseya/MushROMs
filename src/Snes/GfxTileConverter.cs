@@ -9,72 +9,29 @@ namespace Maseya.Snes
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using static GraphicsFormat;
 
-    public abstract class GfxTileConverter
+    public abstract unsafe class GfxTileConverter
     {
-        public static readonly GfxTileConverter Format1Bpp8x8 =
-            new Format1BppTileConverter();
+        public static readonly GfxTileConverter Convert1Bpp8x8 =
+            new Format1Bpp8x8TileConverter();
 
-        public static readonly GfxTileConverter Format2BppNes =
-            new Format2BppNesTileConverter();
-
-        public static readonly GfxTileConverter Format2BppGb =
-            new Format2BppGbTileConverter();
-
-        public static readonly GfxTileConverter Format2BppNgp =
-            new Format2BppNgpTileConverter();
-
-        public static readonly GfxTileConverter Format2BppVb =
-            new Format2BppVbTileConverter();
-
-        public static readonly GfxTileConverter Format3BppSnes =
-            new Format3BppSnesTileConverter();
-
-        public static readonly GfxTileConverter Format3Bpp8x8 =
-            new Format3Bpp8x8TileConverter();
-
-        public static readonly GfxTileConverter Format4BppSnes =
+        public static readonly GfxTileConverter Convert4BppSnes =
             new Format4BppSnesTileConverter();
 
-        public static readonly GfxTileConverter Format4BppGba =
-            new Format4BppGbaTileConverter();
-
-        public static readonly GfxTileConverter Format4BppSms =
-            new Format4BppSmsTileConverter();
-
-        public static readonly GfxTileConverter Format4BppMsx2 =
-            new Format4BppMsx2TileConverter();
-
-        public static readonly GfxTileConverter Format4Bpp8x8 =
-            new Format4Bpp8x8TileConverter();
-
-        public static readonly GfxTileConverter Format8BppSnes =
-            new Format8BppSnesTileConverter();
-
-        public static readonly GfxTileConverter Format8BppMode7 =
+        public static readonly GfxTileConverter Convert8BppMode7 =
             new Format8BppMode7TileConverter();
 
-        private const int DotsPerPlane = GfxTile.DotsPerPlane;
+        private const int PixelsPerPlane = GfxTile.PixelsPerPlane;
         private const int PlanesPerTile = GfxTile.PlanesPerTile;
-        private const int DotsPerTile = GfxTile.DotsPerTile;
+        private const int PixelsPerTile = GfxTile.PixelsPerTile;
 
         private static readonly Dictionary<GraphicsFormat, GfxTileConverter>
             Converters = new Dictionary<GraphicsFormat, GfxTileConverter>()
             {
-                { GraphicsFormat.Format1Bpp8x8, Format1Bpp8x8 },
-                { GraphicsFormat.Format2BppNes, Format2BppNes },
-                { GraphicsFormat.Format2BppGb, Format2BppGb },
-                { GraphicsFormat.Format2BppNgp, Format2BppNgp },
-                { GraphicsFormat.Format2BppVb, Format2BppVb },
-                { GraphicsFormat.Format3BppSnes, Format3BppSnes },
-                { GraphicsFormat.Format3Bpp8x8, Format3Bpp8x8 },
-                { GraphicsFormat.Format4BppSnes, Format4BppSnes },
-                { GraphicsFormat.Format4BppGba, Format4BppGba },
-                { GraphicsFormat.Format4BppSms, Format4BppSms },
-                { GraphicsFormat.Format4BppMsx2, Format4BppMsx2 },
-                { GraphicsFormat.Format4Bpp8x8, Format4Bpp8x8 },
-                { GraphicsFormat.Format8BppSnes, Format8BppSnes },
-                { GraphicsFormat.Format8BppMode7, Format8BppMode7 },
+                { Format1Bpp8x8, Convert1Bpp8x8 },
+                { Format4BppSnes, Convert4BppSnes },
+                { Format8BppMode7, Convert8BppMode7 },
             };
 
         public static GfxTileConverter GetTileConverter(
@@ -103,7 +60,7 @@ namespace Maseya.Snes
                 pixelIndex);
         }
 
-        public static void Write(
+        public static void WritePixel(
             byte pixel,
             IList<byte> bytes,
             int byteIndex,
@@ -117,18 +74,23 @@ namespace Maseya.Snes
                 pixelIndex);
         }
 
-        public static IEnumerable<byte> GetPixels(
-            IEnumerable<byte> bytes,
+        public static GfxTile ReadTileFromFormattedBytes(
+            IList<byte> bytes,
+            int index,
             GraphicsFormat format)
         {
-            return GetTileConverter(format).GetPixels(bytes);
+            var converter = GetTileConverter(format);
+            return converter.ReadTileFromFormattedBytes(bytes, index);
         }
 
-        public static IEnumerable<byte> GetBytes(
-            IEnumerable<byte> pixels,
+        public static void WriteTileToFormattedBytes(
+            in GfxTile tile,
+            IList<byte> bytes,
+            int index,
             GraphicsFormat format)
         {
-            return GetTileConverter(format).GetBytes(pixels);
+            var converter = GetTileConverter(format);
+            converter.WriteTileToFormattedBytes(in tile, bytes, index);
         }
 
         public static int BitsPerPixel(GraphicsFormat format)
@@ -170,9 +132,14 @@ namespace Maseya.Snes
             int byteIndex,
             int pixelIndex);
 
-        public abstract IEnumerable<byte> GetPixels(IEnumerable<byte> bytes);
+        public abstract GfxTile ReadTileFromFormattedBytes(
+            IList<byte> bytes,
+            int startIndex);
 
-        public abstract IEnumerable<byte> GetBytes(IEnumerable<byte> pixels);
+        public abstract void WriteTileToFormattedBytes(
+            in GfxTile tile,
+            IList<byte> bytes,
+            int index);
 
         private static byte ReadBit(int value, int bit)
         {
@@ -194,7 +161,7 @@ namespace Maseya.Snes
             return (byte)(value & ~(1 << (bit & 7)));
         }
 
-        private class Format1BppTileConverter : GfxTileConverter
+        private class Format1Bpp8x8TileConverter : GfxTileConverter
         {
             public override byte ReadPixel(
                 IList<byte> bytes,
@@ -215,256 +182,73 @@ namespace Maseya.Snes
                 bytes[index] = WriteBit(bytes[index], ~pixel, pixel & 1);
             }
 
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
+            public override GfxTile ReadTileFromFormattedBytes(
+                IList<byte> bytes,
+                int index)
             {
-                var planeCount = 0;
-                using (var en = bytes.GetEnumerator())
+                if (bytes is null)
                 {
-                    while (en.MoveNext() && planeCount++ < PlanesPerTile)
+                    throw new ArgumentNullException(nameof(bytes));
+                }
+
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
+                if (index + BytesPerTile(Format1Bpp8x8) >= bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                var result = default(GfxTile);
+                var pixelIndex = 0;
+                for (var y = 0; y < PlanesPerTile; y++)
+                {
+                    var value = bytes[index + y];
+
+                    // We have to read the bits in reverse order. The lowest
+                    // order bit is the rightmost pixel.
+                    for (var x = PixelsPerPlane; --x >= 0;)
                     {
-                        var value = en.Current;
-                        for (var x = DotsPerPlane; --x >= 0;)
-                        {
-                            yield return ReadBit(value, x);
-                        }
+                        result.Pixels[pixelIndex++] = ReadBit(value, x);
                     }
                 }
 
-                if (planeCount != PlanesPerTile)
-                {
-                    throw new ArgumentException();
-                }
+                return result;
             }
 
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
+            public override void WriteTileToFormattedBytes(
+                in GfxTile tile,
+                IList<byte> bytes,
+                int index)
             {
-                using (var en = pixels.GetEnumerator())
+                if (bytes is null)
                 {
-                    for (var y = 0; y < PlanesPerTile; y++)
+                    throw new ArgumentNullException(nameof(bytes));
+                }
+
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
+                if (index + BytesPerTile(Format1Bpp8x8) >= bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                var pixelIndex = 0;
+                for (var y = 0; y < PlanesPerTile; y++)
+                {
+                    var value = (byte)0;
+                    for (var x = PixelsPerPlane; --x >= 0;)
                     {
-                        var x = DotsPerPlane;
-                        var value = 0;
-                        while (en.MoveNext() && --x >= DotsPerPlane)
-                        {
-                            value = WriteBit(value, x, en.Current & 1);
-                        }
-
-                        if (x != 0)
-                        {
-                            throw new ArgumentException();
-                        }
-
-                        yield return (byte)value;
+                        value = WriteBit(value, x, tile[pixelIndex++] & 1);
                     }
+
+                    bytes[index + y] = value;
                 }
-            }
-        }
-
-        private class Format2BppNesTileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                var index1 = byteIndex + (pixelIndex >> 3);
-                var index2 = index1 + PlanesPerTile;
-                var value1 = ReadBit(bytes[index1], ~pixelIndex);
-                var value2 = ReadBit(bytes[index2], ~pixelIndex);
-                return (byte)(value1 | (value2 << 1));
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                var index1 = byteIndex + (pixelIndex >> 3);
-                var index2 = index1 + PlanesPerTile;
-                bytes[index1] = WriteBit(
-                    bytes[index1],
-                    ~pixelIndex,
-                    pixel & 1);
-
-                bytes[index2] = WriteBit(
-                    bytes[index2],
-                    ~pixelIndex,
-                    pixel & 2);
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format2BppGbTileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format2BppNgpTileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format2BppVbTileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format3BppSnesTileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format3Bpp8x8TileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -475,7 +259,40 @@ namespace Maseya.Snes
                 int byteIndex,
                 int pixelIndex)
             {
-                throw new NotImplementedException();
+                if (bytes is null)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(bytes));
+                }
+
+                if (byteIndex < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(byteIndex));
+                }
+
+                if (byteIndex + BytesPerTile(Format4BppSnes) > bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                if (pixelIndex < 0 || pixelIndex >= PixelsPerTile)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(pixelIndex));
+                }
+
+                var y = pixelIndex / PixelsPerPlane;
+                var x = pixelIndex % PixelsPerPlane;
+                var offset = byteIndex + (y << 1);
+
+                var val1 = bytes[offset + 0];
+                var val2 = bytes[offset + 1];
+                var val3 = bytes[offset + 0 + (2 * PlanesPerTile)];
+                var val4 = bytes[offset + 1 + (2 * PlanesPerTile)];
+
+                return (byte)(
+                    (((val1 >> x) & 1) << 0) |
+                    (((val2 >> x) & 1) << 1) |
+                    (((val3 >> x) & 1) << 2) |
+                    (((val4 >> x) & 1) << 3));
             }
 
             public override void WritePixel(
@@ -484,179 +301,133 @@ namespace Maseya.Snes
                 int byteIndex,
                 int pixelIndex)
             {
-                throw new NotImplementedException();
+                if (bytes is null)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(bytes));
+                }
+
+                if (byteIndex < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(byteIndex));
+                }
+
+                if (byteIndex + BytesPerTile(Format4BppSnes) > bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                if (pixelIndex < 0 || pixelIndex >= PixelsPerTile)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(pixelIndex));
+                }
+
+                var y = pixelIndex / PixelsPerPlane;
+                var x = pixelIndex % PixelsPerPlane;
+                var offset = byteIndex + (y << 1);
+
+                var val1 = bytes[offset + 0] & ~(1 << x);
+                var val2 = bytes[offset + 1] & ~(1 << x);
+                var val3 = bytes[offset + 0 + (2 * PlanesPerTile)] & ~(1 << x);
+                var val4 = bytes[offset + 1 + (2 * PlanesPerTile)] & ~(1 << x);
+
+                val1 |= ((pixel >> 0) & 1) << x;
+                val2 |= ((pixel >> 1) & 1) << x;
+                val3 |= ((pixel >> 2) & 1) << x;
+                val4 |= ((pixel >> 3) & 1) << x;
+
+                bytes[offset + 0] = (byte)val1;
+                bytes[offset + 1] = (byte)val2;
+                bytes[offset + 0 + (2 * PlanesPerTile)] = (byte)val3;
+                bytes[offset + 1 + (2 * PlanesPerTile)] = (byte)val4;
             }
 
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format4BppGbaTileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
+            public override GfxTile ReadTileFromFormattedBytes(
                 IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
+                int index)
             {
-                throw new NotImplementedException();
+                if (bytes is null)
+                {
+                    throw new ArgumentNullException(nameof(bytes));
+                }
+
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
+                if (index + BytesPerTile(Format4BppSnes) > bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                var result = default(GfxTile);
+                var pixelIndex = 0;
+                for (var y = 0; y < PlanesPerTile; y++)
+                {
+                    var offset = index + (y << 1);
+
+                    var val1 = bytes[offset + 0];
+                    var val2 = bytes[offset + 1];
+                    var val3 = bytes[offset + 0 + (2 * PlanesPerTile)];
+                    var val4 = bytes[offset + 1 + (2 * PlanesPerTile)];
+
+                    for (var x = PixelsPerPlane; --x >= 0;)
+                    {
+                        result[pixelIndex++] = (byte)(
+                            (((val1 >> x) & 1) << 0) |
+                            (((val2 >> x) & 1) << 1) |
+                            (((val3 >> x) & 1) << 2) |
+                            (((val4 >> x) & 1) << 3));
+                    }
+                }
+
+                return result;
             }
 
-            public override void WritePixel(
-                byte pixel,
+            public override void WriteTileToFormattedBytes(
+                in GfxTile tile,
                 IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
+                int index)
             {
-                throw new NotImplementedException();
-            }
+                if (bytes is null)
+                {
+                    throw new ArgumentNullException(nameof(bytes));
+                }
 
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                }
 
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
+                if (index + BytesPerTile(Format4BppSnes) >= bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
 
-        private class Format4BppSmsTileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
+                var pixelIndex = 0;
+                for (var y = PlanesPerTile; --y >= 0;)
+                {
+                    var offset = index + (y << 1);
 
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
+                    var val1 = 0;
+                    var val2 = 0;
+                    var val3 = 0;
+                    var val4 = 0;
+                    for (var x = PixelsPerPlane; --x >= 0;)
+                    {
+                        var value = tile.Pixels[pixelIndex++];
 
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
+                        val1 |= ((value >> 0) & 1) << x;
+                        val2 |= ((value >> 1) & 1) << x;
+                        val3 |= ((value >> 2) & 1) << x;
+                        val4 |= ((value >> 3) & 1) << x;
+                    }
 
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format4BppMsx2TileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format4Bpp8x8TileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Format8BppSnesTileConverter : GfxTileConverter
-        {
-            public override byte ReadPixel(
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void WritePixel(
-                byte pixel,
-                IList<byte> bytes,
-                int byteIndex,
-                int pixelIndex)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
-            {
-                throw new NotImplementedException();
+                    bytes[offset + 0] = (byte)val1;
+                    bytes[offset + 1] = (byte)val2;
+                    bytes[offset + 0 + (2 * PlanesPerTile)] = (byte)val3;
+                    bytes[offset + 1 + (2 * PlanesPerTile)] = (byte)val4;
+                }
             }
         }
 
@@ -667,6 +438,26 @@ namespace Maseya.Snes
                 int byteIndex,
                 int pixelIndex)
             {
+                if (bytes is null)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(bytes));
+                }
+
+                if (byteIndex < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(byteIndex));
+                }
+
+                if (byteIndex + BytesPerTile(Format4BppSnes) > bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                if (pixelIndex < 0 || pixelIndex >= PixelsPerTile)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(pixelIndex));
+                }
+
                 return bytes[byteIndex + pixelIndex];
             }
 
@@ -676,42 +467,80 @@ namespace Maseya.Snes
                 int byteIndex,
                 int pixelIndex)
             {
+                if (bytes is null)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(bytes));
+                }
+
+                if (byteIndex < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(byteIndex));
+                }
+
+                if (byteIndex + BytesPerTile(Format4BppSnes) > bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                if (pixelIndex < 0 || pixelIndex >= PixelsPerTile)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(pixelIndex));
+                }
+
                 bytes[byteIndex + pixelIndex] = pixel;
             }
 
-            public override IEnumerable<byte> GetPixels(
-                IEnumerable<byte> bytes)
+            public override GfxTile ReadTileFromFormattedBytes(
+                IList<byte> bytes,
+                int index)
             {
-                var dotCount = 0;
-                using (var en = bytes.GetEnumerator())
+                if (bytes is null)
                 {
-                    while (en.MoveNext() && dotCount++ < DotsPerTile)
-                    {
-                        yield return en.Current;
-                    }
+                    throw new ArgumentNullException(nameof(bytes));
                 }
 
-                if (dotCount != DotsPerTile)
+                if (index < 0)
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
+
+                if (index + BytesPerTile(Format8BppMode7) >= bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                var result = default(GfxTile);
+                for (var i = 0; i < PixelsPerTile; i++)
+                {
+                    result[i] = bytes[index + i];
+                }
+
+                return result;
             }
 
-            public override IEnumerable<byte> GetBytes(
-                IEnumerable<byte> pixels)
+            public override void WriteTileToFormattedBytes(
+                in GfxTile tile,
+                IList<byte> bytes,
+                int index)
             {
-                var dotCount = 0;
-                using (var en = pixels.GetEnumerator())
+                if (bytes is null)
                 {
-                    while (en.MoveNext() && dotCount++ < DotsPerTile)
-                    {
-                        yield return en.Current;
-                    }
+                    throw new ArgumentNullException(nameof(bytes));
                 }
 
-                if (dotCount != DotsPerTile)
+                if (index < 0)
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
+                if (index + BytesPerTile(Format1Bpp8x8) >= bytes.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                for (var i = 0; i < PixelsPerTile; i++)
+                {
+                    bytes[index + i] = tile[i];
                 }
             }
         }

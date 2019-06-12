@@ -49,19 +49,24 @@ namespace Maseya.Controls.Editors
             get;
         }
 
-        public void AddEntry(
+        public void AddAssociation(
             Image fileIcon,
             string fileType,
             string description,
             Image previewImage,
             CreateEditorCallback createEditorCallback)
         {
-            CreateEditorForm.AddEntry(
+            CreateEditorForm.AddAssociation(
                 fileIcon,
                 fileType,
                 description,
                 previewImage,
                 createEditorCallback);
+        }
+
+        public void AddAssociation(NewFileIconAssociation association)
+        {
+            CreateEditorForm.AddAssociation(association);
         }
     }
 }

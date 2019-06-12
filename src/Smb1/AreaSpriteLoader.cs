@@ -8,6 +8,7 @@ namespace Maseya.Smb1
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using static Nes.AddressConverter;
 
     public class AreaSpriteLoader
@@ -53,27 +54,28 @@ namespace Maseya.Smb1
             get;
         }
 
-        public int GetAreaPointer(int areaNumber)
+        public int GetAreaIndex(int areaNumber)
         {
-            var lowByteIndex = NesToPc(LowBytePointer);
-            var highByteIndex = NesToPc(HighBytePointer);
             var areaTypeOffsetIndex = NesToPc(AreaTypeOffsetPointer);
-
             var areaType = AreaLoader.GetAreaType(areaNumber);
             var reducedAreaNumber = areaNumber & 0x1F;
             var areaTypeIndex = Rom[areaTypeOffsetIndex + (int)areaType];
-            var areaIndex = reducedAreaNumber + areaTypeIndex;
+            return reducedAreaNumber + areaTypeIndex;
+        }
+
+        public int GetAreaPointer(int areaNumber)
+        {
+            var areaIndex = GetAreaIndex(areaNumber);
+            var lowByteIndex = NesToPc(LowBytePointer);
+            var highByteIndex = NesToPc(HighBytePointer);
             return Rom[lowByteIndex + areaIndex]
                 | (Rom[highByteIndex + areaIndex] << 8);
         }
 
-        public IEnumerable<AreaSpriteCommand> GetAreaObjectData(int address)
+        public IEnumerable<AreaSpriteCommand> GetAreaData(int address)
         {
             var index = NesToPc(address);
-            return AreaSpriteCommand.GetAreaData(
-                Rom,
-                index,
-                Rom.Length - index);
+            return AreaSpriteCommand.GetAreaData(Rom.Skip(index));
         }
 
         public void WriteAreaData(

@@ -15,15 +15,48 @@ namespace Maseya.Editors
     /// </summary>
     public interface IEditor
     {
+        event EventHandler PathChanged;
+
+        event EventHandler<CancelEventArgs> BeginUndo;
+
+        event EventHandler UndoComplete;
+
+        event EventHandler<CancelEventArgs> BeginRedo;
+
+        event EventHandler RedoComplete;
+
+        event EventHandler<CancelEventArgs> BeginCut;
+
+        event EventHandler CutComplete;
+
+        event EventHandler<CancelEventArgs> BeginCopy;
+
+        event EventHandler CopyComplete;
+
+        event EventHandler<CancelEventArgs> BeginPaste;
+
+        event EventHandler PasteComplete;
+
+        event EventHandler<CancelEventArgs> BeginDelete;
+
+        event EventHandler DeleteComplete;
+
+        event EventHandler<CancelEventArgs> BeginSelectAll;
+
+        event EventHandler SelectAllComplete;
+
         event EventHandler<CancelEventArgs> SelectionChanging;
 
         event EventHandler SelectionChanged;
 
-        event EventHandler PathChanged;
+        event EventHandler<CancelEventArgs> BeginWriteData;
+
+        event EventHandler WriteDataComplete;
 
         string Path
         {
             get;
+            set;
         }
 
         /// <summary>

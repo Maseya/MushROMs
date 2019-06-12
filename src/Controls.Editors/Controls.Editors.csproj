@@ -22,6 +22,9 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\..\MushROMs.ruleset</CodeAnalysisRuleSet>
     <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\Controls.Editors.xml</DocumentationFile>
+    <NoWarn>CS1591;</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +34,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
+    <DocumentationFile>bin\Release\Controls.Editors.xml</DocumentationFile>
+    <NoWarn>CS1591;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -47,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChildEditorWindowHelper.cs" />
     <Compile Include="CreateEditorDialog.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -57,9 +61,12 @@
     <Compile Include="CreateEditorForm.Designer.cs">
       <DependentUpon>CreateEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditorWindowEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IEditorMenu.cs" />
     <Compile Include="NewFileHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NewFileIconAssociation.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="OpenFileHelper.cs">
@@ -80,17 +87,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TileMap1DControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="SaveAsDialog.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TileMap1DScrollHelper.cs" />
-    <Compile Include="TileMap2DScrollHelper.cs" />
-    <Compile Include="TileMapControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="SaveAsForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TileMapScrollHelper.cs" />
-    <Compile Include="TileMapResizeMode.cs" />
-    <Compile Include="TileMapSelectionDrawer.cs">
+    <Compile Include="SaveAsForm.Designer.cs">
+      <DependentUpon>SaveAsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaveFileHelper.cs">
       <SubType>Component</SubType>
     </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
@@ -120,6 +126,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaveAsForm.resx">
+      <DependentUpon>SaveAsForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

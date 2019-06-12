@@ -246,9 +246,7 @@ namespace Maseya.Snes.Controls
             ResetValues();
         }
 
-        private void Colorize_CheckedChanged(
-            object sender,
-            EventArgs e)
+        private void Colorize_CheckedChanged(object sender, EventArgs e)
         {
             SwitchValues();
         }

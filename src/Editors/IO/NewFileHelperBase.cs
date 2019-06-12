@@ -12,6 +12,8 @@ namespace Maseya.Editors.IO
 
     public abstract class NewFileHelperBase : Component
     {
+        private IExceptionHandler _exceptionHandler;
+
         protected NewFileHelperBase()
         {
         }
@@ -29,10 +31,20 @@ namespace Maseya.Editors.IO
 
         public event EventHandler<EditorEventArgs> EditorCreated;
 
+        public event EventHandler ExceptionHandlerChanged;
+
         public IExceptionHandler ExceptionHandler
         {
-            get;
-            set;
+            get
+            {
+                return _exceptionHandler;
+            }
+
+            set
+            {
+                _exceptionHandler = value;
+                OnExceptionHandlerChanged(EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -41,9 +53,14 @@ namespace Maseya.Editors.IO
         public void NewFile()
         {
             IEditor editor = null;
-            while (TryCreateEditor(out editor))
+            while (!TryCreateEditor(out editor))
             {
                 continue;
+            }
+
+            if (editor is null)
+            {
+                return;
             }
 
             OnEditorCreated(new EditorEventArgs(editor));
@@ -125,5 +142,10 @@ namespace Maseya.Editors.IO
         /// cref="IEditor"/>.
         /// </returns>
         protected abstract CreateEditorCallback UISelectCreateEditorCallback();
+
+        protected virtual void OnExceptionHandlerChanged(EventArgs e)
+        {
+            ExceptionHandlerChanged?.Invoke(this, e);
+        }
     }
 }

@@ -7,24 +7,30 @@
 namespace Maseya.Smb1
 {
     using System;
+    using System.Collections.Generic;
     using static Nes.AddressConverter;
 
     public class AreaLoader
     {
         public const int DefaultAreaListPointer = 0x9CBC;
-        public const int DefaultLevelsPerWorldPointer = 0x9CB4;
+        public const int DefaultWorldLevelOffsetPointer = 0x9CB4;
         public const int DefaultNumberOfAreas = 0x22;
         public const int DefaultNumberOfWorlds = 8;
 
         public AreaLoader(
             byte[] rom,
-            int levelsPerWorldPointer = DefaultLevelsPerWorldPointer,
+            int worldLevelOffsetPointer = DefaultWorldLevelOffsetPointer,
             int numberOfWorlds = DefaultNumberOfWorlds,
             int areaListPointer = DefaultAreaListPointer,
             int numberOfAreas = DefaultNumberOfAreas)
         {
             Rom = rom
                 ?? throw new ArgumentNullException(nameof(rom));
+
+            AreaListPointer = areaListPointer;
+            WorldLevelOffsetPointer = worldLevelOffsetPointer;
+            NumberOfWorlds = numberOfWorlds;
+            NumberOfAreas = numberOfAreas;
         }
 
         public int AreaListPointer
@@ -33,7 +39,7 @@ namespace Maseya.Smb1
             set;
         }
 
-        public int LevelsPerWorldPointer
+        public int WorldLevelOffsetPointer
         {
             get;
             set;
@@ -72,8 +78,17 @@ namespace Maseya.Smb1
         public byte GetWorldStartLevel(int world)
         {
             var areaListIndex = NesToPc(AreaListPointer);
-            var levelsPerWorldIndex = NesToPc(LevelsPerWorldPointer);
+            var levelsPerWorldIndex = NesToPc(WorldLevelOffsetPointer);
             return Rom[levelsPerWorldIndex + (byte)world];
+        }
+
+        public IEnumerable<byte> EnumerateAreaNumbers()
+        {
+            var index = NesToPc(AreaListPointer);
+            for (var i = 0; i < NumberOfAreas; i++)
+            {
+                yield return Rom[index + i];
+            }
         }
     }
 }

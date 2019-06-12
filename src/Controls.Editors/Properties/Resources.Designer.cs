@@ -61,56 +61,38 @@ namespace Maseya.Controls.Editors.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chroma:.
+        ///   Looks up a localized string similar to *{0};.
         /// </summary>
-        internal static string ChromaText {
+        internal static string OpenEditorFileDialogExtensionEntryFormat {
             get {
-                return ResourceManager.GetString("ChromaText", resourceCulture);
+                return ResourceManager.GetString("OpenEditorFileDialogExtensionEntryFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lightness:.
+        ///   Looks up a localized string similar to {0};.
         /// </summary>
-        internal static string LightnessText {
+        internal static string OpenEditorFileDialogExtensionListFormat {
             get {
-                return ResourceManager.GetString("LightnessText", resourceCulture);
+                return ResourceManager.GetString("OpenEditorFileDialogExtensionListFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luma:.
+        ///   Looks up a localized string similar to All Editors|{0}|{1}All files (*.*)|*.*.
         /// </summary>
-        internal static string LumaText {
+        internal static string OpenEditorFileDialogFilterFormat {
             get {
-                return ResourceManager.GetString("LumaText", resourceCulture);
+                return ResourceManager.GetString("OpenEditorFileDialogFilterFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saturation:.
+        ///   Looks up a localized string similar to {0} ({1})|{1}|.
         /// </summary>
-        internal static string SaturationText {
+        internal static string OpenEditorFileDialogRowFormat {
             get {
-                return ResourceManager.GetString("SaturationText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A TileMap creates arranged tiled of the graphics pixel map..
-        /// </summary>
-        internal static string TileMapFileDescription {
-            get {
-                return ResourceManager.GetString("TileMapFileDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tilemap File.
-        /// </summary>
-        internal static string TileMapFileType {
-            get {
-                return ResourceManager.GetString("TileMapFileType", resourceCulture);
+                return ResourceManager.GetString("OpenEditorFileDialogRowFormat", resourceCulture);
             }
         }
     }

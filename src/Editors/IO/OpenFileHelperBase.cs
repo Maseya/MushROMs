@@ -14,10 +14,12 @@ namespace Maseya.Editors.IO
 
     public abstract class OpenFileHelperBase : Component
     {
+        private IExceptionHandler _exceptionHandler;
+
         protected OpenFileHelperBase()
         {
             Associations = new Dictionary<string, OpenEditorCallback>(
-                StringComparer.OrdinalIgnoreCase);
+                StringFuncComparer.WindowsExtensionComparer);
         }
 
         protected OpenFileHelperBase(IContainer container)
@@ -33,10 +35,20 @@ namespace Maseya.Editors.IO
 
         public event EventHandler<EditorEventArgs> EditorOpened;
 
+        public event EventHandler ExceptionHandlerChanged;
+
         public IExceptionHandler ExceptionHandler
         {
-            get;
-            set;
+            get
+            {
+                return _exceptionHandler;
+            }
+
+            set
+            {
+                _exceptionHandler = value;
+                OnExceptionHandlerChanged(EventArgs.Empty);
+            }
         }
 
         private Dictionary<string, OpenEditorCallback> Associations
@@ -48,7 +60,7 @@ namespace Maseya.Editors.IO
             string extension,
             OpenEditorCallback openEditorCallback)
         {
-            Associations.Add(Path.GetExtension(extension), openEditorCallback);
+            Associations.Add(extension, openEditorCallback);
         }
 
         public void OpenFile()
@@ -79,12 +91,37 @@ namespace Maseya.Editors.IO
             OpenFile(path, openEditor);
         }
 
+        public void OpenFileAs()
+        {
+            var files = UIChooseFiles();
+            if (files is null)
+            {
+                return;
+            }
+
+            foreach (var file in files)
+            {
+                OpenFileAs(file);
+            }
+        }
+
+        public void OpenFileAs(string path)
+        {
+            var openEditor = UISelectOpenEditorCallback(path);
+            if (openEditor is null)
+            {
+                return;
+            }
+
+            OpenFile(path, openEditor);
+        }
+
         public bool TryGetOpenEditorCallback(
             string path,
             out OpenEditorCallback openEditor)
         {
             return Associations.TryGetValue(
-                Path.GetExtension(path),
+                path,
                 out openEditor);
         }
 
@@ -120,8 +157,7 @@ namespace Maseya.Editors.IO
                 return;
             }
 
-            var e = new EditorEventArgs(editor);
-            OnEditorOpened(e);
+            OnEditorOpened(new EditorEventArgs(editor));
         }
 
         protected virtual bool TryOpenFile(
@@ -135,7 +171,7 @@ namespace Maseya.Editors.IO
                 return false;
             }
 
-            loop:
+        loop:
             try
             {
                 editor = openEditor(path);
@@ -151,9 +187,11 @@ namespace Maseya.Editors.IO
                 {
                     goto loop;
                 }
-
-                editor = null;
-                return false;
+                else
+                {
+                    editor = null;
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -196,5 +234,10 @@ namespace Maseya.Editors.IO
         /// </returns>
         protected abstract OpenEditorCallback UISelectOpenEditorCallback(
             string path);
+
+        protected virtual void OnExceptionHandlerChanged(EventArgs e)
+        {
+            ExceptionHandlerChanged?.Invoke(this, e);
+        }
     }
 }

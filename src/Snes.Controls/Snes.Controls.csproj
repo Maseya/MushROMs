@@ -22,6 +22,8 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>CS1591;</NoWarn>
+    <DocumentationFile>bin\Debug\Snes.Controls.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +34,8 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\Snes.Controls.xml</DocumentationFile>
+    <NoWarn>CS1591;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -65,6 +69,24 @@
       <DependentUpon>ColorizeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ColorizeMode.cs" />
+    <Compile Include="GfxPixelEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GfxPixelEditorControl.Designer.cs">
+      <DependentUpon>GfxPixelEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GfxTileEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GfxTileEditorControl.Designer.cs">
+      <DependentUpon>GfxTileEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GfxEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GfxEditorForm.Designer.cs">
+      <DependentUpon>GfxEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GrayscaleDialog.cs">
       <SubType>Component</SubType>
@@ -75,14 +97,42 @@
     <Compile Include="GrayscaleForm.Designer.cs">
       <DependentUpon>GrayscaleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PaletteDrawer.cs" />
+    <Compile Include="NewFileAssociations.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NewFileAssociations.Designer.cs">
+      <DependentUpon>NewFileAssociations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpenFileAssociations.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpenFileAssociations.Designer.cs">
+      <DependentUpon>OpenFileAssociations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaletteEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PaletteEditorControl.Designer.cs">
+      <DependentUpon>PaletteEditorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaletteEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PaletteEditorForm.Designer.cs">
       <DependentUpon>PaletteEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PaletteMenus.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PaletteMenus.Designer.cs">
+      <DependentUpon>PaletteMenus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +148,14 @@
       <Project>{58852581-9311-4d18-8e0b-e0b264c2bc8c}</Project>
       <Name>Controls.Editors</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Controls.TileMaps\Controls.TileMaps.csproj">
+      <Project>{d984a9b4-95f5-4e19-a55e-d4665ee68d97}</Project>
+      <Name>Controls.TileMaps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Editors.Collections\Editors.Collections.csproj">
+      <Project>{f9134a93-8ad6-4c12-a24a-7f245a9b5222}</Project>
+      <Name>Editors.Collections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Editors\Editors.csproj">
       <Project>{0492c2f5-61cf-4c18-99b5-aeb74e98162a}</Project>
       <Name>Editors</Name>
@@ -105,6 +163,10 @@
     <ProjectReference Include="..\Snes\Snes.csproj">
       <Project>{81764abf-92dd-4afe-b258-3c5473a722d6}</Project>
       <Name>Snes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TileMaps\TileMaps.csproj">
+      <Project>{8a1e5259-8123-4945-b59c-caae66844fd3}</Project>
+      <Name>TileMaps</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -116,12 +178,37 @@
       <DependentUpon>ColorizeForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GfxPixelEditorControl.resx">
+      <DependentUpon>GfxPixelEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GfxTileEditorControl.resx">
+      <DependentUpon>GfxTileEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GfxEditorForm.resx">
+      <DependentUpon>GfxEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GrayscaleForm.resx">
       <DependentUpon>GrayscaleForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="NewFileAssociations.resx">
+      <DependentUpon>NewFileAssociations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpenFileAssociations.resx">
+      <DependentUpon>OpenFileAssociations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteEditorControl.resx">
+      <DependentUpon>PaletteEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PaletteEditorForm.resx">
       <DependentUpon>PaletteEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteMenus.resx">
+      <DependentUpon>PaletteMenus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +218,39 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.61\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.61\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mnuBlend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mnuColorize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mnuGrayscale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mnuHorizontalGradient.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mnuInvert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mnuVerticalGradient.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rainbowPalette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Palette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CopyHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CutHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PasteHS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

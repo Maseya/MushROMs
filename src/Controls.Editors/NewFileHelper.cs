@@ -51,12 +51,17 @@ namespace Maseya.Controls.Editors
             Image previewImage,
             CreateEditorCallback createEditorCallback)
         {
-            CreateEditorDialog.AddEntry(
+            CreateEditorDialog.AddAssociation(
                 fileIcon,
                 fileType,
                 description,
                 previewImage,
                 createEditorCallback);
+        }
+
+        public void AddAssociation(NewFileIconAssociation association)
+        {
+            CreateEditorDialog.AddAssociation(association);
         }
 
         public void NewFile(IWin32Window owner)
