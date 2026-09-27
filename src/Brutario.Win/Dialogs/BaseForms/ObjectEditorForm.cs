@@ -560,6 +560,20 @@ internal partial class ObjectEditorForm : Form
             return;
         }
 
+        switch (AreaObjectCode)
+        {
+        case ObjectType.ForegroundSceneryChange:
+            ForegroundSceneryEnabled = true;
+            break;
+        case ObjectType.TerrainAndBackgroundSceneryChange:
+            TerrainAndBackgroundSceneryEnabled = true;
+            break;
+        default:
+            ForegroundSceneryEnabled = false;
+            TerrainAndBackgroundSceneryEnabled = false;
+            break;
+        }
+
         UpdateEnabledControls(UICommand.Command);
         BinaryCommand = UICommand;
         OnAreaObjectCommandChanged(EventArgs.Empty);
