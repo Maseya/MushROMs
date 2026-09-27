@@ -134,6 +134,26 @@ namespace Brutario.Win.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrow_rotate_left_solid {
+            get {
+                object obj = ResourceManager.GetObject("arrow-rotate-left-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrow_rotate_right_solid {
+            get {
+                object obj = ResourceManager.GetObject("arrow-rotate-right-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pulley Platforms (Width={0}).
         /// </summary>
         internal static string BalanceHorizontalRope {
@@ -335,9 +355,9 @@ namespace Brutario.Win.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap copy_solid {
+        internal static System.Drawing.Bitmap copy_regular {
             get {
-                object obj = ResourceManager.GetObject("copy-solid", resourceCulture);
+                object obj = ResourceManager.GetObject("copy-regular", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -452,6 +472,26 @@ namespace Brutario.Win.Properties {
         internal static string ForegroundChange {
             get {
                 return ResourceManager.GetString("ForegroundChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gamepad_solid {
+            get {
+                object obj = ResourceManager.GetObject("gamepad-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gear_solid {
+            get {
+                object obj = ResourceManager.GetObject("gear-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -577,6 +617,16 @@ namespace Brutario.Win.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap microchip_solid {
+            get {
+                object obj = ResourceManager.GetObject("microchip-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap minus_solid {
             get {
                 object obj = ResourceManager.GetObject("minus-solid", resourceCulture);
@@ -587,29 +637,9 @@ namespace Brutario.Win.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap paste_solid {
+        internal static System.Drawing.Bitmap paste_regular {
             get {
-                object obj = ResourceManager.GetObject("paste-solid", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Picture1 {
-            get {
-                object obj = ResourceManager.GetObject("Picture1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Picture2 {
-            get {
-                object obj = ResourceManager.GetObject("Picture2", resourceCulture);
+                object obj = ResourceManager.GetObject("paste-regular", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -666,26 +696,6 @@ namespace Brutario.Win.Properties {
         internal static string RopeForLift {
             get {
                 return ResourceManager.GetString("RopeForLift", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap rotate_left_solid {
-            get {
-                object obj = ResourceManager.GetObject("rotate-left-solid", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap rotate_right_solid {
-            get {
-                object obj = ResourceManager.GetObject("rotate-right-solid", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -765,9 +775,9 @@ namespace Brutario.Win.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap trash_solid {
+        internal static System.Drawing.Bitmap trash_can_solid {
             get {
-                object obj = ResourceManager.GetObject("trash-solid", resourceCulture);
+                object obj = ResourceManager.GetObject("trash-can-solid", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
