@@ -84,7 +84,6 @@ namespace Brutario.Win.Dialogs.BaseForms
             // tsbClear
             // 
             tsbClear.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            tsbClear.Image = Properties.Resources.trash_solid;
             tsbClear.ImageTransparentColor = Color.Magenta;
             tsbClear.Name = "tsbClear";
             tsbClear.Size = new Size(24, 24);
@@ -94,7 +93,6 @@ namespace Brutario.Win.Dialogs.BaseForms
             // toolStripButton1
             // 
             toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton1.Image = Properties.Resources.Picture1;
             toolStripButton1.ImageTransparentColor = Color.Magenta;
             toolStripButton1.Name = "toolStripButton1";
             toolStripButton1.Size = new Size(24, 24);
@@ -104,7 +102,6 @@ namespace Brutario.Win.Dialogs.BaseForms
             // toolStripButton2
             // 
             toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton2.Image = Properties.Resources.Picture2;
             toolStripButton2.ImageTransparentColor = Color.Magenta;
             toolStripButton2.Name = "toolStripButton2";
             toolStripButton2.Size = new Size(24, 24);
@@ -115,7 +112,6 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             toolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolStripButton3.Enabled = false;
-            toolStripButton3.Image = Properties.Resources.circle_question_regular;
             toolStripButton3.ImageTransparentColor = Color.Magenta;
             toolStripButton3.Name = "toolStripButton3";
             toolStripButton3.Size = new Size(24, 24);
