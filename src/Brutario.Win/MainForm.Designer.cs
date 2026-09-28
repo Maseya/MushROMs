@@ -76,6 +76,9 @@ namespace Brutario.Win
             tsmPlayer = new ToolStripMenuItem();
             tsmMario = new ToolStripMenuItem();
             tsmLuigi = new ToolStripMenuItem();
+            toolStripSeparator17 = new ToolStripSeparator();
+            tsmToggleAnimations = new ToolStripMenuItem();
+            toolStripSeparator16 = new ToolStripSeparator();
             tsmViewObjectList = new ToolStripMenuItem();
             tsmHelp = new ToolStripMenuItem();
             tsmSettings = new ToolStripMenuItem();
@@ -396,7 +399,7 @@ namespace Brutario.Win
             // 
             // tsmView
             // 
-            tsmView.DropDownItems.AddRange(new ToolStripItem[] { tsmPlayerState, tsmPlayer, tsmViewObjectList });
+            tsmView.DropDownItems.AddRange(new ToolStripItem[] { tsmPlayerState, tsmPlayer, toolStripSeparator17, tsmToggleAnimations, toolStripSeparator16, tsmViewObjectList });
             tsmView.Name = "tsmView";
             tsmView.Size = new Size(44, 20);
             tsmView.Text = "&View";
@@ -449,6 +452,25 @@ namespace Brutario.Win
             tsmLuigi.Size = new Size(105, 22);
             tsmLuigi.Text = "&Luigi";
             tsmLuigi.Click += Player_Click;
+            // 
+            // toolStripSeparator17
+            // 
+            toolStripSeparator17.Name = "toolStripSeparator17";
+            toolStripSeparator17.Size = new Size(251, 6);
+            // 
+            // tsmToggleAnimations
+            // 
+            tsmToggleAnimations.CheckOnClick = true;
+            tsmToggleAnimations.Name = "tsmToggleAnimations";
+            tsmToggleAnimations.ShortcutKeys = Keys.F9;
+            tsmToggleAnimations.Size = new Size(254, 22);
+            tsmToggleAnimations.Text = "Toggle &Animations";
+            tsmToggleAnimations.CheckedChanged += ToggleAnimations_CheckedChanged;
+            // 
+            // toolStripSeparator16
+            // 
+            toolStripSeparator16.Name = "toolStripSeparator16";
+            toolStripSeparator16.Size = new Size(251, 6);
             // 
             // tsmViewObjectList
             // 
@@ -1024,6 +1046,9 @@ namespace Brutario.Win
         private ToolStripSeparator toolStripSeparator14;
         private ToolStripMenuItem tsmClearRecent;
         private ToolStripSeparator toolStripSeparator15;
+        private ToolStripSeparator toolStripSeparator16;
+        private ToolStripSeparator toolStripSeparator17;
+        private ToolStripMenuItem tsmToggleAnimations;
     }
 }
 
