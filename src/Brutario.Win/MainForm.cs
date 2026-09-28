@@ -295,6 +295,16 @@ public partial class MainForm : Form, IMainView
         get;
     }
 
+    private string? LastRom
+    {
+        get
+        {
+            return Settings.Default.RecentRoms.Count > 0
+                ? Settings.Default.RecentRoms[0]
+                : null;
+        }
+    }
+
     private DateTime StartTime
     {
         get; set;
@@ -377,6 +387,16 @@ public partial class MainForm : Form, IMainView
         tsmSmall.Tag = PlayerState.Small;
         tsmBig.Tag = PlayerState.Big;
         tsmFire.Tag = PlayerState.Fire;
+
+        openFileNameSelector.OpenFileDialog.Title = "Open ROM";
+        saveFileNameSelector.SaveFileDialog.Title = "Save ROM As...";
+
+        openFileNameSelector.OpenFileDialog.DefaultExt =
+        saveFileNameSelector.SaveFileDialog.DefaultExt = "sfc";
+
+        openFileNameSelector.OpenFileDialog.Filter =
+        saveFileNameSelector.SaveFileDialog.Filter =
+            "ROM Files (*.sfc;*.smc;*.fig)|*.sfc;*.smc;*.fig|All Files (*.*)|*.*";
 
         autoSaveTimer.Interval = (int)new TimeSpan(0, 0, 3).TotalMilliseconds;
     }
@@ -467,6 +487,12 @@ public partial class MainForm : Form, IMainView
         // through events, so maybe it's ok? MVP is painful.
         //
         // Let's look for another dialog command and make considerations there.
+        if (LastRom is not null)
+        {
+            openFileNameSelector.OpenFileDialog.FileName = Path.GetFileName(LastRom);
+            openFileNameSelector.OpenFileDialog.InitialDirectory = Path.GetDirectoryName(LastRom);
+        }
+
         Presenter.Open();
     }
 
@@ -482,6 +508,12 @@ public partial class MainForm : Form, IMainView
 
     private void SaveAs_Click(object? sender, EventArgs e)
     {
+        if (LastRom is not null)
+        {
+            saveFileNameSelector.SaveFileDialog.FileName = Path.GetFileName(LastRom);
+            saveFileNameSelector.SaveFileDialog.InitialDirectory = Path.GetDirectoryName(LastRom);
+        }
+
         Presenter.SaveAs();
     }
 
