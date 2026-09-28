@@ -211,6 +211,22 @@ public static class ExtensionMethods
         };
     }
 
+    public static (int min, int max) GetYBounds(this ObjectType code)
+    {
+        var y = ((int)code & 0xF00) >> 8;
+        if (y == 0)
+        {
+            return (0x00, 0x0B);
+        }
+
+        if (y != 0x0F)
+        {
+            return (y, y);
+        }
+
+        return (0, 0x0F);
+    }
+
     public static string BaseName(this AreaSpriteCode code)
     {
         return code switch
