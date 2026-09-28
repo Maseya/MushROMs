@@ -1423,6 +1423,7 @@ public class AreaObjectParser
             // Custom check. Not in asm code.
             if (y >= 0x0D)
             {
+                CurrentBufferObjectWidth = 0;
                 return;
             }
 
