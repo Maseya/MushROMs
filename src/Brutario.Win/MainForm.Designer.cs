@@ -161,7 +161,7 @@ namespace Brutario.Win
             tsmOpen.Image = Properties.Resources.folder_open_solid;
             tsmOpen.Name = "tsmOpen";
             tsmOpen.ShortcutKeys = Keys.Control | Keys.O;
-            tsmOpen.Size = new Size(190, 26);
+            tsmOpen.Size = new Size(186, 22);
             tsmOpen.Text = "&Open";
             tsmOpen.Click += Open_Click;
             // 
@@ -170,7 +170,7 @@ namespace Brutario.Win
             tsmOpenRecent.DropDownItems.AddRange(new ToolStripItem[] { toolStripSeparator14, tsmClearRecent });
             tsmOpenRecent.Image = Properties.Resources.folder_multiple_solid;
             tsmOpenRecent.Name = "tsmOpenRecent";
-            tsmOpenRecent.Size = new Size(190, 26);
+            tsmOpenRecent.Size = new Size(186, 22);
             tsmOpenRecent.Text = "Open &Recent";
             // 
             // toolStripSeparator14
@@ -191,7 +191,7 @@ namespace Brutario.Win
             tsmSave.Image = Properties.Resources.floppy_disk_regular;
             tsmSave.Name = "tsmSave";
             tsmSave.ShortcutKeys = Keys.Control | Keys.S;
-            tsmSave.Size = new Size(190, 26);
+            tsmSave.Size = new Size(186, 22);
             tsmSave.Text = "&Save";
             tsmSave.Click += Save_Click;
             // 
@@ -200,20 +200,20 @@ namespace Brutario.Win
             tsmSaveAs.Enabled = false;
             tsmSaveAs.Name = "tsmSaveAs";
             tsmSaveAs.ShortcutKeys = Keys.Control | Keys.Alt | Keys.S;
-            tsmSaveAs.Size = new Size(190, 26);
+            tsmSaveAs.Size = new Size(186, 22);
             tsmSaveAs.Text = "Save &As...";
             tsmSaveAs.Click += SaveAs_Click;
             // 
             // toolStripSeparator13
             // 
             toolStripSeparator13.Name = "toolStripSeparator13";
-            toolStripSeparator13.Size = new Size(187, 6);
+            toolStripSeparator13.Size = new Size(183, 6);
             // 
             // tsmSetupEmulator
             // 
             tsmSetupEmulator.Image = Properties.Resources.microchip_solid;
             tsmSetupEmulator.Name = "tsmSetupEmulator";
-            tsmSetupEmulator.Size = new Size(190, 26);
+            tsmSetupEmulator.Size = new Size(186, 22);
             tsmSetupEmulator.Text = "Setup Emulator";
             tsmSetupEmulator.Click += SetupEmulator_Click;
             // 
@@ -223,34 +223,34 @@ namespace Brutario.Win
             tsmRunEmulator.Image = Properties.Resources.gamepad_solid;
             tsmRunEmulator.Name = "tsmRunEmulator";
             tsmRunEmulator.ShortcutKeys = Keys.F5;
-            tsmRunEmulator.Size = new Size(190, 26);
+            tsmRunEmulator.Size = new Size(186, 22);
             tsmRunEmulator.Text = "Run Emulator";
             tsmRunEmulator.Click += RunEmulator_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(187, 6);
+            toolStripSeparator1.Size = new Size(183, 6);
             // 
             // tsmClose
             // 
             tsmClose.Enabled = false;
             tsmClose.Name = "tsmClose";
             tsmClose.ShortcutKeys = Keys.Control | Keys.F4;
-            tsmClose.Size = new Size(190, 26);
+            tsmClose.Size = new Size(186, 22);
             tsmClose.Text = "&Close";
             tsmClose.Click += Close_Click;
             // 
             // toolStripSeparator10
             // 
             toolStripSeparator10.Name = "toolStripSeparator10";
-            toolStripSeparator10.Size = new Size(187, 6);
+            toolStripSeparator10.Size = new Size(183, 6);
             // 
             // tsmExit
             // 
             tsmExit.Name = "tsmExit";
             tsmExit.ShortcutKeys = Keys.Alt | Keys.F4;
-            tsmExit.Size = new Size(190, 26);
+            tsmExit.Size = new Size(186, 22);
             tsmExit.Text = "E&xit";
             tsmExit.Click += Exit_Click;
             // 
@@ -267,7 +267,7 @@ namespace Brutario.Win
             tsmUndo.Image = Properties.Resources.arrow_rotate_left_solid;
             tsmUndo.Name = "tsmUndo";
             tsmUndo.ShortcutKeys = Keys.Control | Keys.Z;
-            tsmUndo.Size = new Size(211, 26);
+            tsmUndo.Size = new Size(207, 22);
             tsmUndo.Text = "&Undo";
             tsmUndo.Click += Undo_Click;
             // 
@@ -277,14 +277,14 @@ namespace Brutario.Win
             tsmRedo.Image = Properties.Resources.arrow_rotate_right_solid;
             tsmRedo.Name = "tsmRedo";
             tsmRedo.ShortcutKeys = Keys.Control | Keys.Y;
-            tsmRedo.Size = new Size(211, 26);
+            tsmRedo.Size = new Size(207, 22);
             tsmRedo.Text = "&Redo";
             tsmRedo.Click += Redo_Click;
             // 
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new Size(208, 6);
+            toolStripSeparator7.Size = new Size(204, 6);
             // 
             // tsmCut
             // 
@@ -292,7 +292,7 @@ namespace Brutario.Win
             tsmCut.Image = Properties.Resources.scissors_solid;
             tsmCut.Name = "tsmCut";
             tsmCut.ShortcutKeys = Keys.Control | Keys.X;
-            tsmCut.Size = new Size(211, 26);
+            tsmCut.Size = new Size(207, 22);
             tsmCut.Text = "Cu&t";
             tsmCut.Click += Cut_Click;
             // 
@@ -302,7 +302,7 @@ namespace Brutario.Win
             tsmCopy.Image = Properties.Resources.copy_regular;
             tsmCopy.Name = "tsmCopy";
             tsmCopy.ShortcutKeys = Keys.Control | Keys.C;
-            tsmCopy.Size = new Size(211, 26);
+            tsmCopy.Size = new Size(207, 22);
             tsmCopy.Text = "&Copy";
             tsmCopy.Click += Copy_Click;
             // 
@@ -312,14 +312,14 @@ namespace Brutario.Win
             tsmPaste.Image = Properties.Resources.paste_regular;
             tsmPaste.Name = "tsmPaste";
             tsmPaste.ShortcutKeys = Keys.Control | Keys.V;
-            tsmPaste.Size = new Size(211, 26);
+            tsmPaste.Size = new Size(207, 22);
             tsmPaste.Text = "&Paste";
             tsmPaste.Click += Paste_Click;
             // 
             // toolStripSeparator8
             // 
             toolStripSeparator8.Name = "toolStripSeparator8";
-            toolStripSeparator8.Size = new Size(208, 6);
+            toolStripSeparator8.Size = new Size(204, 6);
             // 
             // tsmAddItem
             // 
@@ -327,7 +327,7 @@ namespace Brutario.Win
             tsmAddItem.Image = Properties.Resources.plus_solid;
             tsmAddItem.Name = "tsmAddItem";
             tsmAddItem.ShortcutKeys = Keys.Insert;
-            tsmAddItem.Size = new Size(211, 26);
+            tsmAddItem.Size = new Size(207, 22);
             tsmAddItem.Text = "&Add Item";
             tsmAddItem.Click += AddItem_Click;
             // 
@@ -337,7 +337,7 @@ namespace Brutario.Win
             tsmRemoveItem.Image = Properties.Resources.minus_solid;
             tsmRemoveItem.Name = "tsmRemoveItem";
             tsmRemoveItem.ShortcutKeys = Keys.Delete;
-            tsmRemoveItem.Size = new Size(211, 26);
+            tsmRemoveItem.Size = new Size(207, 22);
             tsmRemoveItem.Text = "&Remove Item";
             tsmRemoveItem.Click += RemoveItem_Click;
             // 
@@ -347,7 +347,7 @@ namespace Brutario.Win
             tsmDeleteAll.Image = Properties.Resources.trash_can_solid;
             tsmDeleteAll.Name = "tsmDeleteAll";
             tsmDeleteAll.ShortcutKeys = Keys.Control | Keys.Shift | Keys.Delete;
-            tsmDeleteAll.Size = new Size(211, 26);
+            tsmDeleteAll.Size = new Size(207, 22);
             tsmDeleteAll.Text = "&Delete All";
             tsmDeleteAll.Click += DeleteAll_Click;
             // 
@@ -363,7 +363,7 @@ namespace Brutario.Win
             tsmLoadArea.Enabled = false;
             tsmLoadArea.Image = Properties.Resources.folder_tree_solid;
             tsmLoadArea.Name = "tsmLoadArea";
-            tsmLoadArea.Size = new Size(187, 26);
+            tsmLoadArea.Size = new Size(183, 22);
             tsmLoadArea.Text = "Load Area";
             tsmLoadArea.Click += LoadArea_Click;
             // 
@@ -371,7 +371,7 @@ namespace Brutario.Win
             // 
             tsmExportTileData.Enabled = false;
             tsmExportTileData.Name = "tsmExportTileData";
-            tsmExportTileData.Size = new Size(187, 26);
+            tsmExportTileData.Size = new Size(183, 22);
             tsmExportTileData.Text = "Export Tile Data";
             tsmExportTileData.Click += ExportTileData_Click;
             // 
@@ -380,7 +380,7 @@ namespace Brutario.Win
             tsmEditHeader.Enabled = false;
             tsmEditHeader.Name = "tsmEditHeader";
             tsmEditHeader.ShortcutKeys = Keys.Control | Keys.H;
-            tsmEditHeader.Size = new Size(187, 26);
+            tsmEditHeader.Size = new Size(183, 22);
             tsmEditHeader.Text = "Edit Header";
             tsmEditHeader.Click += EditHeader_Click;
             // 
@@ -390,7 +390,7 @@ namespace Brutario.Win
             tsmSpriteMode.Image = Properties.Resources.alien;
             tsmSpriteMode.Name = "tsmSpriteMode";
             tsmSpriteMode.ShortcutKeys = Keys.Control | Keys.M;
-            tsmSpriteMode.Size = new Size(187, 26);
+            tsmSpriteMode.Size = new Size(183, 22);
             tsmSpriteMode.Text = "Sprite Mode";
             tsmSpriteMode.Click += SpriteMode_Click;
             // 
@@ -470,20 +470,20 @@ namespace Brutario.Win
             // 
             tsmSettings.Image = Properties.Resources.gear_solid;
             tsmSettings.Name = "tsmSettings";
-            tsmSettings.Size = new Size(184, 26);
+            tsmSettings.Size = new Size(151, 22);
             tsmSettings.Text = "Settings";
             tsmSettings.Click += Settings_Click;
             // 
             // toolStripSeparator12
             // 
             toolStripSeparator12.Name = "toolStripSeparator12";
-            toolStripSeparator12.Size = new Size(181, 6);
+            toolStripSeparator12.Size = new Size(148, 6);
             // 
             // tsmSpecialThanks
             // 
             tsmSpecialThanks.Image = Properties.Resources.hands_clapping_solid;
             tsmSpecialThanks.Name = "tsmSpecialThanks";
-            tsmSpecialThanks.Size = new Size(184, 26);
+            tsmSpecialThanks.Size = new Size(151, 22);
             tsmSpecialThanks.Text = "Special &Thanks";
             tsmSpecialThanks.Click += SpecialThanks_Click;
             // 
@@ -493,7 +493,7 @@ namespace Brutario.Win
             tsmAbout.Image = Properties.Resources.circle_question_regular;
             tsmAbout.Name = "tsmAbout";
             tsmAbout.ShortcutKeys = Keys.F1;
-            tsmAbout.Size = new Size(184, 26);
+            tsmAbout.Size = new Size(151, 22);
             tsmAbout.Text = "&About";
             // 
             // toolStrip
