@@ -55,12 +55,12 @@ public class AreaSpriteRenderer
             { AreaSpriteCode.FastFireBarCounterClockwise, FireBarCounterClockwiseFast },
             { AreaSpriteCode.LongFireBarClockwise, LongFireBarClockwiseFast},
             { AreaSpriteCode.BalanceRopeLift, BalanceRopeLift },
-            { AreaSpriteCode.LiftDownThenUp,  StationaryLift },
+            { AreaSpriteCode.LiftDownThenUp,  LiftDownThenUp },
             { AreaSpriteCode.LiftUp, LiftUp },
             { AreaSpriteCode.LiftDown, LiftDown },
-            { AreaSpriteCode.LiftLeftThenRight, StationaryLift },
-            { AreaSpriteCode.LiftFalling, StationaryLift },
-            { AreaSpriteCode.LiftRight, StationaryLift },
+            { AreaSpriteCode.LiftLeftThenRight, LiftLeftThenRight },
+            { AreaSpriteCode.LiftFalling, LiftFalling },
+            { AreaSpriteCode.LiftRight, LiftRight },
             { AreaSpriteCode.ShortLiftUp, ShortLiftUp },
             { AreaSpriteCode.ShortLiftDown, ShortLiftDown },
             { AreaSpriteCode.Bowser, Bowser },
@@ -441,9 +441,10 @@ public class AreaSpriteRenderer
     private static IEnumerable<Sprite> Lift(int x, int y, int size)
     {
         var tile = new ChrTile(0x87, 6, LayerPriority.Priority2, 0);
+        var spriteTile = new SpriteTile(tile, PixelStartIndex);
         for (var i = 0; i <= 8 * size; i += 8)
         {
-            yield return new Sprite(x + i, y, new SpriteTile(tile, PixelStartIndex));
+            yield return new Sprite(x + i, y, spriteTile);
         }
     }
 
@@ -1113,48 +1114,104 @@ public class AreaSpriteRenderer
         }
     }
 
-    private IEnumerable<Sprite> StationaryLift(int x, int y, int frame)
+    private IEnumerable<Sprite> LiftFalling(int x, int y, int frame)
     {
-        return Lift(x, y, 6);
+        return Lift(x, y - 0x0F, 5);
+    }
+
+    private IEnumerable<Sprite> LiftRight(int x, int y, int frame)
+    {
+        return Lift(x, y - 0x0F, 5);
+    }
+
+    private static readonly int[] LeftRightLiftOffsets = [
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01,
+        0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x02, 0x02, 0x02, 0x02, 0x03, 0x03, 0x03,
+        0x04, 0x04, 0x04, 0x05, 0x05, 0x05, 0x06, 0x06, 0x07, 0x07, 0x07, 0x08, 0x08,
+        0x09, 0x09, 0x0A, 0x0B, 0x0B, 0x0C, 0x0C, 0x0D, 0x0E, 0x0E, 0x0F, 0x10, 0x10,
+        0x11, 0x12, 0x12, 0x13, 0x14, 0x15, 0x16, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B,
+        0x1C, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x21, 0x21, 0x22, 0x23, 0x24, 0x24, 0x25,
+        0x26, 0x27, 0x27, 0x28, 0x28, 0x29, 0x2A, 0x2A, 0x2B, 0x2B, 0x2C, 0x2C, 0x2D,
+        0x2D, 0x2E, 0x2E, 0x2F, 0x2F, 0x30, 0x30, 0x30, 0x31, 0x31, 0x32, 0x32, 0x32,
+        0x32, 0x33, 0x33, 0x33, 0x33, 0x34, 0x34, 0x34, 0x34, 0x34, 0x34, 0x35, 0x35,
+        0x35, 0x35, 0x35, 0x35, 0x35, 0x35, 0x35,
+    ];
+
+    private IEnumerable<Sprite> LiftLeftThenRight(int x, int y, int frame)
+    {
+        frame += x;
+        frame %= 2 * LeftRightLiftOffsets.Length;
+        if (frame >= LeftRightLiftOffsets.Length)
+        {
+            frame = (2 * LeftRightLiftOffsets.Length) - 1 - frame;
+        }
+
+        return Lift(x - LeftRightLiftOffsets[frame], y - 0x0F, 5);
+    }
+
+    private static readonly int[] UpDownLiftOffsets = [
+        -0x03, -0x03, -0x03, -0x03, -0x03, -0x03, -0x03, -0x02, -0x02, -0x02, -0x02,
+        -0x02, -0x02, -0x02, -0x02, -0x02, -0x01, -0x01, -0x01, -0x01, 0x00, 0x00, 0x00,
+        0x00, 0x01, 0x01, 0x02, 0x02, 0x02, 0x03, 0x03, 0x04, 0x04, 0x05, 0x05, 0x06,
+        0x07, 0x07, 0x08, 0x08, 0x09, 0x0A, 0x0B, 0x0B, 0x0C, 0x0D, 0x0E, 0x0E, 0x0F,
+        0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x1A, 0x1B, 0x1C, 0x1D,
+        0x1E, 0x1F, 0x20, 0x21, 0x23, 0x24, 0x25, 0x26, 0x28, 0x29, 0x2A, 0x2C, 0x2D,
+        0x2E, 0x30, 0x31, 0x33, 0x34, 0x36, 0x37, 0x39, 0x3A, 0x3C, 0x3D, 0x3F, 0x41,
+        0x42, 0x44, 0x45, 0x47, 0x49, 0x4A, 0x4C, 0x4D, 0x4F, 0x50, 0x52, 0x53, 0x54,
+        0x56, 0x57, 0x58, 0x5A, 0x5B, 0x5C, 0x5E, 0x5F, 0x60, 0x61, 0x63, 0x64, 0x65,
+        0x66, 0x67, 0x68, 0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72,
+        0x73, 0x74, 0x75, 0x76, 0x76, 0x77, 0x78, 0x79, 0x7A, 0x7A, 0x7B, 0x7C, 0x7D,
+        0x7E, 0x7E, 0x7F, 0x7F, 0x80, 0x80, 0x81, 0x81, 0x82, 0x82, 0x83, 0x83, 0x84,
+        0x84, 0x85, 0x85, 0x85, 0x86, 0x86, 0x86, 0x86, 0x86,
+        ];
+
+    private IEnumerable<Sprite> LiftDownThenUp(int x, int y, int frame)
+    {
+        y -= 0x10;
+        if (y >= 0x80)
+        {
+            y -= 0x80;
+        }
+
+        frame += x;
+        frame %= 2 * UpDownLiftOffsets.Length;
+        if (frame >= UpDownLiftOffsets.Length)
+        {
+            frame = (2 * UpDownLiftOffsets.Length) - 1 - frame;
+        }
+
+        return Lift(x, y + UpDownLiftOffsets[frame], 5);
     }
 
     private IEnumerable<Sprite> LiftDown(int x, int y, int frame)
     {
         y += ((frame << 6) / 75) + (x >> 4);
-        y &= 0xFF;
-        x += 8;
-        return Lift(x, y, 6);
+        return Lift(x + 0x0C, y & 0xFF, 5);
     }
 
     private IEnumerable<Sprite> LiftUp(int x, int y, int frame)
     {
         y -= ((frame << 6) / 75) + (x >> 4);
-        y &= 0xFF;
-        x += 8;
-        return Lift(x, y, 6);
+        return Lift(x + 0x0C, y & 0xFF, 5);
     }
 
     private IEnumerable<Sprite> ShortLiftDown(int x, int y, int frame)
     {
         y += ((frame << 6) / 75) + (x >> 4);
-        y &= 0xFF;
-        x += 8;
-        return Lift(x, y, 3);
+        x += 12;
+        return Lift(x, y & 0xFF, 2).Concat(Lift(x, (y + 0x80) & 0xFF, 2));
     }
 
     private IEnumerable<Sprite> ShortLiftUp(int x, int y, int frame)
     {
         y -= ((frame << 6) / 75) + (x >> 4);
-        y &= 0xFF;
-        x += 8;
-        return Lift(x, y, 3);
+        x += 12;
+        return Lift(x, y & 0xFF, 2).Concat(Lift(x, (y + 0x80) & 0xFF, 2));
     }
 
     private IEnumerable<Sprite> BalanceRopeLift(int x, int y, int frame)
     {
-        x -= 4;
-        y -= 0x10;
-        return Lift(x, y, 6);
+        return Lift(x, y - 0x0F, 5);
     }
 
     private IEnumerable<Sprite> BulletBill(int x, int y, int frame)
