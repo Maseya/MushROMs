@@ -161,6 +161,32 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
+    private int MinY
+    {
+        get
+        {
+            return (int)nudY.Minimum;
+        }
+
+        set
+        {
+            nudY.Minimum = value;
+        }
+    }
+
+    private int MaxY
+    {
+        get
+        {
+            return (int)nudY.Maximum;
+        }
+
+        set
+        {
+            nudY.Maximum = value;
+        }
+    }
+
     private int YPos
     {
         get
@@ -490,6 +516,7 @@ internal partial class ObjectEditorForm : Form
         YPosEnabled = value.HasYCoord;
         LengthEnabled = value.IsExtendableObject;
         MaximumLength = value.ObjectType.GetMaxLength();
+        (MinY, MaxY) = value.ObjectType.GetYBounds();
         TerrainAndBackgroundSceneryEnabled = value.IsTerrainAndBackgroundChange;
         ForegroundSceneryEnabled = value.IsForegroundChange;
     }
