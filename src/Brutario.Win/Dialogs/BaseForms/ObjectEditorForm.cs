@@ -370,6 +370,7 @@ internal partial class ObjectEditorForm : Form
         {
             var result = default(AreaObjectCommand);
             result.Value1 |= (byte)(XPos << 4);
+            (var minY, var maxY) = AreaObjectCode.GetYBounds();
             switch ((int)AreaObjectCode & 0xF00)
             {
             case 0xE00:
@@ -397,7 +398,7 @@ internal partial class ObjectEditorForm : Form
                 result.Value1 |= 0x0F;
                 if (YPosEnabled)
                 {
-                    result.Value2 |= (byte)(YPos << 4);
+                    result.Value2 |= (byte)(Math.Clamp(YPos, minY, maxY) << 4);
                 }
 
                 result.Value3 |= (byte)((int)AreaObjectCode & 0x7F);
@@ -406,7 +407,7 @@ internal partial class ObjectEditorForm : Form
             default:
                 if (YPosEnabled)
                 {
-                    result.Value1 |= (byte)YPos;
+                    result.Value1 |= (byte)Math.Clamp(YPos, minY, maxY);
                 }
 
                 result.Value1 |= (byte)((int)AreaObjectCode >> 8);
@@ -517,6 +518,7 @@ internal partial class ObjectEditorForm : Form
         LengthEnabled = value.IsExtendableObject;
         MaximumLength = value.ObjectType.GetMaxLength();
         (MinY, MaxY) = value.ObjectType.GetYBounds();
+        YPos = Math.Clamp(YPos, MinY, MaxY);
         TerrainAndBackgroundSceneryEnabled = value.IsTerrainAndBackgroundChange;
         ForegroundSceneryEnabled = value.IsForegroundChange;
     }
