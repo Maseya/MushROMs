@@ -61,7 +61,7 @@ namespace Maseya.Smas.Smb1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transition Command.
+        ///   Looks up a localized string similar to Area Pointer.
         /// </summary>
         internal static string AreaPointer {
             get {
@@ -115,20 +115,20 @@ namespace Maseya.Smas.Smb1 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        internal static string Balance {
+            get {
+                return ResourceManager.GetString("Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pulley Platforms.
         /// </summary>
         internal static string BalanceHorizontalRope {
             get {
                 return ResourceManager.GetString("BalanceHorizontalRope", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rope for Lift Balance.
-        /// </summary>
-        internal static string BalanceRopeLift {
-            get {
-                return ResourceManager.GetString("BalanceRopeLift", resourceCulture);
             }
         }
         
@@ -354,6 +354,15 @@ namespace Maseya.Smas.Smb1 {
         internal static string CounterClockwise {
             get {
                 return ResourceManager.GetString("CounterClockwise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crashes.
+        /// </summary>
+        internal static string Crashes {
+            get {
+                return ResourceManager.GetString("Crashes", resourceCulture);
             }
         }
         
@@ -736,6 +745,15 @@ namespace Maseya.Smas.Smb1 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} ({1}; {2}; {3}).
+        /// </summary>
+        internal static string ObjectWithThreeDescriptors {
+            get {
+                return ResourceManager.GetString("ObjectWithThreeDescriptors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ({1}; {2}).
         /// </summary>
         internal static string ObjectWithTwoDescriptors {
@@ -898,7 +916,7 @@ namespace Maseya.Smas.Smb1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spiny (Warning: Walk speed is random).
+        ///   Looks up a localized string similar to Spiny.
         /// </summary>
         internal static string Spiny {
             get {
