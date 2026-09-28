@@ -85,6 +85,11 @@ public class BrutarioEditor : IMainEditor
         ObjectData.DataCleared += (s, e) => OnObjectData_DataCleared(e);
 
         SpriteData = [];
+        SpriteData.DataReset += OnSpriteData_DataReset;
+        SpriteData.ItemEdited += OnSpriteData_ItemEdited;
+        SpriteData.ItemAdded += OnSpriteData_ItemAdded;
+        SpriteData.ItemRemoved += OnSpriteData_ItemRemoved;
+        SpriteData.DataCleared += OnSpriteData_DataCleared;
 
         UndoFactory = new UndoFactory();
         UndoFactory.Cleared += UndoFactory_Cleared;
@@ -146,6 +151,16 @@ public class BrutarioEditor : IMainEditor
     public event EventHandler<ItemAddedEventArgs>? ObjectData_ItemRemoved;
 
     public event EventHandler? ObjectData_DataCleared;
+
+    public event EventHandler? SpriteData_DataReset;
+
+    public event EventHandler<SpriteEditedEventArgs>? SpriteData_ItemEdited;
+
+    public event EventHandler<ItemAddedEventArgs>? SpriteData_ItemAdded;
+
+    public event EventHandler<ItemAddedEventArgs>? SpriteData_ItemRemoved;
+
+    public event EventHandler? SpriteData_DataCleared;
 
     public event EventHandler? AnimationFrameChanged;
 
@@ -1489,6 +1504,57 @@ public class BrutarioEditor : IMainEditor
         {
             Invalidate();
         }
+    }
+
+    private void OnSpriteData_DataReset(object? sender, EventArgs e)
+    {
+        SpriteData_DataReset?.Invoke(this, e);
+        SelectedSpriteIndex = SpriteData.Count > 0 ? 0 : -1;
+        OnSelectedSpriteChanged(EventArgs.Empty);
+        if (IsAreaLoaded)
+        {
+            RenderAreaTilemap();
+            Invalidate();
+        }
+    }
+
+    private void OnSpriteData_ItemEdited(object? sender, SpriteEditedEventArgs e)
+    {
+        SpriteData_ItemEdited?.Invoke(this, e);
+        if (IsAreaLoaded)
+        {
+            RenderAreaTilemap();
+            Invalidate();
+        }
+    }
+
+    private void OnSpriteData_ItemAdded(object? sender, ItemAddedEventArgs e)
+    {
+        SpriteData_ItemAdded?.Invoke(this, e);
+        if (IsAreaLoaded)
+        {
+            RenderAreaTilemap();
+            Invalidate();
+        }
+    }
+
+    private void OnSpriteData_ItemRemoved(object? sender, ItemAddedEventArgs e)
+    {
+        SpriteData_ItemRemoved?.Invoke(this, e);
+        if (SelectedSpriteIndex >= SpriteData.Count)
+        {
+            SelectedSpriteIndex = SpriteData.Count - 1;
+        }
+
+        RenderAreaTilemap();
+        Invalidate();
+    }
+
+    private void OnSpriteData_DataCleared(object? sender, EventArgs e)
+    {
+        SpriteData_DataCleared?.Invoke(this, e);
+        RenderAreaTilemap();
+        Invalidate();
     }
 
     protected virtual void OnAnimationFrameChanged(EventArgs e)

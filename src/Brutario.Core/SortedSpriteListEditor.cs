@@ -29,11 +29,11 @@ public class SortedSpriteListEditor :
 
     public event EventHandler? DataReset;
 
-    public event EventHandler? ItemEdited;
+    public event EventHandler<SpriteEditedEventArgs>? ItemEdited;
 
-    public event EventHandler? ItemAdded;
+    public event EventHandler<ItemAddedEventArgs>? ItemAdded;
 
-    public event EventHandler? ItemRemoved;
+    public event EventHandler<ItemAddedEventArgs>? ItemRemoved;
 
     public event EventHandler? DataCleared;
 
@@ -173,7 +173,7 @@ public class SortedSpriteListEditor :
     public int Add(UIAreaSpriteCommand command)
     {
         var index = AddInternal(command);
-        ItemAdded?.Invoke(this, EventArgs.Empty);
+        ItemAdded?.Invoke(this, new ItemAddedEventArgs(index));
         return index;
     }
 
@@ -197,15 +197,24 @@ public class SortedSpriteListEditor :
     public void RemoveAt(int index)
     {
         Items.RemoveAt(index);
-        ItemRemoved?.Invoke(this, EventArgs.Empty);
+        ItemRemoved?.Invoke(this, new ItemAddedEventArgs(index));
     }
 
     public int Edit(int index, UIAreaSpriteCommand newItem)
     {
+        if (Items[index] == newItem)
+        {
+            return index;
+        }
+
+        var oldItem = Items[index];
         Items.RemoveAt(index);
-        index = AddInternal(newItem);
-        ItemEdited?.Invoke(this, EventArgs.Empty);
-        return index;
+        var newIndex = AddInternal(newItem);
+
+        ItemEdited?.Invoke(
+            this,
+            new SpriteEditedEventArgs(index, newIndex, oldItem, newItem));
+        return newIndex;
     }
 
     public void Clear()
