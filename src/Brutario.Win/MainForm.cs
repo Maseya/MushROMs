@@ -290,6 +290,19 @@ public partial class MainForm : Form, IMainView
         }
     }
 
+    public bool AnimationsEnabled
+    {
+        get
+        {
+            return tsmToggleAnimations.Checked;
+        }
+
+        set
+        {
+            tsmToggleAnimations.Checked = value;
+        }
+    }
+
     public MainPresenter Presenter
     {
         get;
@@ -318,12 +331,18 @@ public partial class MainForm : Form, IMainView
         }
     }
 
+    private int LastFrame
+    {
+        get;
+        set;
+    }
+
     private int CurrentFrame
     {
         get
         {
             // TODO(swr): Remove frame constants here.
-            return (int)(ElapsedTime.TotalMilliseconds * (60 / 1000.0));
+            return (int)(ElapsedTime.TotalMilliseconds * (60 / 1000.0)) + LastFrame;
         }
     }
 
@@ -453,6 +472,8 @@ public partial class MainForm : Form, IMainView
         }
 
         Presenter.AutoSaveHardCutoff = Settings.Default.AutoSaveHardCutoff;
+
+        AnimationsEnabled = Settings.Default.AnimationsEnabled;
 
         // TODO(swr): Maybe start timer when rom is opened?
         StartTime = DateTime.Now;
@@ -735,7 +756,10 @@ public partial class MainForm : Form, IMainView
     private void Timer_Elapsed(object? sender, EventArgs e)
     {
         // TODO(swr): Should animation be UI-controlled?
-        Presenter.UpdateFrame(CurrentFrame);
+        if (AnimationsEnabled)
+        {
+            Presenter.UpdateFrame(CurrentFrame);
+        }
     }
 
     private void LoadArea_Click(object sender, EventArgs e)
@@ -833,5 +857,19 @@ public partial class MainForm : Form, IMainView
         location.X += tsbOpenRecent.Bounds.Width / 4;
         location.Y += tsbOpenRecent.Bounds.Height;
         cmsRecentRoms.Show(toolStrip, location);
+    }
+
+    private void ToggleAnimations_CheckedChanged(object sender, EventArgs e)
+    {
+        Settings.Default.AnimationsEnabled = AnimationsEnabled;
+        Settings.Default.Save();
+        if (AnimationsEnabled)
+        {
+            StartTime = DateTime.Now;
+        }
+        else
+        {
+            LastFrame = CurrentFrame;
+        }
     }
 }

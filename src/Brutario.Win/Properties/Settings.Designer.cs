@@ -117,5 +117,17 @@ namespace Brutario.Win.Properties {
                 this["LoadLastOpenedRom"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AnimationsEnabled {
+            get {
+                return ((bool)(this["AnimationsEnabled"]));
+            }
+            set {
+                this["AnimationsEnabled"] = value;
+            }
+        }
     }
 }
