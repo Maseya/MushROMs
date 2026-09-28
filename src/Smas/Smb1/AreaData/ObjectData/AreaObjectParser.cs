@@ -1251,12 +1251,32 @@ public class AreaObjectParser
     {
         _ = TrySetCurrentBufferObjectWidth();
         (var y, _) = GetObjectColumnProperties();
+
+        // Custom check. Not in asm code.
+        if (y >= 0x0D)
+        {
+            return;
+        }
+
         if (CurrentBufferObjectWidth == 0)
         {
             TileBuffer[y++] = 0xF3;
+
+            // Custom check. Not in asm code.
+            if (y >= 0x0D)
+            {
+                return;
+            }
+
             if (TileBuffer[y] == 0)
             {
                 TileBuffer[y++] = 0xF4;
+
+                // Custom check. Not in asm code.
+                if (y >= 0x0D)
+                {
+                    return;
+                }
             }
         }
         else if (TileBuffer[y] == 0)
@@ -1277,6 +1297,13 @@ public class AreaObjectParser
     private void CastleRectangularCeilingTiles()
     {
         (var y, _) = GetObjectColumnProperties();
+
+        // Custom check. Not in asm code.
+        if (y >= 0x0D)
+        {
+            return;
+        }
+
         _ = TrySetCurrentBufferObjectWidth();
         TileBuffer[y] = 0x67;
         for (y += 2; y < TileBuffer.Length; y += 2)
@@ -1330,6 +1357,13 @@ public class AreaObjectParser
     {
         _ = TrySetCurrentBufferObjectWidth();
         (var y, _) = GetObjectColumnProperties();
+
+        // Custom check. Not in asm code.
+        if (y >= 0x0D)
+        {
+            return;
+        }
+
         if (CurrentBufferObjectWidth == 0)
         {
             TileBuffer[y++] = 2;
@@ -1356,6 +1390,13 @@ public class AreaObjectParser
     private void CastleFloorRightWall()
     {
         (var y, _) = GetObjectColumnProperties();
+
+        // Custom check. Not in asm code.
+        if (y >= 0x0D)
+        {
+            return;
+        }
+
         _ = TrySetCurrentBufferObjectWidth();
         if (CurrentBufferObjectWidth == 0)
         {
@@ -1379,6 +1420,12 @@ public class AreaObjectParser
         (var y, _) = GetObjectColumnProperties();
         do
         {
+            // Custom check. Not in asm code.
+            if (y >= 0x0D)
+            {
+                return;
+            }
+
             TileBuffer[y++] = 0x71;
         }
         while (--CurrentBufferObjectWidth >= 0);
