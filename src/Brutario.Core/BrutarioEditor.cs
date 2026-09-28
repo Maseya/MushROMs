@@ -717,6 +717,7 @@ public class BrutarioEditor : IMainEditor
         Path = path;
         GameData = gameData;
         GameData.GfxData.ReadStaticData(PixelData);
+        GameData.GfxData.ReadAnimationFrame(0, PixelData);
         GameData.Map16Data.ReadStaticTiles(Map16Tiles);
         GameData.TilemapLoaderAsm.LoadTileset += TilemapLoaderAsm_LoadTileset;
 
