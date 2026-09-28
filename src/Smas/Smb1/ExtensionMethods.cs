@@ -238,7 +238,7 @@ public static class ExtensionMethods
             AreaSpriteCode.YellowKoopaParatroopaStopped => AddTwoDescriptors(
                 Resources.KoopaParatroopa,
                 Resources.Yellow,
-                WarningDescriptor(Resources.FliesInPlace)),
+                Resources.FliesInPlace),
             AreaSpriteCode.GreenCheepCheep => AddDescriptor(
                 Resources.CheepCheep,
                 Resources.Green),
@@ -260,17 +260,20 @@ public static class ExtensionMethods
                 Resources.Green,
                 Resources.FliesHorizontally),
             AreaSpriteCode.Lakitu => Resources.Lakitu,
-            AreaSpriteCode.Spiny => AddWarningDescriptor(
+            AreaSpriteCode.Spiny => AddDescriptor(
                 Resources.Spiny,
                 Resources.RandomWalkSpeed),
-            AreaSpriteCode.RedFlyingCheepCheep => AddTwoDescriptors(
+            AreaSpriteCode.RedFlyingCheepCheep => AddThreeDescriptors(
                 Resources.CheepCheep,
+                Resources.Generator,
                 Resources.Red,
                 Resources.Flying),
             AreaSpriteCode.BowsersFire => AddDescriptor(
                 Resources.BowserFire,
                 Resources.Generator),
-            AreaSpriteCode.Fireworks => Resources.Firework,
+            AreaSpriteCode.Fireworks => AddDescriptor(
+                Resources.Firework,
+                Resources.Crashes),
             AreaSpriteCode.BulletBillOrCheepCheeps => AddDescriptor(
                 Resources.Generator,
                 Resources.BulletBillOrCheepCheep),
@@ -291,8 +294,10 @@ public static class ExtensionMethods
             AreaSpriteCode.LongFireBarClockwise => AddTwoDescriptors(
                 Resources.FireBar,
                 Resources.Long,
-                Resources.CounterClockwise),
-            AreaSpriteCode.BalanceRopeLift => Resources.BalanceRopeLift,
+                Resources.Clockwise),
+            AreaSpriteCode.BalanceRopeLift => AddDescriptor(
+                Resources.Lift,
+                Resources.Balance),
             AreaSpriteCode.LiftDownThenUp => AddTwoDescriptors(
                 Resources.Lift,
                 Resources.Down,
@@ -410,6 +415,20 @@ public static class ExtensionMethods
             item,
             description1,
             description2);
+    }
+
+    private static string AddThreeDescriptors(
+        string item,
+        string description1,
+        string description2,
+        string description3)
+    {
+        return String.Format(
+            Resources.ObjectWithThreeDescriptors,
+            item,
+            description1,
+            description2,
+            description3);
     }
 
     private static string YDescriptor(object y)

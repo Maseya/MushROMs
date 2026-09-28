@@ -308,7 +308,7 @@
     <value>Skip to screen 0x{0:X2}</value>
   </data>
   <data name="AreaPointer" xml:space="preserve">
-    <value>Transition Command</value>
+    <value>Area Pointer</value>
   </data>
   <data name="BuzzyBeetle" xml:space="preserve">
     <value>Buzzy Beetle</value>
@@ -335,7 +335,7 @@
     <value>Lakitu</value>
   </data>
   <data name="Spiny" xml:space="preserve">
-    <value>Spiny (Warning: Walk speed is random)</value>
+    <value>Spiny</value>
   </data>
   <data name="ObjectWithTwoDescriptors" xml:space="preserve">
     <value>{0} ({1}; {2})</value>
@@ -425,8 +425,8 @@
   <data name="Long" xml:space="preserve">
     <value>Long</value>
   </data>
-  <data name="BalanceRopeLift" xml:space="preserve">
-    <value>Rope for Lift Balance</value>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
   </data>
   <data name="Up" xml:space="preserve">
     <value>Up</value>
@@ -466,5 +466,11 @@
   </data>
   <data name="ToadOrPrincess" xml:space="preserve">
     <value>Toad or Princess</value>
+  </data>
+  <data name="Crashes" xml:space="preserve">
+    <value>Crashes</value>
+  </data>
+  <data name="ObjectWithThreeDescriptors" xml:space="preserve">
+    <value>{0} ({1}; {2}; {3})</value>
   </data>
 </root>
