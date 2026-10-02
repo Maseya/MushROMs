@@ -247,7 +247,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
             {
                 0x0F => (ObjectType)(0xF00 | PrimaryCommand),
                 0x0C => (ObjectType)(0xC00 | (SecondaryCommand << 4)),
-                0x0D => (SecondaryCommand & ~1) == 0
+                0x0D => (SecondaryCommand & ~3) == 0
                     ? ObjectType.PageSkip
                     : (ObjectType)(0xD00 | (SecondaryCommand << 4) | Parameter),
                 0x0E => (ObjectType)(0xE00 | ((SecondaryCommand & 4) << 4)),
