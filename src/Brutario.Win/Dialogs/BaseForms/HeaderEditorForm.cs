@@ -8,6 +8,7 @@
 namespace Brutario.Win.Dialogs.BaseForms;
 
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 using Maseya.Smas.Smb1.AreaData.HeaderData;
@@ -18,116 +19,117 @@ internal partial class HeaderEditorForm : Form
     public HeaderEditorForm()
     {
         InitializeComponent();
-
-        AreaHeader = default;
     }
 
+    [Category("Area Header")]
     public event EventHandler? AreaHeaderChanged;
 
+    [Category("Area Header")]
     public StartTime StartTime
     {
         get
         {
-            return (StartTime)cbxTime.SelectedIndex;
+            return headerEditorUserControl.StartTime;
         }
 
         set
         {
-            cbxTime.SelectedIndex = (int)value;
+            headerEditorUserControl.StartTime = value;
         }
     }
 
+    [Category("Area Header")]
     public StartYPosition StartYPosition
     {
         get
         {
-            return (StartYPosition)cbxPosition.SelectedIndex;
+            return headerEditorUserControl.StartYPosition;
         }
 
         set
         {
-            cbxPosition.SelectedIndex = (int)value;
+            headerEditorUserControl.StartYPosition = value;
         }
     }
 
+    [Category("Area Header")]
     public ForegroundScenery ForegroundScenery
     {
         get
         {
-            return (ForegroundScenery)cbxForeground.SelectedIndex;
+            return headerEditorUserControl.ForegroundScenery;
         }
 
         set
         {
-            cbxForeground.SelectedIndex = (int)value;
+            headerEditorUserControl.ForegroundScenery = value;
         }
     }
 
+    [Category("Area Header")]
     public AreaPlatformType AreaPlatformType
     {
         get
         {
-            return (AreaPlatformType)cbxAreaPlatformType.SelectedIndex;
+            return headerEditorUserControl.AreaPlatformType;
         }
 
         set
         {
-            cbxAreaPlatformType.SelectedIndex = (int)value;
+            headerEditorUserControl.AreaPlatformType = value;
         }
     }
 
+    [Category("Area Header")]
     public BackgroundScenery BackgroundScenery
     {
         get
         {
-            return (BackgroundScenery)cbxBackgroundScenery.SelectedIndex;
+            return headerEditorUserControl.BackgroundScenery;
         }
 
         set
         {
-            cbxBackgroundScenery.SelectedIndex = (int)value;
+            headerEditorUserControl.BackgroundScenery = value;
         }
     }
 
+    [Category("Area Header")]
     public TerrainMode TerrainMode
     {
         get
         {
-            return (TerrainMode)cbxTerrainMode.SelectedIndex;
+            return headerEditorUserControl.TerrainMode;
         }
 
         set
         {
-            cbxTerrainMode.SelectedIndex = (int)value;
+            headerEditorUserControl.TerrainMode = value;
         }
     }
 
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public AreaHeader AreaHeader
     {
         get
         {
-            return new AreaHeader(
-                StartTime,
-                StartYPosition,
-                ForegroundScenery,
-                AreaPlatformType,
-                BackgroundScenery,
-                TerrainMode);
+            return headerEditorUserControl.AreaHeader;
         }
 
         set
         {
-            StartTime = value.StartTime;
-            StartYPosition = value.StartYPosition;
-            ForegroundScenery = value.ForegroundScenery;
-            AreaPlatformType = value.AreaPlatformType;
-            BackgroundScenery = value.BackgroundScenery;
-            TerrainMode = value.TerrainMode;
+            headerEditorUserControl.AreaHeader = value;
         }
     }
 
-    private void Value_SelectedIndexChanged(object? sender, EventArgs e)
+    protected virtual void OnAreaHeaderChanged(EventArgs e)
     {
         AreaHeaderChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HeaderEditorUserControl_AreaHeaderChanged(object sender, EventArgs e)
+    {
+        OnAreaHeaderChanged(EventArgs.Empty);
     }
 }
