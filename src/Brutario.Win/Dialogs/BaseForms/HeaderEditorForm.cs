@@ -18,8 +18,6 @@ internal partial class HeaderEditorForm : Form
     public HeaderEditorForm()
     {
         InitializeComponent();
-
-        AreaHeader = default;
     }
 
     public event EventHandler? AreaHeaderChanged;
@@ -28,12 +26,12 @@ internal partial class HeaderEditorForm : Form
     {
         get
         {
-            return (StartTime)cbxTime.SelectedIndex;
+            return headerEditorUserControl.StartTime;
         }
 
         set
         {
-            cbxTime.SelectedIndex = (int)value;
+            headerEditorUserControl.StartTime = value;
         }
     }
 
@@ -41,12 +39,12 @@ internal partial class HeaderEditorForm : Form
     {
         get
         {
-            return (StartYPosition)cbxPosition.SelectedIndex;
+            return headerEditorUserControl.StartYPosition;
         }
 
         set
         {
-            cbxPosition.SelectedIndex = (int)value;
+            headerEditorUserControl.StartYPosition = value;
         }
     }
 
@@ -54,12 +52,12 @@ internal partial class HeaderEditorForm : Form
     {
         get
         {
-            return (ForegroundScenery)cbxForeground.SelectedIndex;
+            return headerEditorUserControl.ForegroundScenery;
         }
 
         set
         {
-            cbxForeground.SelectedIndex = (int)value;
+            headerEditorUserControl.ForegroundScenery = value;
         }
     }
 
@@ -67,12 +65,12 @@ internal partial class HeaderEditorForm : Form
     {
         get
         {
-            return (AreaPlatformType)cbxAreaPlatformType.SelectedIndex;
+            return headerEditorUserControl.AreaPlatformType;
         }
 
         set
         {
-            cbxAreaPlatformType.SelectedIndex = (int)value;
+            headerEditorUserControl.AreaPlatformType = value;
         }
     }
 
@@ -80,12 +78,12 @@ internal partial class HeaderEditorForm : Form
     {
         get
         {
-            return (BackgroundScenery)cbxBackgroundScenery.SelectedIndex;
+            return headerEditorUserControl.BackgroundScenery;
         }
 
         set
         {
-            cbxBackgroundScenery.SelectedIndex = (int)value;
+            headerEditorUserControl.BackgroundScenery = value;
         }
     }
 
@@ -93,12 +91,12 @@ internal partial class HeaderEditorForm : Form
     {
         get
         {
-            return (TerrainMode)cbxTerrainMode.SelectedIndex;
+            return headerEditorUserControl.TerrainMode;
         }
 
         set
         {
-            cbxTerrainMode.SelectedIndex = (int)value;
+            headerEditorUserControl.TerrainMode = value;
         }
     }
 
@@ -106,27 +104,16 @@ internal partial class HeaderEditorForm : Form
     {
         get
         {
-            return new AreaHeader(
-                StartTime,
-                StartYPosition,
-                ForegroundScenery,
-                AreaPlatformType,
-                BackgroundScenery,
-                TerrainMode);
+            return headerEditorUserControl.AreaHeader;
         }
 
         set
         {
-            StartTime = value.StartTime;
-            StartYPosition = value.StartYPosition;
-            ForegroundScenery = value.ForegroundScenery;
-            AreaPlatformType = value.AreaPlatformType;
-            BackgroundScenery = value.BackgroundScenery;
-            TerrainMode = value.TerrainMode;
+            headerEditorUserControl.AreaHeader = value;
         }
     }
 
-    private void Value_SelectedIndexChanged(object? sender, EventArgs e)
+    private void HeaderEditorUserControl_AreaHeaderChanged(object sender, EventArgs e)
     {
         AreaHeaderChanged?.Invoke(this, EventArgs.Empty);
     }
