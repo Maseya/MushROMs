@@ -126,13 +126,29 @@ public partial class HeaderEditorUserControl : UserControl
 
         set
         {
+            if (AreaHeader == value || AreaHeaderIsChanging)
+            {
+                return;
+            }
+
+            AreaHeaderIsChanging = true;
+
             StartTime = value.StartTime;
             StartYPosition = value.StartYPosition;
             ForegroundScenery = value.ForegroundScenery;
             AreaPlatformType = value.AreaPlatformType;
             BackgroundScenery = value.BackgroundScenery;
             TerrainMode = value.TerrainMode;
+
+            OnAreaHeaderChanged(EventArgs.Empty);
+            AreaHeaderIsChanging = false;
         }
+    }
+
+    private bool AreaHeaderIsChanging
+    {
+        get;
+        set;
     }
 
     protected virtual void OnAreaHeaderChanged(EventArgs e)
@@ -142,6 +158,14 @@ public partial class HeaderEditorUserControl : UserControl
 
     private void Value_SelectedIndexChanged(object? sender, EventArgs e)
     {
+        if (AreaHeaderIsChanging)
+        {
+            return;
+        }
+
+        AreaHeaderIsChanging = true;
+
         OnAreaHeaderChanged(EventArgs.Empty);
+        AreaHeaderIsChanging = false;
     }
 }
