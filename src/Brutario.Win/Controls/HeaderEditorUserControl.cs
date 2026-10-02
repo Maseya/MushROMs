@@ -135,8 +135,13 @@ public partial class HeaderEditorUserControl : UserControl
         }
     }
 
-    private void Value_SelectedIndexChanged(object? sender, EventArgs e)
+    protected virtual void OnAreaHeaderChanged(EventArgs e)
     {
         AreaHeaderChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Value_SelectedIndexChanged(object? sender, EventArgs e)
+    {
+        OnAreaHeaderChanged(EventArgs.Empty);
     }
 }

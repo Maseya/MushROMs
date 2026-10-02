@@ -123,8 +123,13 @@ internal partial class HeaderEditorForm : Form
         }
     }
 
-    private void HeaderEditorUserControl_AreaHeaderChanged(object sender, EventArgs e)
+    protected virtual void OnAreaHeaderChanged(EventArgs e)
     {
         AreaHeaderChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HeaderEditorUserControl_AreaHeaderChanged(object sender, EventArgs e)
+    {
+        OnAreaHeaderChanged(EventArgs.Empty);
     }
 }
