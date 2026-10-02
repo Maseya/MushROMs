@@ -8,6 +8,7 @@
 namespace Brutario.Win.Dialogs.BaseForms;
 
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 using Maseya.Smas.Smb1.AreaData.HeaderData;
@@ -20,8 +21,10 @@ internal partial class HeaderEditorForm : Form
         InitializeComponent();
     }
 
+    [Category("Area Header")]
     public event EventHandler? AreaHeaderChanged;
 
+    [Category("Area Header")]
     public StartTime StartTime
     {
         get
@@ -35,6 +38,7 @@ internal partial class HeaderEditorForm : Form
         }
     }
 
+    [Category("Area Header")]
     public StartYPosition StartYPosition
     {
         get
@@ -48,6 +52,7 @@ internal partial class HeaderEditorForm : Form
         }
     }
 
+    [Category("Area Header")]
     public ForegroundScenery ForegroundScenery
     {
         get
@@ -61,6 +66,7 @@ internal partial class HeaderEditorForm : Form
         }
     }
 
+    [Category("Area Header")]
     public AreaPlatformType AreaPlatformType
     {
         get
@@ -74,6 +80,7 @@ internal partial class HeaderEditorForm : Form
         }
     }
 
+    [Category("Area Header")]
     public BackgroundScenery BackgroundScenery
     {
         get
@@ -87,6 +94,7 @@ internal partial class HeaderEditorForm : Form
         }
     }
 
+    [Category("Area Header")]
     public TerrainMode TerrainMode
     {
         get
@@ -100,6 +108,8 @@ internal partial class HeaderEditorForm : Form
         }
     }
 
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public AreaHeader AreaHeader
     {
         get

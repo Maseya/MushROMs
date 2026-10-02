@@ -22,8 +22,10 @@ public partial class HeaderEditorUserControl : UserControl
         AreaHeader = default;
     }
 
+    [Category("Area Header")]
     public event EventHandler? AreaHeaderChanged;
 
+    [Category("Area Header")]
     public StartTime StartTime
     {
         get
@@ -37,6 +39,7 @@ public partial class HeaderEditorUserControl : UserControl
         }
     }
 
+    [Category("Area Header")]
     public StartYPosition StartYPosition
     {
         get
@@ -50,6 +53,7 @@ public partial class HeaderEditorUserControl : UserControl
         }
     }
 
+    [Category("Area Header")]
     public ForegroundScenery ForegroundScenery
     {
         get
@@ -63,6 +67,7 @@ public partial class HeaderEditorUserControl : UserControl
         }
     }
 
+    [Category("Area Header")]
     public AreaPlatformType AreaPlatformType
     {
         get
@@ -76,6 +81,7 @@ public partial class HeaderEditorUserControl : UserControl
         }
     }
 
+    [Category("Area Header")]
     public BackgroundScenery BackgroundScenery
     {
         get
@@ -89,6 +95,7 @@ public partial class HeaderEditorUserControl : UserControl
         }
     }
 
+    [Category("Area Header")]
     public TerrainMode TerrainMode
     {
         get
@@ -102,6 +109,8 @@ public partial class HeaderEditorUserControl : UserControl
         }
     }
 
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public AreaHeader AreaHeader
     {
         get
