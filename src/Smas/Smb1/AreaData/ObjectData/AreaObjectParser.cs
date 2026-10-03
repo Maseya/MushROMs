@@ -1142,9 +1142,8 @@ public class AreaObjectParser
     private void ForegroundChange()
     {
         var header = CurrentHeader;
-        header.ForegroundScenery = (CurrentBufferObject.PrimaryCommand & 7) < 4
-            ? (ForegroundScenery)(CurrentBufferObject.PrimaryCommand & 7)
-            : ForegroundScenery.None;
+        header.ForegroundScenery =
+            ((ForegroundScenery)CurrentBufferObject.PrimaryCommand).SafeValue();
         CurrentHeader = header;
     }
 
