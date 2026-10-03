@@ -374,6 +374,10 @@ public partial class SpriteEditorForm : Form
     {
         IsValidInput = !tbxAreaNumber.Enabled
             || TryGetAreaNumber(tbxAreaNumber.Text, out var _);
+        if (IsValidInput)
+        {
+            AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void ManualInput_TextChanged(object? sender, EventArgs e)
