@@ -31,4 +31,24 @@ public enum ForegroundScenery
     /// Water or lava is at ground level (e.g. main area of W2-3).
     /// </summary>
     OverWater,
+
+    /// <summary>
+    /// Unused.
+    /// </summary>
+    Night,
+
+    /// <summary>
+    /// Unused.
+    /// </summary>
+    Snow,
+
+    /// <summary>
+    /// Unused.
+    /// </summary>
+    NightAndSnow,
+
+    /// <summary>
+    /// Unused.
+    /// </summary>
+    Castle,
 }

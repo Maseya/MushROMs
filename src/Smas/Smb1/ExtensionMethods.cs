@@ -13,6 +13,8 @@ using System.Collections.Immutable;
 using AreaData.ObjectData;
 using AreaData.SpriteData;
 
+using Maseya.Smas.Smb1.AreaData.HeaderData;
+
 public static class ExtensionMethods
 {
     private static readonly ImmutableHashSet<ObjectType>
@@ -86,6 +88,11 @@ public static class ExtensionMethods
         }
 
         yield return AreaSpriteCommand.TerminationCode;
+    }
+
+    public static ForegroundScenery SafeValue(this ForegroundScenery scenery)
+    {
+        return ((int)scenery & 7) < 4 ? scenery : ForegroundScenery.None;
     }
 
     public static ObjectType ToObjectCode(this AreaPlatformType type)
