@@ -66,13 +66,6 @@ public partial class ObjectEditorUserControl : UserControl
             }
 
             _areaPlatformType = value;
-
-            // Change the name of the area specific platform in the object
-            // combo box to match the new value.
-            var index = EnumIndexes[ObjectType.AreaSpecificPlatform];
-            var code = value.ToObjectCode();
-            cbxAreaObjectCode.Items[index] = code.BaseName();
-
             OnAreaPlatformTypeChanged(EventArgs.Empty);
         }
     }
@@ -426,6 +419,12 @@ public partial class ObjectEditorUserControl : UserControl
 
     protected virtual void OnAreaPlatformTypeChanged(EventArgs e)
     {
+        // Change the name of the area specific platform in the object
+        // combo box to match the new value.
+        var index = EnumIndexes[ObjectType.AreaSpecificPlatform];
+        var code = AreaPlatformType.ToObjectCode();
+        cbxAreaObjectCode.Items[index] = code.BaseName();
+
         AreaPlatformTypeChanged?.Invoke(this, e);
     }
 
