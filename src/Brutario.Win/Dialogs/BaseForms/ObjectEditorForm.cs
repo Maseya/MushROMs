@@ -88,61 +88,13 @@ internal partial class ObjectEditorForm : Form
     {
         get
         {
-            _ = TryGetBinaryCommand(tbxManualInput.Text, out var result);
-            return result;
+            return objectEditorTextBox.BinaryCommand;
         }
 
         set
         {
-            if (TryGetBinaryCommand(tbxManualInput.Text, out var result)
-                && value == result)
-            {
-                return;
-            }
-
-            tbxManualInput.Text = value.HexString;
+            objectEditorTextBox.BinaryCommand = value;
         }
-    }
-
-    private static bool TryGetBinaryCommand(string text, out UIAreaObjectCommand command)
-    {
-        var tokens = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        if (tokens.Length is not 4 and not 3)
-        {
-            command = default;
-            return false;
-        }
-
-        var bytes = new byte[4];
-        for (var i = 0; i < tokens.Length; i++)
-        {
-            if (tokens[i].Length != 2)
-            {
-                command = default;
-                return false;
-            }
-
-            if (!Byte.TryParse(
-                tokens[i],
-                NumberStyles.HexNumber,
-                CultureInfo.CurrentUICulture,
-                out bytes[i]))
-            {
-                command = default;
-                return false;
-            }
-        }
-
-        var result = new AreaObjectCommand(bytes[1], bytes[2], bytes[3]);
-        if (!result.IsValid || bytes[0] >= 0x20
-            || result.ObjectType == ObjectType.PageSkip)
-        {
-            command = default;
-            return false;
-        }
-
-        command = new UIAreaObjectCommand(result, bytes[0]);
-        return true;
     }
 
     private void UpdateValidInputFlag()
@@ -150,8 +102,10 @@ internal partial class ObjectEditorForm : Form
         // If we're using the list and check boxes, then the input is always valid by
         // their restraints. Otherwise, if we're entering the value manually, then we
         // must check that text is valid.
+        /*
         IsValidInput =
             !UseManualInput || TryGetBinaryCommand(tbxManualInput.Text, out var _);
+        */
     }
 
     private void ManualInput_TextChanged(object? sender, EventArgs e)
@@ -159,7 +113,7 @@ internal partial class ObjectEditorForm : Form
         UpdateValidInputFlag();
         if (!UICommandIsUpdating && IsValidInput)
         {
-            //UICommand = BinaryCommand;
+            AreaObjectCommand = BinaryCommand;
         }
     }
 
