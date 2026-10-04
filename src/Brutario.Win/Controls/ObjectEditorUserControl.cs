@@ -102,11 +102,6 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            if (value == XPos)
-            {
-                return;
-            }
-
             nudX.Value = value;
         }
     }
@@ -120,11 +115,6 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            if (value == Page)
-            {
-                return;
-            }
-
             nudPage.Value = value;
         }
     }
@@ -179,11 +169,6 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            if (value == YPos)
-            {
-                return;
-            }
-
             nudY.Value = value;
         }
     }
@@ -226,7 +211,7 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            if (value == Length || value > MaximumLength)
+            if ((uint)value > MaximumLength)
             {
                 return;
             }
@@ -271,9 +256,12 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            if (value == TerrainMode)
+            if (!Enum.IsDefined(value))
             {
-                return;
+                throw new InvalidEnumArgumentException(
+                    nameof(TerrainMode),
+                    (int)value,
+                    typeof(TerrainMode));
             }
 
             cbxTerrainMode.SelectedIndex = (int)value;
@@ -289,9 +277,12 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            if (value == BackgroundScenery)
+            if (!Enum.IsDefined(value))
             {
-                return;
+                throw new InvalidEnumArgumentException(
+                    nameof(BackgroundScenery),
+                    (int)value,
+                    typeof(BackgroundScenery));
             }
 
             cbxBackgroundScenery.SelectedIndex = (int)value;
@@ -323,9 +314,12 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            if (value == ForegroundScenery)
+            if (!Enum.IsDefined(value))
             {
-                return;
+                throw new InvalidEnumArgumentException(
+                    nameof(ForegroundScenery),
+                    (int)value,
+                    typeof(ForegroundScenery));
             }
 
             cbxForegroundScenery.SelectedIndex = (int)value;
