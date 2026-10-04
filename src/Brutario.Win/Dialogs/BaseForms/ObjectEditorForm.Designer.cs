@@ -50,11 +50,11 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             btnOK.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnOK.DialogResult = DialogResult.OK;
-            btnOK.Location = new Point(295, 215);
+            btnOK.Location = new Point(189, 212);
             btnOK.Margin = new Padding(4, 3, 4, 3);
             btnOK.Name = "btnOK";
             btnOK.Size = new Size(88, 27);
-            btnOK.TabIndex = 0;
+            btnOK.TabIndex = 5;
             btnOK.Text = "&OK";
             btnOK.UseVisualStyleBackColor = true;
             // 
@@ -62,11 +62,11 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             btnCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnCancel.DialogResult = DialogResult.Cancel;
-            btnCancel.Location = new Point(390, 215);
+            btnCancel.Location = new Point(285, 211);
             btnCancel.Margin = new Padding(4, 3, 4, 3);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(88, 27);
-            btnCancel.TabIndex = 1;
+            btnCancel.TabIndex = 6;
             btnCancel.Text = "&Cancel";
             btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -74,22 +74,23 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(objectEditorUserControl);
-            groupBox1.Location = new Point(14, 14);
+            groupBox1.Location = new Point(13, 12);
             groupBox1.Margin = new Padding(4, 3, 4, 3);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4, 3, 4, 3);
-            groupBox1.Size = new Size(463, 171);
-            groupBox1.TabIndex = 2;
+            groupBox1.Size = new Size(360, 175);
+            groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Object";
             // 
             // objectEditorUserControl
             // 
             objectEditorUserControl.AreaPlatformType = Maseya.Smas.Smb1.AreaData.ObjectData.AreaPlatformType.Trees;
-            objectEditorUserControl.Location = new Point(7, 18);
+            objectEditorUserControl.Location = new Point(7, 22);
+            objectEditorUserControl.MinimumSize = new Size(346, 139);
             objectEditorUserControl.Name = "objectEditorUserControl";
-            objectEditorUserControl.Size = new Size(449, 147);
-            objectEditorUserControl.TabIndex = 0;
+            objectEditorUserControl.Size = new Size(346, 147);
+            objectEditorUserControl.TabIndex = 1;
             objectEditorUserControl.AreaPlatformTypeChanged += ObjectEditorUserControl_AreaPlatformTypeChanged;
             objectEditorUserControl.AreaObjectCommandChanged += ObjectEditorUserControl_AreaObjectCommandChanged;
             // 
@@ -97,23 +98,23 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             gbxBinary.Controls.Add(tbxManualInput);
             gbxBinary.Controls.Add(chkUseManualInput);
-            gbxBinary.Location = new Point(14, 192);
+            gbxBinary.Location = new Point(13, 193);
             gbxBinary.Margin = new Padding(4, 3, 4, 3);
             gbxBinary.Name = "gbxBinary";
             gbxBinary.Padding = new Padding(4, 3, 4, 3);
-            gbxBinary.Size = new Size(219, 68);
+            gbxBinary.Size = new Size(168, 51);
             gbxBinary.TabIndex = 3;
             gbxBinary.TabStop = false;
             // 
             // tbxManualInput
             // 
             tbxManualInput.CharacterCasing = CharacterCasing.Upper;
-            tbxManualInput.Location = new Point(10, 27);
+            tbxManualInput.Location = new Point(8, 22);
             tbxManualInput.Margin = new Padding(4, 3, 4, 3);
             tbxManualInput.MaxLength = 8;
             tbxManualInput.Name = "tbxManualInput";
-            tbxManualInput.Size = new Size(201, 23);
-            tbxManualInput.TabIndex = 1;
+            tbxManualInput.Size = new Size(152, 23);
+            tbxManualInput.TabIndex = 4;
             tbxManualInput.WordWrap = false;
             tbxManualInput.TextChanged += ManualInput_TextChanged;
             // 
@@ -124,7 +125,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             chkUseManualInput.Margin = new Padding(4, 3, 4, 3);
             chkUseManualInput.Name = "chkUseManualInput";
             chkUseManualInput.Size = new Size(136, 19);
-            chkUseManualInput.TabIndex = 0;
+            chkUseManualInput.TabIndex = 2;
             chkUseManualInput.Text = "Enter value manually";
             chkUseManualInput.UseVisualStyleBackColor = true;
             chkUseManualInput.CheckedChanged += UseManualInput_CheckedChanged;
@@ -135,7 +136,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
-            ClientSize = new Size(491, 273);
+            ClientSize = new Size(386, 256);
             Controls.Add(gbxBinary);
             Controls.Add(groupBox1);
             Controls.Add(btnCancel);
@@ -144,7 +145,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
-            MinimumSize = new Size(452, 312);
+            MinimumSize = new Size(402, 295);
             Name = "ObjectEditorForm";
             ShowIcon = false;
             ShowInTaskbar = false;
