@@ -10,6 +10,7 @@ namespace Brutario.Win.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -21,6 +22,13 @@ using Maseya.Smas.Smb1.AreaData.ObjectData;
 
 public partial class ObjectEditorUserControl : UserControl
 {
+    private static readonly ReadOnlyCollection<ObjectType> Codes =
+        AreaObjectCommand.ValidCodes;
+
+    private static readonly ReadOnlyDictionary<ObjectType, int> EnumIndexes = new(
+            Enumerable.Range(0, Codes.Count).Select(
+                i => new KeyValuePair<ObjectType, int>(Codes[i], i)).ToDictionary());
+
     private AreaPlatformType _areaPlatformType;
 
     public ObjectEditorUserControl()
@@ -35,10 +43,14 @@ public partial class ObjectEditorUserControl : UserControl
         SetCommandInternal(default);
     }
 
+    [Category("Editor")]
     public event EventHandler? AreaPlatformTypeChanged;
 
+    [Category("Editor")]
     public event EventHandler? AreaObjectCommandChanged;
 
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public AreaPlatformType AreaPlatformType
     {
         get
@@ -65,7 +77,9 @@ public partial class ObjectEditorUserControl : UserControl
         }
     }
 
-    public UIAreaObjectCommand AreaObjectCommand
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public UIAreaObjectCommand UIAreaObjectCommand
     {
         get
         {
@@ -78,7 +92,7 @@ public partial class ObjectEditorUserControl : UserControl
         }
     }
 
-    private bool UICommandIsUpdating
+    public bool CommandIsUpdating
     {
         get;
         set;
@@ -408,22 +422,6 @@ public partial class ObjectEditorUserControl : UserControl
         }
     }
 
-    private static ReadOnlyCollection<ObjectType> Codes
-    {
-        get
-        {
-            return Maseya.Smas.Smb1.AreaData.ObjectData.AreaObjectCommand.ValidCodes;
-        }
-    }
-
-    private static ReadOnlyDictionary<ObjectType, int> EnumIndexes
-    {
-        get;
-    } = new(
-        new Dictionary<ObjectType, int>(
-        Enumerable.Range(0, Codes.Count)
-            .Select(i => new KeyValuePair<ObjectType, int>(Codes[i], i))));
-
     private void UpdateEnabledControls(AreaObjectCommand value)
     {
         YPosEnabled = value.HasYCoord;
@@ -437,9 +435,9 @@ public partial class ObjectEditorUserControl : UserControl
 
     private void SetCommandInternal(UIAreaObjectCommand value)
     {
-        Debug.Assert(!UICommandIsUpdating, "Object command is being set recursively");
+        Debug.Assert(!CommandIsUpdating, "Object command is being set recursively");
 
-        UICommandIsUpdating = true;
+        CommandIsUpdating = true;
         var command = value.Command;
         UpdateEnabledControls(command);
 
@@ -473,12 +471,12 @@ public partial class ObjectEditorUserControl : UserControl
             BinaryCommand = UICommand;
         }
         */
-        UICommandIsUpdating = false;
+        CommandIsUpdating = false;
     }
 
     private void AreaObectCode_SelectedIndexChanged(object? sender, EventArgs e)
     {
-        if (UICommandIsUpdating)
+        if (CommandIsUpdating)
         {
             return;
         }
@@ -505,7 +503,7 @@ public partial class ObjectEditorUserControl : UserControl
     private void Item_ValueChanged(object sender, EventArgs e)
     {
         var control = (Control)sender;
-        if (!control.Enabled || UICommandIsUpdating)
+        if (!control.Enabled || CommandIsUpdating)
         {
             return;
         }

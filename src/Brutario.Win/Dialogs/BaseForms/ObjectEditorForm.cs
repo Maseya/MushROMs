@@ -43,12 +43,12 @@ internal partial class ObjectEditorForm : Form
     {
         get
         {
-            return objectEditorUserControl.AreaObjectCommand;
+            return objectEditorUserControl.UIAreaObjectCommand;
         }
 
         set
         {
-            objectEditorUserControl.AreaObjectCommand = value;
+            objectEditorUserControl.UIAreaObjectCommand = value;
         }
     }
 
