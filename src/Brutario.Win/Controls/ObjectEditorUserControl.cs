@@ -487,11 +487,6 @@ public partial class ObjectEditorUserControl : UserControl
 
     private void AreaObectCode_SelectedIndexChanged(object? sender, EventArgs e)
     {
-        if (CommandIsUpdating)
-        {
-            return;
-        }
-
         switch (AreaObjectCode)
         {
         case ObjectType.ForegroundSceneryChange:
@@ -504,6 +499,11 @@ public partial class ObjectEditorUserControl : UserControl
             ForegroundSceneryEnabled = false;
             TerrainAndBackgroundSceneryEnabled = false;
             break;
+        }
+
+        if (CommandIsUpdating)
+        {
+            return;
         }
 
         UpdateEnabledControls(UICommand.Command);
