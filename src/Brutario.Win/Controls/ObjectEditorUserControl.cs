@@ -476,12 +476,7 @@ public partial class ObjectEditorUserControl : UserControl
             : default;
 
         Length = LengthEnabled ? 1 + command.Length : 1;
-        /*
-        if (!UseManualInput)
-        {
-            BinaryCommand = UICommand;
-        }
-        */
+
         CommandIsUpdating = false;
     }
 
@@ -507,7 +502,6 @@ public partial class ObjectEditorUserControl : UserControl
         }
 
         UpdateEnabledControls(UICommand.Command);
-        //BinaryCommand = UICommand;
         OnAreaObjectCommandChanged(EventArgs.Empty);
     }
 
@@ -519,7 +513,6 @@ public partial class ObjectEditorUserControl : UserControl
             return;
         }
 
-        //BinaryCommand = UICommand;
         OnAreaObjectCommandChanged(EventArgs.Empty);
     }
 }
