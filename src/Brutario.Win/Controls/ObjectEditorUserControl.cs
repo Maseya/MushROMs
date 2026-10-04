@@ -92,10 +92,12 @@ public partial class ObjectEditorUserControl : UserControl
         }
     }
 
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool CommandIsUpdating
     {
         get;
-        set;
+        private set;
     }
 
     private int XPos
@@ -422,6 +424,16 @@ public partial class ObjectEditorUserControl : UserControl
         }
     }
 
+    protected virtual void OnAreaPlatformTypeChanged(EventArgs e)
+    {
+        AreaPlatformTypeChanged?.Invoke(this, e);
+    }
+
+    protected virtual void OnAreaObjectCommandChanged(EventArgs e)
+    {
+        AreaObjectCommandChanged?.Invoke(this, e);
+    }
+
     private void UpdateEnabledControls(AreaObjectCommand value)
     {
         YPosEnabled = value.HasYCoord;
@@ -510,15 +522,5 @@ public partial class ObjectEditorUserControl : UserControl
 
         //BinaryCommand = UICommand;
         OnAreaObjectCommandChanged(EventArgs.Empty);
-    }
-
-    private void OnAreaPlatformTypeChanged(EventArgs e)
-    {
-        AreaPlatformTypeChanged?.Invoke(this, e);
-    }
-
-    private void OnAreaObjectCommandChanged(EventArgs e)
-    {
-        AreaObjectCommandChanged?.Invoke(this, e);
     }
 }
