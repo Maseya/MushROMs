@@ -114,7 +114,8 @@ namespace Brutario.Win.Dialogs.BaseForms
             objectEditorTextBox.TabIndex = 4;
             objectEditorTextBox.Text = "00 00 00";
             objectEditorTextBox.WordWrap = false;
-            objectEditorTextBox.TextChanged += ManualInput_TextChanged;
+            objectEditorTextBox.AreaObjectCommandChanged += ObjectEditorTextBox_AreaObjectCommandChanged;
+            objectEditorTextBox.IsValidCommandChanged += ObjectEditorTextBox_IsValidCommandChanged;
             // 
             // ObjectEditorForm
             // 

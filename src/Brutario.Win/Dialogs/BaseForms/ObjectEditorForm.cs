@@ -16,6 +16,8 @@ using Maseya.Smas.Smb1.AreaData.ObjectData;
 
 internal partial class ObjectEditorForm : Form
 {
+    private UIAreaObjectCommand _command;
+
     public ObjectEditorForm()
     {
         InitializeComponent();
@@ -42,12 +44,17 @@ internal partial class ObjectEditorForm : Form
     {
         get
         {
-            return objectEditorUserControl.UIAreaObjectCommand;
+            return _command;
         }
 
         set
         {
-            objectEditorUserControl.UIAreaObjectCommand = value;
+            if (UIAreaObjectCommand == value)
+            {
+                return;
+            }
+
+            SetCommandInternal(value);
         }
     }
 
@@ -64,13 +71,26 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
-    private bool UICommandIsUpdating
+    private UIAreaObjectCommand ControlCommand
+    {
+        get
+        {
+            return objectEditorUserControl.UIAreaObjectCommand;
+        }
+
+        set
+        {
+            objectEditorUserControl.UIAreaObjectCommand = value;
+        }
+    }
+
+    private bool IsControlCommandUpdating
     {
         get;
         set;
     }
 
-    private UIAreaObjectCommand BinaryCommand
+    private UIAreaObjectCommand TextCommand
     {
         get
         {
@@ -83,6 +103,12 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
+    private bool IsTextCommandUpdating
+    {
+        get;
+        set;
+    }
+
     protected virtual void OnAreaPlatformTypeChanged(EventArgs e)
     {
         AreaPlatformTypeChanged?.Invoke(this, e);
@@ -93,24 +119,20 @@ internal partial class ObjectEditorForm : Form
         AreaObjectCommandChanged?.Invoke(this, e);
     }
 
-    private void UpdateValidInputFlag()
+    private void SetCommandInternal(UIAreaObjectCommand value)
     {
-        // If we're using the list and check boxes, then the input is always valid by
-        // their restraints. Otherwise, if we're entering the value manually, then we
-        // must check that text is valid.
-        /*
-        IsValidInput =
-            !UseManualInput || TryGetBinaryCommand(tbxManualInput.Text, out var _);
-        */
-    }
-
-    private void ManualInput_TextChanged(object? sender, EventArgs e)
-    {
-        UpdateValidInputFlag();
-        if (!UICommandIsUpdating && IsValidInput)
+        _command = value;
+        if (!IsControlCommandUpdating)
         {
-            UIAreaObjectCommand = BinaryCommand;
+            ControlCommand = value;
         }
+
+        if (!IsTextCommandUpdating)
+        {
+            TextCommand = value;
+        }
+
+        OnAreaObjectCommandChanged(EventArgs.Empty);
     }
 
     private void ObjectEditorUserControl_AreaPlatformTypeChanged(object sender, EventArgs e)
@@ -120,6 +142,26 @@ internal partial class ObjectEditorForm : Form
 
     private void ObjectEditorUserControl_AreaObjectCommandChanged(object sender, EventArgs e)
     {
-        OnAreaObjectCommandChanged(EventArgs.Empty);
+        if (!IsControlCommandUpdating)
+        {
+            IsControlCommandUpdating = true;
+            SetCommandInternal(ControlCommand);
+            IsControlCommandUpdating = false;
+        }
+    }
+
+    private void ObjectEditorTextBox_AreaObjectCommandChanged(object sender, EventArgs e)
+    {
+        if (!IsTextCommandUpdating)
+        {
+            IsTextCommandUpdating = true;
+            SetCommandInternal(TextCommand);
+            IsTextCommandUpdating = false;
+        }
+    }
+
+    private void ObjectEditorTextBox_IsValidCommandChanged(object sender, EventArgs e)
+    {
+        IsValidInput = objectEditorTextBox.IsValidCommand;
     }
 }
