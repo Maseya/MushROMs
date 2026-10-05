@@ -7,6 +7,7 @@
 
 namespace Brutario.Win.Controls;
 using System;
+using System.ComponentModel;
 using System.Globalization;
 
 using Brutario.Core;
@@ -15,7 +16,62 @@ using Maseya.Smas.Smb1.AreaData.ObjectData;
 
 internal class ObjectEditorTextBox : TextBox
 {
-    public UIAreaObjectCommand BinaryCommand
+    private UIAreaObjectCommand _areaObjectCommand;
+    private bool _isValidCommand;
+
+    public ObjectEditorTextBox() : base()
+    {
+        ParsedCommand = default;
+    }
+
+    [Category("Editor")]
+    public event EventHandler? AreaObjectCommandChanged;
+
+    [Category("Editor")]
+    public event EventHandler? IsValidCommandChanged;
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public UIAreaObjectCommand UIAreaObjectCommand
+    {
+        get
+        {
+            return _areaObjectCommand;
+        }
+
+        set
+        {
+            if (value == UIAreaObjectCommand)
+            {
+                return;
+            }
+
+            SetCommandInternal(value);
+        }
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public bool IsValidCommand
+    {
+        get
+        {
+            return _isValidCommand;
+        }
+
+        set
+        {
+            if (IsValidCommand == value)
+            {
+                return;
+            }
+
+            _isValidCommand = value;
+            OnIsValidCommandChanged(EventArgs.Empty);
+        }
+    }
+
+    private UIAreaObjectCommand ParsedCommand
     {
         get
         {
@@ -35,17 +91,44 @@ internal class ObjectEditorTextBox : TextBox
         }
     }
 
+    private bool IsCommandUpdating
+    {
+        get;
+        set;
+    }
+
     protected override void OnTextChanged(EventArgs e)
     {
-        /*
-        UpdateValidInputFlag();
-        if (!UICommandIsUpdating && IsValidInput)
+        IsValidCommand = TryGetBinaryCommand(Text, out var command);
+        if (IsValidCommand && !IsCommandUpdating)
         {
-            //UICommand = BinaryCommand;
+            IsCommandUpdating = true;
+            UIAreaObjectCommand = command;
+            IsCommandUpdating = false;
         }
-        */
 
         base.OnTextChanged(e);
+    }
+
+    protected virtual void OnAreaObjectCommandChanged(EventArgs e)
+    {
+        AreaObjectCommandChanged?.Invoke(this, e);
+    }
+
+    protected virtual void OnIsValidCommandChanged(EventArgs e)
+    {
+        IsValidCommandChanged?.Invoke(this, e);
+    }
+
+    private void SetCommandInternal(UIAreaObjectCommand value)
+    {
+        _areaObjectCommand = value;
+        if (!IsCommandUpdating)
+        {
+            ParsedCommand = value;
+        }
+
+        OnAreaObjectCommandChanged(EventArgs.Empty);
     }
 
     private static bool TryGetBinaryCommand(string text, out UIAreaObjectCommand command)

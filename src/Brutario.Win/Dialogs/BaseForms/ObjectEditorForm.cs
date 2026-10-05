@@ -88,12 +88,12 @@ internal partial class ObjectEditorForm : Form
     {
         get
         {
-            return objectEditorTextBox.BinaryCommand;
+            return objectEditorTextBox.UIAreaObjectCommand;
         }
 
         set
         {
-            objectEditorTextBox.BinaryCommand = value;
+            objectEditorTextBox.UIAreaObjectCommand = value;
         }
     }
 
