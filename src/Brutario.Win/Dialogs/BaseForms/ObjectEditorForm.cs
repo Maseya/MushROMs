@@ -83,6 +83,16 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
+    protected virtual void OnAreaPlatformTypeChanged(EventArgs e)
+    {
+        AreaPlatformTypeChanged?.Invoke(this, e);
+    }
+
+    protected virtual void OnAreaObjectCommandChanged(EventArgs e)
+    {
+        AreaObjectCommandChanged?.Invoke(this, e);
+    }
+
     private void UpdateValidInputFlag()
     {
         // If we're using the list and check boxes, then the input is always valid by
@@ -101,16 +111,6 @@ internal partial class ObjectEditorForm : Form
         {
             UIAreaObjectCommand = BinaryCommand;
         }
-    }
-
-    private void OnAreaPlatformTypeChanged(EventArgs e)
-    {
-        AreaPlatformTypeChanged?.Invoke(this, e);
-    }
-
-    private void OnAreaObjectCommandChanged(EventArgs e)
-    {
-        AreaObjectCommandChanged?.Invoke(this, e);
     }
 
     private void ObjectEditorUserControl_AreaPlatformTypeChanged(object sender, EventArgs e)
