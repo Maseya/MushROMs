@@ -30,6 +30,7 @@ public partial class ObjectEditorUserControl : UserControl
                 i => new KeyValuePair<ObjectType, int>(Codes[i], i)).ToDictionary());
 
     private AreaPlatformType _areaPlatformType;
+    private UIAreaObjectCommand _areaObjectCommand;
 
     public ObjectEditorUserControl()
     {
@@ -40,7 +41,7 @@ public partial class ObjectEditorUserControl : UserControl
             _ = cbxAreaObjectCode.Items.Add(Codes[i].BaseName());
         }
 
-        UICommand = default;
+        ControlCommand = default;
     }
 
     [Category("Editor")]
@@ -76,12 +77,17 @@ public partial class ObjectEditorUserControl : UserControl
     {
         get
         {
-            return UICommand;
+            return _areaObjectCommand;
         }
 
         set
         {
-            UICommand = value;
+            if (UIAreaObjectCommand == value)
+            {
+                return;
+            }
+
+            SetCommandInternal(value);
         }
     }
 
@@ -340,7 +346,7 @@ public partial class ObjectEditorUserControl : UserControl
         }
     }
 
-    private UIAreaObjectCommand UICommand
+    private UIAreaObjectCommand ControlCommand
     {
         get
         {
@@ -399,9 +405,6 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            Debug.Assert(!CommandIsUpdating, "Object command is being set recursively");
-
-            CommandIsUpdating = true;
             var command = value.Command;
             UpdateEnabledControls(command);
 
@@ -429,10 +432,6 @@ public partial class ObjectEditorUserControl : UserControl
                 : default;
 
             Length = LengthEnabled ? 1 + command.Length : 1;
-
-            CommandIsUpdating = false;
-
-            OnAreaObjectCommandChanged(EventArgs.Empty);
         }
     }
 
@@ -452,6 +451,18 @@ public partial class ObjectEditorUserControl : UserControl
         AreaObjectCommandChanged?.Invoke(this, e);
     }
 
+    private void SetCommandInternal(UIAreaObjectCommand value)
+    {
+        _areaObjectCommand = value;
+        UpdateEnabledControls(value.Command);
+        if (!CommandIsUpdating)
+        {
+            ControlCommand = value;
+        }
+
+        OnAreaObjectCommandChanged(EventArgs.Empty);
+    }
+
     private void UpdateEnabledControls(AreaObjectCommand value)
     {
         YPosEnabled = value.HasYCoord;
@@ -465,12 +476,11 @@ public partial class ObjectEditorUserControl : UserControl
 
     private void Item_ValueChanged(object sender, EventArgs e)
     {
-        var control = (Control)sender;
-        if (!control.Enabled || CommandIsUpdating)
+        if (!CommandIsUpdating)
         {
-            return;
+            CommandIsUpdating = true;
+            SetCommandInternal(ControlCommand);
+            CommandIsUpdating = false;
         }
-
-        OnAreaObjectCommandChanged(EventArgs.Empty);
     }
 }
