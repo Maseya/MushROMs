@@ -40,7 +40,7 @@ public partial class ObjectEditorUserControl : UserControl
             _ = cbxAreaObjectCode.Items.Add(Codes[i].BaseName());
         }
 
-        SetCommandInternal(default);
+        UICommand = default;
     }
 
     [Category("Editor")]
@@ -401,12 +401,39 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
-            if (value == UICommand)
+            Debug.Assert(!CommandIsUpdating, "Object command is being set recursively");
+
+            CommandIsUpdating = true;
+            var command = value.Command;
+            UpdateEnabledControls(command);
+
+            XPos = command.X;
+            Page = value.Page;
+            if (YPosEnabled)
             {
-                return;
+                YPos = command.Y;
             }
 
-            SetCommandInternal(value);
+            AreaObjectCode = command.ObjectType;
+            if (TerrainAndBackgroundSceneryEnabled)
+            {
+                TerrainMode = command.TerrainMode;
+                BackgroundScenery = command.BackgroundScenery;
+            }
+            else
+            {
+                TerrainMode = default;
+                BackgroundScenery = default;
+            }
+
+            ForegroundScenery = ForegroundSceneryEnabled
+                ? command.ForegroundScenery
+                : default;
+
+            Length = LengthEnabled ? 1 + command.Length : 1;
+
+            CommandIsUpdating = false;
+
             OnAreaObjectCommandChanged(EventArgs.Empty);
         }
     }
@@ -436,42 +463,6 @@ public partial class ObjectEditorUserControl : UserControl
         YPos = Math.Clamp(YPos, MinY, MaxY);
         TerrainAndBackgroundSceneryEnabled = value.IsTerrainAndBackgroundChange;
         ForegroundSceneryEnabled = value.IsForegroundChange;
-    }
-
-    private void SetCommandInternal(UIAreaObjectCommand value)
-    {
-        Debug.Assert(!CommandIsUpdating, "Object command is being set recursively");
-
-        CommandIsUpdating = true;
-        var command = value.Command;
-        UpdateEnabledControls(command);
-
-        XPos = command.X;
-        Page = value.Page;
-        if (YPosEnabled)
-        {
-            YPos = command.Y;
-        }
-
-        AreaObjectCode = command.ObjectType;
-        if (TerrainAndBackgroundSceneryEnabled)
-        {
-            TerrainMode = command.TerrainMode;
-            BackgroundScenery = command.BackgroundScenery;
-        }
-        else
-        {
-            TerrainMode = default;
-            BackgroundScenery = default;
-        }
-
-        ForegroundScenery = ForegroundSceneryEnabled
-            ? command.ForegroundScenery
-            : default;
-
-        Length = LengthEnabled ? 1 + command.Length : 1;
-
-        CommandIsUpdating = false;
     }
 
     private void AreaObectCode_SelectedIndexChanged(object? sender, EventArgs e)
