@@ -190,7 +190,7 @@ partial class ObjectEditorUserControl
         cbxAreaObjectCode.Name = "cbxAreaObjectCode";
         cbxAreaObjectCode.Size = new Size(262, 23);
         cbxAreaObjectCode.TabIndex = 9;
-        cbxAreaObjectCode.SelectedIndexChanged += AreaObectCode_SelectedIndexChanged;
+        cbxAreaObjectCode.SelectedIndexChanged += Item_ValueChanged;
         // 
         // lblY
         // 

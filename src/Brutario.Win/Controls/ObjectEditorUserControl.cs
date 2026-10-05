@@ -352,20 +352,18 @@ public partial class ObjectEditorUserControl : UserControl
             case 0xE00:
                 result.Value1 |= 0x0E;
                 result.Value2 |= (byte)(((int)AreaObjectCode) & 0x40);
-                if (ForegroundSceneryEnabled)
+                if (AreaObjectCode == ObjectType.ForegroundSceneryChange)
                 {
                     result.Value2 |= (byte)ForegroundScenery;
                 }
-                else if (TerrainAndBackgroundSceneryEnabled)
+                else if (AreaObjectCode == ObjectType.TerrainAndBackgroundSceneryChange)
                 {
                     result.Value2 |= (byte)TerrainMode;
                     result.Value2 |= (byte)((int)BackgroundScenery << 4);
                 }
                 else
                 {
-                    Debug.Assert(
-                        false,
-                        "Scenery command but no scenery objects enabled.");
+                    Debug.Assert(false, "Unknown scenery command.");
                 }
 
                 break;
@@ -463,31 +461,6 @@ public partial class ObjectEditorUserControl : UserControl
         YPos = Math.Clamp(YPos, MinY, MaxY);
         TerrainAndBackgroundSceneryEnabled = value.IsTerrainAndBackgroundChange;
         ForegroundSceneryEnabled = value.IsForegroundChange;
-    }
-
-    private void AreaObectCode_SelectedIndexChanged(object? sender, EventArgs e)
-    {
-        switch (AreaObjectCode)
-        {
-        case ObjectType.ForegroundSceneryChange:
-            ForegroundSceneryEnabled = true;
-            break;
-        case ObjectType.TerrainAndBackgroundSceneryChange:
-            TerrainAndBackgroundSceneryEnabled = true;
-            break;
-        default:
-            ForegroundSceneryEnabled = false;
-            TerrainAndBackgroundSceneryEnabled = false;
-            break;
-        }
-
-        if (CommandIsUpdating)
-        {
-            return;
-        }
-
-        UpdateEnabledControls(UICommand.Command);
-        OnAreaObjectCommandChanged(EventArgs.Empty);
     }
 
     private void Item_ValueChanged(object sender, EventArgs e)
