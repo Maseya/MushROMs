@@ -8,7 +8,6 @@
 namespace Brutario.Win.Dialogs.BaseForms;
 
 using System;
-using System.Globalization;
 using System.Windows.Forms;
 
 using Core;
@@ -39,7 +38,7 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
-    public UIAreaObjectCommand AreaObjectCommand
+    public UIAreaObjectCommand UIAreaObjectCommand
     {
         get
         {
@@ -113,7 +112,7 @@ internal partial class ObjectEditorForm : Form
         UpdateValidInputFlag();
         if (!UICommandIsUpdating && IsValidInput)
         {
-            AreaObjectCommand = BinaryCommand;
+            UIAreaObjectCommand = BinaryCommand;
         }
     }
 

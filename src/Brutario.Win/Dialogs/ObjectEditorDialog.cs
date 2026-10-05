@@ -59,16 +59,16 @@ public sealed class ObjectEditorDialog : DialogProxy
 
     [Browsable(false)]
     [DesignerSerializationVisibility(Hidden)]
-    public UIAreaObjectCommand AreaObjectCommand
+    public UIAreaObjectCommand UIAreaObjectCommand
     {
         get
         {
-            return ObjectEditorForm.AreaObjectCommand;
+            return ObjectEditorForm.UIAreaObjectCommand;
         }
 
         set
         {
-            ObjectEditorForm.AreaObjectCommand = value;
+            ObjectEditorForm.UIAreaObjectCommand = value;
         }
     }
 
