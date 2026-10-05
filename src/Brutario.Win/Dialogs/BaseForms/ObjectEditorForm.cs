@@ -64,19 +64,6 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
-    private bool UseManualInput
-    {
-        get
-        {
-            return chkUseManualInput.Checked;
-        }
-
-        set
-        {
-            chkUseManualInput.Checked = value;
-        }
-    }
-
     private bool UICommandIsUpdating
     {
         get;
@@ -114,11 +101,6 @@ internal partial class ObjectEditorForm : Form
         {
             UIAreaObjectCommand = BinaryCommand;
         }
-    }
-
-    private void UseManualInput_CheckedChanged(object? sender, EventArgs e)
-    {
-        UpdateValidInputFlag();
     }
 
     private void OnAreaPlatformTypeChanged(EventArgs e)
