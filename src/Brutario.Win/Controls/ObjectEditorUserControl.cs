@@ -91,12 +91,10 @@ public partial class ObjectEditorUserControl : UserControl
         }
     }
 
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public bool CommandIsUpdating
+    private bool IsCommandUpdating
     {
         get;
-        private set;
+        set;
     }
 
     private int XPos
@@ -455,7 +453,7 @@ public partial class ObjectEditorUserControl : UserControl
     {
         _areaObjectCommand = value;
         UpdateEnabledControls(value.Command);
-        if (!CommandIsUpdating)
+        if (!IsCommandUpdating)
         {
             ControlCommand = value;
         }
@@ -476,11 +474,11 @@ public partial class ObjectEditorUserControl : UserControl
 
     private void Item_ValueChanged(object sender, EventArgs e)
     {
-        if (!CommandIsUpdating)
+        if (!IsCommandUpdating)
         {
-            CommandIsUpdating = true;
+            IsCommandUpdating = true;
             SetCommandInternal(ControlCommand);
-            CommandIsUpdating = false;
+            IsCommandUpdating = false;
         }
     }
 }
