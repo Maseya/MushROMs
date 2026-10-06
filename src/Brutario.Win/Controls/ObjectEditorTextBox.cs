@@ -8,11 +8,8 @@
 namespace Brutario.Win.Controls;
 using System;
 using System.ComponentModel;
-using System.Globalization;
 
 using Brutario.Core;
-
-using Maseya.Smas.Smb1.AreaData.ObjectData;
 
 internal class ObjectEditorTextBox : TextBox
 {
@@ -75,13 +72,13 @@ internal class ObjectEditorTextBox : TextBox
     {
         get
         {
-            _ = TryGetBinaryCommand(Text, out var result);
+            _ = UIAreaObjectCommand.TryGetCommand(Text, out var result);
             return result;
         }
 
         set
         {
-            if (TryGetBinaryCommand(Text, out var result)
+            if (UIAreaObjectCommand.TryGetCommand(Text, out var result)
                 && value == result)
             {
                 return;
@@ -99,7 +96,7 @@ internal class ObjectEditorTextBox : TextBox
 
     protected override void OnTextChanged(EventArgs e)
     {
-        IsValidCommand = TryGetBinaryCommand(Text, out var command);
+        IsValidCommand = UIAreaObjectCommand.TryGetCommand(Text, out var command);
         if (IsValidCommand && !IsCommandUpdating)
         {
             IsCommandUpdating = true;
@@ -129,46 +126,5 @@ internal class ObjectEditorTextBox : TextBox
         }
 
         OnAreaObjectCommandChanged(EventArgs.Empty);
-    }
-
-    private static bool TryGetBinaryCommand(string text, out UIAreaObjectCommand command)
-    {
-        var tokens = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        if (tokens.Length is not 4 and not 3)
-        {
-            command = default;
-            return false;
-        }
-
-        var bytes = new byte[4];
-        for (var i = 0; i < tokens.Length; i++)
-        {
-            if (tokens[i].Length != 2)
-            {
-                command = default;
-                return false;
-            }
-
-            if (!Byte.TryParse(
-                tokens[i],
-                NumberStyles.HexNumber,
-                CultureInfo.CurrentUICulture,
-                out bytes[i]))
-            {
-                command = default;
-                return false;
-            }
-        }
-
-        var result = new AreaObjectCommand(bytes[1], bytes[2], bytes[3]);
-        if (!result.IsValid || bytes[0] >= 0x20
-            || result.ObjectType == ObjectType.PageSkip)
-        {
-            command = default;
-            return false;
-        }
-
-        command = new UIAreaObjectCommand(result, bytes[0]);
-        return true;
     }
 }
