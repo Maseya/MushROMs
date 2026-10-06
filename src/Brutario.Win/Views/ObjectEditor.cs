@@ -54,16 +54,16 @@ public sealed partial class ObjectEditor : EditorDialogBase, IObjectEditorView
 
     [Browsable(false)]
     [DesignerSerializationVisibility(Hidden)]
-    public UIAreaObjectCommand AreaObjectCommand
+    public UIAreaObjectCommand UIAreaObjectCommand
     {
         get
         {
-            return objectEditorDialog.AreaObjectCommand;
+            return objectEditorDialog.UIAreaObjectCommand;
         }
 
         set
         {
-            objectEditorDialog.AreaObjectCommand = value;
+            objectEditorDialog.UIAreaObjectCommand = value;
         }
     }
 

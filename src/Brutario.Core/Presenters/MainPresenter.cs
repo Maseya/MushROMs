@@ -412,7 +412,7 @@ public class MainPresenter
             return;
         }
 
-        ObjectEditorView.AreaObjectCommand = MainEditor.SelectedObject;
+        ObjectEditorView.UIAreaObjectCommand = MainEditor.SelectedObject;
         ObjectEditorView.AreaObjectCommandChanged += ObjectEditor_ItemChanged;
 
         var commit = ObjectEditorView.PromptConfirm();
@@ -423,7 +423,7 @@ public class MainPresenter
         void ObjectEditor_ItemChanged(object? sender, EventArgs e)
         {
             MainEditor.EditPreviewObject(
-                ObjectEditorView.AreaObjectCommand);
+                ObjectEditorView.UIAreaObjectCommand);
         }
     }
 
@@ -683,7 +683,7 @@ public class MainPresenter
         var item = MainEditor.DefaultPreviewObject;
         MainEditor.AddPreviewObject(item);
 
-        ObjectEditorView.AreaObjectCommand = item;
+        ObjectEditorView.UIAreaObjectCommand = item;
         ObjectEditorView.AreaObjectCommandChanged += ObjectEditor_ItemChanged;
 
         var commit = ObjectEditorView.PromptConfirm();
@@ -694,7 +694,7 @@ public class MainPresenter
         void ObjectEditor_ItemChanged(object? sender, EventArgs e)
         {
             MainEditor.EditPreviewObject(
-                ObjectEditorView.AreaObjectCommand);
+                ObjectEditorView.UIAreaObjectCommand);
         }
     }
 

@@ -22,7 +22,7 @@ public interface IObjectEditorView
         get; set;
     }
 
-    UIAreaObjectCommand AreaObjectCommand
+    UIAreaObjectCommand UIAreaObjectCommand
     {
         get; set;
     }
