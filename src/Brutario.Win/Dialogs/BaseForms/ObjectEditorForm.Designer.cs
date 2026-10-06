@@ -108,7 +108,6 @@ namespace Brutario.Win.Dialogs.BaseForms
             objectEditorTextBox.CharacterCasing = CharacterCasing.Upper;
             objectEditorTextBox.Location = new Point(8, 22);
             objectEditorTextBox.Margin = new Padding(4, 3, 4, 3);
-            objectEditorTextBox.MaxLength = 8;
             objectEditorTextBox.Name = "objectEditorTextBox";
             objectEditorTextBox.Size = new Size(152, 23);
             objectEditorTextBox.TabIndex = 4;
