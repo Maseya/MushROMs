@@ -95,6 +95,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // gbxBinary
             // 
             gbxBinary.Controls.Add(objectEditorTextBox);
+            gbxBinary.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxBinary.Location = new Point(13, 193);
             gbxBinary.Margin = new Padding(4, 3, 4, 3);
             gbxBinary.Name = "gbxBinary";
@@ -102,6 +103,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             gbxBinary.Size = new Size(168, 51);
             gbxBinary.TabIndex = 3;
             gbxBinary.TabStop = false;
+            gbxBinary.Text = "Screen:Command";
             // 
             // objectEditorTextBox
             // 
@@ -109,9 +111,8 @@ namespace Brutario.Win.Dialogs.BaseForms
             objectEditorTextBox.Location = new Point(8, 22);
             objectEditorTextBox.Margin = new Padding(4, 3, 4, 3);
             objectEditorTextBox.Name = "objectEditorTextBox";
-            objectEditorTextBox.Size = new Size(152, 23);
+            objectEditorTextBox.Size = new Size(152, 22);
             objectEditorTextBox.TabIndex = 4;
-            objectEditorTextBox.Text = "00 00 00";
             objectEditorTextBox.WordWrap = false;
             objectEditorTextBox.AreaObjectCommandChanged += ObjectEditorTextBox_AreaObjectCommandChanged;
             objectEditorTextBox.IsValidCommandChanged += ObjectEditorTextBox_IsValidCommandChanged;

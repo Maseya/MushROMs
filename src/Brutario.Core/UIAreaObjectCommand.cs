@@ -11,6 +11,7 @@ using System;
 using System.Drawing;
 
 using Maseya.Smas.Smb1.AreaData.ObjectData;
+using Maseya.Snes;
 
 public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
 {
@@ -85,7 +86,7 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
     {
         get
         {
-            return $"{Page:X2} {Command.HexString}";
+            return $"{Page:X2}:{Command.HexString}";
         }
     }
 
@@ -97,6 +98,38 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
     public static bool operator !=(UIAreaObjectCommand left, UIAreaObjectCommand right)
     {
         return !(left == right);
+    }
+
+    public static bool TryGetCommand(string text, out UIAreaObjectCommand command)
+    {
+        var result = true;
+
+        command = default;
+        var tokens1 = text.Split(':');
+        if (tokens1.Length == 0)
+        {
+            return false;
+        }
+
+        result &= MathHelper.TryGetHexByte(tokens1[0], out var screen);
+        if (screen >= 0x20)
+        {
+            result = false;
+            screen = 0x1F;
+        }
+
+        command.Page = screen;
+
+        if (tokens1.Length == 1)
+        {
+            return false;
+        }
+
+        result &= tokens1.Length == 2;
+        result &= AreaObjectCommand.TryGetCommand(tokens1[1], out var command2);
+        result &= command2.ObjectType != ObjectType.PageSkip;
+        command.Command = command2;
+        return result;
     }
 
     public readonly bool Equals(UIAreaObjectCommand other)

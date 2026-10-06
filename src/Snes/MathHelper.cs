@@ -7,6 +7,8 @@
 
 namespace Maseya.Snes;
 
+using System.Globalization;
+
 public static class MathHelper
 {
     /// <summary>
@@ -32,5 +34,15 @@ public static class MathHelper
         // string of 1's shifted one to the left, and we end up with just the one top
         // bit followed by 0's.
         return x ^ (x >> 1);
+    }
+
+    public static bool TryGetHexByte(string token, out byte value)
+    {
+        return Byte.TryParse(
+            token,
+            NumberStyles.HexNumber,
+            CultureInfo.CurrentUICulture,
+            out value)
+            && token.Length == 2;
     }
 }
