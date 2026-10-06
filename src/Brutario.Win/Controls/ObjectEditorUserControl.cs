@@ -403,6 +403,9 @@ public partial class ObjectEditorUserControl : UserControl
 
         set
         {
+            Debug.Assert(!IsCommandUpdating, "Command is being set recursively");
+
+            IsCommandUpdating = true;
             var command = value.Command;
             UpdateEnabledControls(command);
 
@@ -430,6 +433,7 @@ public partial class ObjectEditorUserControl : UserControl
                 : default;
 
             Length = LengthEnabled ? 1 + command.Length : 1;
+            IsCommandUpdating = false;
         }
     }
 
