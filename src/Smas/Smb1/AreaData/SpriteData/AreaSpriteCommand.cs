@@ -8,10 +8,64 @@
 namespace Maseya.Smas.Smb1.AreaData.SpriteData;
 
 using System;
+using System.Collections.ObjectModel;
+using System.Net.NetworkInformation;
 
 public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
 {
     public const byte TerminationCode = 0xFF;
+
+    public static readonly ReadOnlyCollection<AreaSpriteCode> ValidCodes = new([
+            AreaSpriteCode.GreenKoopaTroopa,
+            AreaSpriteCode.RedKoopaTroopa,
+            AreaSpriteCode.BuzzyBeetle,
+            AreaSpriteCode.RedKoopaTroopaPatrol,
+            AreaSpriteCode.GreenKoopaTroopaStopped,
+            AreaSpriteCode.HammerBros,
+            AreaSpriteCode.Goomba,
+            AreaSpriteCode.Blooper,
+            AreaSpriteCode.BulletBill,
+            AreaSpriteCode.YellowKoopaParatroopaStopped,
+            AreaSpriteCode.GreenCheepCheep,
+            AreaSpriteCode.RedCheepCheep,
+            AreaSpriteCode.Podoboo,
+            AreaSpriteCode.PiranhaPlant,
+            AreaSpriteCode.GreenKoopaParatroopaLeaping,
+            AreaSpriteCode.RedKoopaParatroopa,
+            AreaSpriteCode.GreenKoopaParatroopaFlying,
+            AreaSpriteCode.Lakitu,
+            AreaSpriteCode.Spiny,
+            AreaSpriteCode.RedFlyingCheepCheep,
+            AreaSpriteCode.BowsersFire,
+            AreaSpriteCode.Fireworks,
+            AreaSpriteCode.BulletBillOrCheepCheeps,
+            AreaSpriteCode.FireBarClockwise,
+            AreaSpriteCode.FastFireBarClockwise,
+            AreaSpriteCode.FireBarCounterClockwise,
+            AreaSpriteCode.FastFireBarCounterClockwise,
+            AreaSpriteCode.LongFireBarClockwise,
+            AreaSpriteCode.BalanceRopeLift,
+            AreaSpriteCode.LiftDownThenUp,
+            AreaSpriteCode.LiftUp,
+            AreaSpriteCode.LiftDown,
+            AreaSpriteCode.LiftLeftThenRight,
+            AreaSpriteCode.LiftFalling,
+            AreaSpriteCode.LiftRight,
+            AreaSpriteCode.ShortLiftUp,
+            AreaSpriteCode.ShortLiftDown,
+            AreaSpriteCode.Bowser,
+            AreaSpriteCode.WarpZoneCommand,
+            AreaSpriteCode.ToadOrPrincess,
+            AreaSpriteCode.TwoGoombasY10,
+            AreaSpriteCode.ThreeGoombasY10,
+            AreaSpriteCode.TwoGoombasY6,
+            AreaSpriteCode.ThreeGoombasY6,
+            AreaSpriteCode.TwoGreenKoopasY10,
+            AreaSpriteCode.ThreeGreenKoopasY10,
+            AreaSpriteCode.TwoGreenKoopasY6,
+            AreaSpriteCode.ThreeGreenKoopasY6,
+            AreaSpriteCode.AreaPointer,
+        ]);
 
     public AreaSpriteCommand(byte value1, byte value2, byte value3 = 0)
     {

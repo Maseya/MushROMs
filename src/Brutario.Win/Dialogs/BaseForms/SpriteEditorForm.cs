@@ -22,21 +22,6 @@ public partial class SpriteEditorForm : Form
     public SpriteEditorForm()
     {
         InitializeComponent();
-
-        Codes = [];
-        EnumIndexes = [];
-        foreach (var obj in Enum.GetValues(typeof(AreaSpriteCode)))
-        {
-            var code = (AreaSpriteCode)obj;
-            if (code == AreaSpriteCode.ScreenJump)
-            {
-                continue;
-            }
-
-            EnumIndexes.Add(code, Codes.Count);
-            Codes.Add(code);
-            _ = cbxAreaSpriteCode.Items.Add(code.BaseName());
-        }
     }
 
     public event EventHandler? AreaSpriteCommandChanged;
@@ -45,16 +30,12 @@ public partial class SpriteEditorForm : Form
     {
         get
         {
-            return UseManualInput ? BinaryCommand : UICommand;
+            return UICommand;
         }
 
         set
         {
-            BinaryCommand = UICommand = value;
-            if (IsValidInput)
-            {
-                AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
-            }
+            UICommand = value;
         }
     }
 
@@ -93,176 +74,16 @@ public partial class SpriteEditorForm : Form
         set;
     }
 
-    private int XPos
-    {
-        get
-        {
-            return (int)nudX.Value;
-        }
-
-        set
-        {
-            nudX.Value = value;
-        }
-    }
-
-    private int Page
-    {
-        get
-        {
-            return (int)nudPage.Value;
-        }
-
-        set
-        {
-            nudPage.Value = value;
-        }
-    }
-
-    private int YPos
-    {
-        get
-        {
-            var y = (int)AreaSpriteCode >> 8;
-            return y < 0x0D ? (int)nudY.Value : y;
-        }
-
-        set
-        {
-            if (value <= nudY.Maximum)
-            {
-                nudY.Value = value;
-            }
-        }
-    }
-
-    private AreaSpriteCode AreaSpriteCode
-    {
-        get
-        {
-            return Codes[
-                cbxAreaSpriteCode.SelectedIndex >= 0
-                ? cbxAreaSpriteCode.SelectedIndex
-                : 0];
-        }
-
-        set
-        {
-            cbxAreaSpriteCode.SelectedIndex = EnumIndexes.TryGetValue(
-                value,
-                out var index) ? index : -1;
-        }
-    }
-
-    private int DestPage
-    {
-        get
-        {
-            return nudDestPage.Enabled ? (int)nudDestPage.Value : 1;
-        }
-
-        set
-        {
-            if (value <= nudDestPage.Maximum)
-            {
-                nudDestPage.Value = value;
-            }
-        }
-    }
-
-    private int World
-    {
-        get
-        {
-            return nudWorld.Enabled ? (int)nudWorld.Value : 1;
-        }
-
-        set
-        {
-            if (value <= nudWorld.Maximum)
-            {
-                nudWorld.Value = value;
-            }
-        }
-    }
-
-    private bool HardFlag
-    {
-        get
-        {
-            return chkHardFlag.Enabled && chkHardFlag.Checked;
-        }
-
-        set
-        {
-            chkHardFlag.Checked = value;
-        }
-    }
-
-    private int AreaNumber
-    {
-        get
-        {
-            _ = TryGetAreaNumber(tbxAreaNumber.Text, out var result);
-            return tbxAreaNumber.Enabled ? result : 0;
-        }
-
-        set
-        {
-            tbxAreaNumber.Text = $"{value & 0xFF:X2}";
-        }
-    }
-
     private UIAreaSpriteCommand UICommand
     {
         get
         {
-            var result = default(AreaSpriteCommand);
-            result.Value1 |= (byte)(XPos << 4);
-            switch (AreaSpriteCode)
-            {
-            case AreaSpriteCode.AreaPointer:
-                result.Value1 |= 0x0E;
-                result.Value2 |= (byte)(AreaNumber & 0x7F);
-                result.Value3 |= (byte)((World - 1) << 5);
-                result.Value3 |= (byte)(DestPage & 0x1F);
-                break;
-
-            default:
-                result.Value1 |= (byte)YPos;
-                result.Value2 |= (byte)((int)AreaSpriteCode & 0x3F);
-                break;
-            }
-
-            result.HardWorldFlag |= HardFlag;
-
-            return new UIAreaSpriteCommand(result, Page);
+            return spriteEditorUserControl.UIAreaSpriteCommand;
         }
 
         set
         {
-            SettingUICommand = true;
-            var command = value.Command;
-            UpdateEnabledControls(command);
-
-            XPos = command.X;
-            AreaSpriteCode = command.Code;
-            switch (command.Code)
-            {
-            case AreaSpriteCode.AreaPointer:
-                Page = 1 + (command.Value3 & 0x1F);
-                World = 1 + command.WorldLimit;
-                AreaNumber = command.AreaNumber;
-                break;
-
-            default:
-                YPos = command.Y;
-                HardFlag = command.HardWorldFlag;
-                break;
-            }
-
-            Page = value.Page;
-            SettingUICommand = false;
+            spriteEditorUserControl.UIAreaSpriteCommand = value;
         }
     }
 
@@ -280,29 +101,9 @@ public partial class SpriteEditorForm : Form
         }
     }
 
-    private List<AreaSpriteCode> Codes
+    protected virtual void OnAreaSpriteCommandChanged(EventArgs e)
     {
-        get;
-    }
-
-    private Dictionary<AreaSpriteCode, int> EnumIndexes
-    {
-        get;
-    }
-
-    private static bool TryGetAreaNumber(string text, out byte result)
-    {
-        if (text.Length != 2)
-        {
-            result = 0;
-            return false;
-        }
-
-        return Byte.TryParse(
-            text,
-            NumberStyles.HexNumber,
-            CultureInfo.CurrentUICulture,
-            out result);
+        AreaSpriteCommandChanged?.Invoke(this, e);
     }
 
     private static bool TryGetCommand(string text, out UIAreaSpriteCommand command)
@@ -346,21 +147,6 @@ public partial class SpriteEditorForm : Form
         return true;
     }
 
-    private void UpdateEnabledControls(AreaSpriteCommand value)
-    {
-        lblY.Enabled =
-        nudY.Enabled =
-        chkHardFlag.Enabled = value.Y <= 0x0D;
-
-        lblDestPage.Enabled =
-        nudDestPage.Enabled = value.Y > 0x0D;
-
-        lblWorld.Enabled =
-        nudWorld.Enabled =
-        lblAreaNumber.Enabled =
-        tbxAreaNumber.Enabled = value.Code == AreaSpriteCode.AreaPointer;
-    }
-
     private void UpdateValidInput()
     {
         // If we're using the list and check boxes, then the input is always valid by
@@ -368,16 +154,6 @@ public partial class SpriteEditorForm : Form
         // must check that text is valid.
         IsValidInput =
             !UseManualInput || TryGetCommand(tbxManualInput.Text, out var _);
-    }
-
-    private void AreaNumber_TextChanged(object? sender, EventArgs e)
-    {
-        IsValidInput = !tbxAreaNumber.Enabled
-            || TryGetAreaNumber(tbxAreaNumber.Text, out var _);
-        if (IsValidInput)
-        {
-            AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
-        }
     }
 
     private void ManualInput_TextChanged(object? sender, EventArgs e)
@@ -390,30 +166,13 @@ public partial class SpriteEditorForm : Form
         }
     }
 
-    private void AreaSpriteCode_SelectedIndexChanged(object? sender, EventArgs e)
-    {
-        if (cbxAreaSpriteCode.SelectedIndex == -1 || SettingUICommand)
-        {
-            return;
-        }
-
-        UpdateEnabledControls(UICommand.Command);
-        BinaryCommand = UICommand;
-        AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void Item_ValueChanged(object? sender, EventArgs e)
-    {
-        var control = sender as Control;
-        if (control!.Enabled && !SettingUICommand && BinaryCommand != UICommand)
-        {
-            BinaryCommand = UICommand;
-            AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-
     private void UseManualInput_CheckedChanged(object? sender, EventArgs e)
     {
         UpdateValidInput();
+    }
+
+    private void SpriteEditorUserControl_AreaSpriteCommandChanged(object sender, EventArgs e)
+    {
+        OnAreaSpriteCommandChanged(EventArgs.Empty);
     }
 }
