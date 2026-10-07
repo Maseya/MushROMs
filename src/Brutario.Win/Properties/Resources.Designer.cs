@@ -98,6 +98,16 @@ namespace Brutario.Win.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon AppIcon {
+            get {
+                object obj = ResourceManager.GetObject("AppIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bullet Bill Shooter (Height={0}).
         /// </summary>
         internal static string AreaSpecificPlatform_BulletBillTurrets {

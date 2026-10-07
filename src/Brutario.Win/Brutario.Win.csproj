@@ -9,7 +9,12 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <NeutralLanguage>en-US</NeutralLanguage>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\App.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Brutario.Core\Brutario.Core.csproj" />

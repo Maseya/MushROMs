@@ -929,7 +929,7 @@ namespace Brutario.Win
             Controls.Add(hsbStartX);
             Controls.Add(toolStrip);
             Controls.Add(mnuMain);
-            Icon = (Icon)resources.GetObject("$this.Icon");
+            Icon = Brutario.Win.Properties.Resources.AppIcon;
             MainMenuStrip = mnuMain;
             Margin = new Padding(4, 3, 4, 3);
             MinimumSize = new Size(917, 398);
