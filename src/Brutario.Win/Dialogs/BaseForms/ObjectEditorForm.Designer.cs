@@ -84,6 +84,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             // objectEditorUserControl
             // 
+            objectEditorUserControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             objectEditorUserControl.Location = new Point(7, 22);
             objectEditorUserControl.MinimumSize = new Size(346, 139);
             objectEditorUserControl.Name = "objectEditorUserControl";
@@ -94,6 +95,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             // gbxBinary
             // 
+            gbxBinary.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             gbxBinary.Controls.Add(objectEditorTextBox);
             gbxBinary.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxBinary.Location = new Point(13, 193);
@@ -107,12 +109,15 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             // objectEditorTextBox
             // 
+            objectEditorTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             objectEditorTextBox.CharacterCasing = CharacterCasing.Upper;
             objectEditorTextBox.Location = new Point(8, 22);
             objectEditorTextBox.Margin = new Padding(4, 3, 4, 3);
             objectEditorTextBox.Name = "objectEditorTextBox";
+            objectEditorTextBox.PlaceholderText = "00:00 00";
             objectEditorTextBox.Size = new Size(152, 22);
             objectEditorTextBox.TabIndex = 4;
+            objectEditorTextBox.Text = "00:00 00";
             objectEditorTextBox.WordWrap = false;
             objectEditorTextBox.AreaObjectCommandChanged += ObjectEditorTextBox_AreaObjectCommandChanged;
             objectEditorTextBox.IsValidCommandChanged += ObjectEditorTextBox_IsValidCommandChanged;
@@ -128,9 +133,9 @@ namespace Brutario.Win.Dialogs.BaseForms
             Controls.Add(groupBox1);
             Controls.Add(btnCancel);
             Controls.Add(btnOK);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
+            MaximumSize = new Size(1200, 295);
             MinimizeBox = false;
             MinimumSize = new Size(402, 295);
             Name = "ObjectEditorForm";
