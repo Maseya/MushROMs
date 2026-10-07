@@ -1,10 +1,11 @@
-# Brutatio
+# MushROMs
 
 A level editor for SMB1 Super Mario All-Stars
 
 ## How to build
 
-Get Visual Studio
+MushROMs is a native WinForms app built in .NET 8.0 and C# 12. It is
+managed and compiled in Visual Studio Community 2022.
 
 ## Questions
 
