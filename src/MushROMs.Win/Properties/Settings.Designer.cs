@@ -8,155 +8,124 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MushROMs.Win.Properties
-{
-
-
+namespace MushROMs.Win.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AutoSaveEnabled
-        {
-            get
-            {
+        public bool AutoSaveEnabled {
+            get {
                 return ((bool)(this["AutoSaveEnabled"]));
             }
-            set
-            {
+            set {
                 this["AutoSaveEnabled"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:05:00")]
-        public global::System.TimeSpan AutoSaveInterval
-        {
-            get
-            {
+        public global::System.TimeSpan AutoSaveInterval {
+            get {
                 return ((global::System.TimeSpan)(this["AutoSaveInterval"]));
             }
-            set
-            {
+            set {
                 this["AutoSaveInterval"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("04:00:00")]
-        public global::System.TimeSpan AutoSavePruningCutoff
-        {
-            get
-            {
+        public global::System.TimeSpan AutoSavePruningCutoff {
+            get {
                 return ((global::System.TimeSpan)(this["AutoSavePruningCutoff"]));
             }
-            set
-            {
+            set {
                 this["AutoSavePruningCutoff"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoSaveHardCutoff
-        {
-            get
-            {
+        public bool AutoSaveHardCutoff {
+            get {
                 return ((bool)(this["AutoSaveHardCutoff"]));
             }
-            set
-            {
+            set {
                 this["AutoSaveHardCutoff"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AutoSavePruningEnabled
-        {
-            get
-            {
+        public bool AutoSavePruningEnabled {
+            get {
                 return ((bool)(this["AutoSavePruningEnabled"]));
             }
-            set
-            {
+            set {
                 this["AutoSavePruningEnabled"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string EmulatorPath
-        {
-            get
-            {
+        public string EmulatorPath {
+            get {
                 return ((string)(this["EmulatorPath"]));
             }
-            set
-            {
+            set {
                 this["EmulatorPath"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection RecentRoms
-        {
-            get
-            {
+        public global::System.Collections.Specialized.StringCollection RecentRoms {
+            get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["RecentRoms"]));
             }
-            set
-            {
+            set {
                 this["RecentRoms"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool LoadLastOpenedRom
-        {
-            get
-            {
+        public bool LoadLastOpenedRom {
+            get {
                 return ((bool)(this["LoadLastOpenedRom"]));
             }
-            set
-            {
+            set {
                 this["LoadLastOpenedRom"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AnimationsEnabled
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AnimationsEnabled {
+            get {
                 return ((bool)(this["AnimationsEnabled"]));
             }
-            set
-            {
+            set {
                 this["AnimationsEnabled"] = value;
             }
         }
