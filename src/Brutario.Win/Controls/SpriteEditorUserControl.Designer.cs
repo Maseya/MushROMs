@@ -194,6 +194,7 @@ partial class SpriteEditorUserControl
         // nudY
         // 
         nudY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        nudY.Hexadecimal = true;
         nudY.Location = new Point(201, 0);
         nudY.Margin = new Padding(4);
         nudY.Maximum = new decimal(new int[] { 13, 0, 0, 0 });
