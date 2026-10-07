@@ -42,12 +42,12 @@ public class SpriteEditorDialog : DialogProxy
     {
         get
         {
-            return SpriteEditorForm.AreaSpriteCommand;
+            return SpriteEditorForm.UIAreaSpriteCommand;
         }
 
         set
         {
-            SpriteEditorForm.AreaSpriteCommand = value;
+            SpriteEditorForm.UIAreaSpriteCommand = value;
         }
     }
 

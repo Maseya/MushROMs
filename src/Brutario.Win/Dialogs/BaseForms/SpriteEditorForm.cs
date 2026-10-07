@@ -8,17 +8,17 @@
 namespace Brutario.Win.Dialogs.BaseForms;
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
 
 using Core;
 
-using Maseya.Smas.Smb1;
 using Maseya.Smas.Smb1.AreaData.SpriteData;
 
 public partial class SpriteEditorForm : Form
 {
+    private UIAreaSpriteCommand _command;
+
     public SpriteEditorForm()
     {
         InitializeComponent();
@@ -26,16 +26,21 @@ public partial class SpriteEditorForm : Form
 
     public event EventHandler? AreaSpriteCommandChanged;
 
-    public UIAreaSpriteCommand AreaSpriteCommand
+    public UIAreaSpriteCommand UIAreaSpriteCommand
     {
         get
         {
-            return UICommand;
+            return _command;
         }
 
         set
         {
-            UICommand = value;
+            if (UIAreaSpriteCommand == value)
+            {
+                return;
+            }
+
+            SetCommandInternal(value);
         }
     }
 
@@ -52,29 +57,7 @@ public partial class SpriteEditorForm : Form
         }
     }
 
-    private bool UseManualInput
-    {
-        get
-        {
-            return chkUseManualInput.Checked;
-        }
-
-        set
-        {
-            chkUseManualInput.Checked = value;
-        }
-    }
-
-    /// <summary>
-    /// Returns true when the UICommand is being updated by its set accessor.
-    /// </summary>
-    private bool SettingUICommand
-    {
-        get;
-        set;
-    }
-
-    private UIAreaSpriteCommand UICommand
+    private UIAreaSpriteCommand ControlCommand
     {
         get
         {
@@ -87,51 +70,73 @@ public partial class SpriteEditorForm : Form
         }
     }
 
-    private UIAreaSpriteCommand BinaryCommand
+    private bool IsControlCommandUpdating
+    {
+        get;
+        set;
+    }
+
+    private UIAreaSpriteCommand TextCommand
     {
         get
         {
-            _ = TryGetCommand(tbxManualInput.Text, out var result);
-            return result;
+            return spriteEditorTextBox.UIAreaSpriteCommand;
         }
 
         set
         {
-            tbxManualInput.Text = value.HexString;
+            spriteEditorTextBox.UIAreaSpriteCommand = value;
         }
+    }
+
+    private bool IsTextCommandUpdating
+    {
+        get;
+        set;
     }
 
     protected virtual void OnAreaSpriteCommandChanged(EventArgs e)
     {
         AreaSpriteCommandChanged?.Invoke(this, e);
     }
-
-    private void UpdateValidInput()
+    private void SetCommandInternal(UIAreaSpriteCommand value)
     {
-        // If we're using the list and check boxes, then the input is always valid by
-        // their restraints. Otherwise, if we're entering the value manually, then we
-        // must check that text is valid.
-        IsValidInput =
-            !UseManualInput || TryGetCommand(tbxManualInput.Text, out var _);
-    }
-
-    private void ManualInput_TextChanged(object? sender, EventArgs e)
-    {
-        UpdateValidInput();
-        if (!SettingUICommand && btnOK.Enabled && UICommand != BinaryCommand)
+        _command = value;
+        if (!IsControlCommandUpdating)
         {
-            UICommand = BinaryCommand;
-            AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
+            ControlCommand = value;
         }
-    }
 
-    private void UseManualInput_CheckedChanged(object? sender, EventArgs e)
-    {
-        UpdateValidInput();
+        if (!IsTextCommandUpdating)
+        {
+            TextCommand = value;
+        }
+
+        OnAreaSpriteCommandChanged(EventArgs.Empty);
     }
 
     private void SpriteEditorUserControl_AreaSpriteCommandChanged(object sender, EventArgs e)
     {
-        OnAreaSpriteCommandChanged(EventArgs.Empty);
+        if (!IsControlCommandUpdating)
+        {
+            IsControlCommandUpdating = true;
+            SetCommandInternal(ControlCommand);
+            IsControlCommandUpdating = false;
+        }
+    }
+
+    private void SpriteEditorTextBox_AreaSpriteCommandChanged(object sender, EventArgs e)
+    {
+        if (!IsTextCommandUpdating)
+        {
+            IsTextCommandUpdating = true;
+            SetCommandInternal(TextCommand);
+            IsTextCommandUpdating = false;
+        }
+    }
+
+    private void SpriteEditorTextBox_IsValidCommandChanged(object sender, EventArgs e)
+    {
+        IsValidInput = spriteEditorTextBox.IsValidCommand;
     }
 }

@@ -36,8 +36,7 @@ namespace Brutario.Win.Dialogs.BaseForms
         private void InitializeComponent()
         {
             gbxBinary = new GroupBox();
-            tbxManualInput = new TextBox();
-            chkUseManualInput = new CheckBox();
+            spriteEditorTextBox = new Brutario.Win.Controls.SpriteEditorTextBox();
             btnCancel = new Button();
             btnOK = new Button();
             groupBox1 = new GroupBox();
@@ -49,46 +48,33 @@ namespace Brutario.Win.Dialogs.BaseForms
             // gbxBinary
             // 
             gbxBinary.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            gbxBinary.Controls.Add(tbxManualInput);
-            gbxBinary.Controls.Add(chkUseManualInput);
+            gbxBinary.Controls.Add(spriteEditorTextBox);
+            gbxBinary.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxBinary.Location = new Point(13, 222);
             gbxBinary.Margin = new Padding(4);
             gbxBinary.Name = "gbxBinary";
             gbxBinary.Padding = new Padding(4);
-            gbxBinary.Size = new Size(149, 55);
+            gbxBinary.Size = new Size(149, 51);
             gbxBinary.TabIndex = 6;
             gbxBinary.TabStop = false;
+            gbxBinary.Text = "Screen:Command";
             // 
-            // tbxManualInput
+            // spriteEditorTextBox
             // 
-            tbxManualInput.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            tbxManualInput.CharacterCasing = CharacterCasing.Upper;
-            tbxManualInput.Location = new Point(8, 24);
-            tbxManualInput.Margin = new Padding(4);
-            tbxManualInput.MaxLength = 8;
-            tbxManualInput.Name = "tbxManualInput";
-            tbxManualInput.Size = new Size(133, 23);
-            tbxManualInput.TabIndex = 1;
-            tbxManualInput.WordWrap = false;
-            tbxManualInput.TextChanged += ManualInput_TextChanged;
-            // 
-            // chkUseManualInput
-            // 
-            chkUseManualInput.AutoSize = true;
-            chkUseManualInput.Location = new Point(10, 0);
-            chkUseManualInput.Margin = new Padding(4);
-            chkUseManualInput.Name = "chkUseManualInput";
-            chkUseManualInput.Size = new Size(136, 19);
-            chkUseManualInput.TabIndex = 0;
-            chkUseManualInput.Text = "Enter value manually";
-            chkUseManualInput.UseVisualStyleBackColor = true;
-            chkUseManualInput.CheckedChanged += UseManualInput_CheckedChanged;
+            spriteEditorTextBox.Location = new Point(7, 22);
+            spriteEditorTextBox.Name = "spriteEditorTextBox";
+            spriteEditorTextBox.PlaceholderText = "00 00 00";
+            spriteEditorTextBox.Size = new Size(135, 22);
+            spriteEditorTextBox.TabIndex = 0;
+            spriteEditorTextBox.Text = "00:00 00";
+            spriteEditorTextBox.AreaSpriteCommandChanged += SpriteEditorTextBox_AreaSpriteCommandChanged;
+            spriteEditorTextBox.IsValidCommandChanged += SpriteEditorTextBox_IsValidCommandChanged;
             // 
             // btnCancel
             // 
             btnCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnCancel.DialogResult = DialogResult.Cancel;
-            btnCancel.Location = new Point(266, 242);
+            btnCancel.Location = new Point(266, 240);
             btnCancel.Margin = new Padding(4);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(88, 26);
@@ -100,7 +86,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             btnOK.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnOK.DialogResult = DialogResult.OK;
-            btnOK.Location = new Point(170, 242);
+            btnOK.Location = new Point(170, 240);
             btnOK.Margin = new Padding(4);
             btnOK.Name = "btnOK";
             btnOK.Size = new Size(88, 26);
@@ -138,16 +124,16 @@ namespace Brutario.Win.Dialogs.BaseForms
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
-            ClientSize = new Size(367, 290);
+            ClientSize = new Size(367, 286);
             Controls.Add(groupBox1);
             Controls.Add(gbxBinary);
             Controls.Add(btnCancel);
             Controls.Add(btnOK);
             Margin = new Padding(4);
             MaximizeBox = false;
-            MaximumSize = new Size(1200, 329);
+            MaximumSize = new Size(1200, 325);
             MinimizeBox = false;
-            MinimumSize = new Size(383, 329);
+            MinimumSize = new Size(383, 325);
             Name = "SpriteEditorForm";
             ShowIcon = false;
             ShowInTaskbar = false;
@@ -161,11 +147,10 @@ namespace Brutario.Win.Dialogs.BaseForms
         #endregion
 
         private System.Windows.Forms.GroupBox gbxBinary;
-        private System.Windows.Forms.TextBox tbxManualInput;
-        private System.Windows.Forms.CheckBox chkUseManualInput;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.GroupBox groupBox1;
         private Controls.SpriteEditorUserControl spriteEditorUserControl;
+        private Controls.SpriteEditorTextBox spriteEditorTextBox;
     }
 }
