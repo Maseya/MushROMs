@@ -107,12 +107,15 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             // objectEditorTextBox
             // 
+            objectEditorTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             objectEditorTextBox.CharacterCasing = CharacterCasing.Upper;
             objectEditorTextBox.Location = new Point(8, 22);
             objectEditorTextBox.Margin = new Padding(4, 3, 4, 3);
             objectEditorTextBox.Name = "objectEditorTextBox";
+            objectEditorTextBox.PlaceholderText = "00:00 00";
             objectEditorTextBox.Size = new Size(152, 22);
             objectEditorTextBox.TabIndex = 4;
+            objectEditorTextBox.Text = "00:00 00";
             objectEditorTextBox.WordWrap = false;
             objectEditorTextBox.AreaObjectCommandChanged += ObjectEditorTextBox_AreaObjectCommandChanged;
             objectEditorTextBox.IsValidCommandChanged += ObjectEditorTextBox_IsValidCommandChanged;

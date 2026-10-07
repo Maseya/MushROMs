@@ -19,6 +19,7 @@ internal class ObjectEditorTextBox : TextBox
     public ObjectEditorTextBox() : base()
     {
         ParsedCommand = default;
+        PlaceholderText = ParsedCommand.HexString;
     }
 
     [Category("Editor")]
