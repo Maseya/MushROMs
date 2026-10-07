@@ -11,6 +11,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Net.NetworkInformation;
 
+using Maseya.Snes;
+
 public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
 {
     public const byte TerminationCode = 0xFF;
@@ -385,6 +387,24 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
     public static bool IsThreeByteSpecifier(int coordinates)
     {
         return (coordinates & 0x0F) == 0x0E;
+    }
+
+    public static bool TryGetCommand(string text, out AreaSpriteCommand command)
+    {
+        var result = true;
+        var tokens = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        result &= tokens.Length is 3 or 2;
+
+        var bytes = new byte[3];
+        for (var i = 0; i < Math.Min(tokens.Length, bytes.Length); i++)
+        {
+            result &= MathHelper.TryGetHexByte(tokens[i], out bytes[i]);
+        }
+
+        command = new AreaSpriteCommand(bytes[0], bytes[1], bytes[2]);
+        return result
+            && command.IsValid
+            && command.IsThreeByteCommand ^ tokens.Length != 3;
     }
 
     public override readonly bool Equals(object? obj)

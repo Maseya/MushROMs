@@ -106,47 +106,6 @@ public partial class SpriteEditorForm : Form
         AreaSpriteCommandChanged?.Invoke(this, e);
     }
 
-    private static bool TryGetCommand(string text, out UIAreaSpriteCommand command)
-    {
-        var tokens = text.Split(' ');
-        if (tokens.Length is not 4 and not 3)
-        {
-            command = default;
-            return false;
-        }
-
-        var bytes = new byte[4];
-        for (var i = 0; i < tokens.Length; i++)
-        {
-            if (tokens[i].Length != 2)
-            {
-                command = default;
-                return false;
-            }
-
-            if (!Byte.TryParse(
-                    tokens[i],
-                    NumberStyles.HexNumber,
-                    CultureInfo.CurrentUICulture,
-                    out bytes[i]))
-            {
-                command = default;
-                return false;
-            }
-        }
-
-        var result = new AreaSpriteCommand(bytes[1], bytes[2], bytes[3]);
-        if (!result.IsValid || bytes[0] >= 0x20
-            || result.Code == AreaSpriteCode.ScreenJump)
-        {
-            command = default;
-            return false;
-        }
-
-        command = new UIAreaSpriteCommand(result, bytes[0]);
-        return true;
-    }
-
     private void UpdateValidInput()
     {
         // If we're using the list and check boxes, then the input is always valid by
