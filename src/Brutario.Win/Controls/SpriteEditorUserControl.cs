@@ -162,7 +162,7 @@ public partial class SpriteEditorUserControl : UserControl
     {
         get
         {
-            return nudDestScreen.Enabled ? (int)nudDestScreen.Value : 1;
+            return (int)nudDestScreen.Value;
         }
 
         set
@@ -175,7 +175,7 @@ public partial class SpriteEditorUserControl : UserControl
     {
         get
         {
-            return nudWorld.Enabled ? (int)nudWorld.Value : 1;
+            return (int)nudWorld.Value;
         }
 
         set
@@ -188,7 +188,7 @@ public partial class SpriteEditorUserControl : UserControl
     {
         get
         {
-            return chkHardFlag.Enabled && chkHardFlag.Checked;
+            return chkHardFlag.Checked;
         }
 
         set
@@ -201,7 +201,7 @@ public partial class SpriteEditorUserControl : UserControl
     {
         get
         {
-            return nudAreaNumber.Enabled ? (int)nudAreaNumber.Value : 0;
+            return (int)nudAreaNumber.Value;
         }
 
         set

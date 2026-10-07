@@ -127,6 +127,7 @@ partial class SpriteEditorUserControl
         // nudDestScreen
         // 
         nudDestScreen.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        nudDestScreen.Hexadecimal = true;
         nudDestScreen.Location = new Point(178, 51);
         nudDestScreen.Margin = new Padding(4);
         nudDestScreen.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
