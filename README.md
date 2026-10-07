@@ -8,7 +8,7 @@ Get Visual Studio
 
 ## Questions
 
-Open an [Issue](https://github.com/Maseya/Brutario/issues) if you have
+Open an [Issue](https://github.com/Maseya/MushROMs/issues) if you have
 any questions or bug reports.
 
 ## Contributors

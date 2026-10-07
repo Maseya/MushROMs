@@ -1,0 +1,101 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\App.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MushROMs.Core\MushROMs.Core.csproj" />
+    <ProjectReference Include="..\Smas\Smas.csproj" />
+    <ProjectReference Include="..\Snes\Snes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\DesignControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\DialogProxy.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EditorDialogBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Views\ExceptionView.cs" />
+    <Compile Update="Views\HeaderEditor.cs" />
+    <Compile Update="Dialogs\HeaderEditorDialog.cs" />
+    <Compile Update="Dialogs\BaseForms\HeaderEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Controls\ListViewNF.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\ObjectEditor.cs" />
+    <Compile Update="Dialogs\ObjectEditorDialog.cs" />
+    <Compile Update="Dialogs\BaseForms\ObjectEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Dialogs\ObjectListDialog.cs" />
+    <Compile Update="Dialogs\BaseForms\ObjectListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SaveOnClosePrompt.cs" />
+    <Compile Update="SpecialThanksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\SpriteEditor.cs" />
+    <Compile Update="Dialogs\SpriteEditorDialog.cs" />
+    <Compile Update="Dialogs\BaseForms\SpriteEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Controls\ToolStripRadioButtonMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="MainForm.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="COPY &quot;$(SolutionDir)Credits.rtf&quot; &quot;$(ProjectDir)$(OutDir)Credits.rtf&quot;" />
+  </Target>
+
+</Project>
