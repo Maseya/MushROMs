@@ -120,4 +120,7 @@
   <data name="BufferTooSmall" xml:space="preserve">
     <value>The buffer size is insufficient.</value>
   </data>
+  <data name="InvalidTplHeader" xml:space="preserve">
+    <value>The data must begin with the TPL header.</value>
+  </data>
 </root>

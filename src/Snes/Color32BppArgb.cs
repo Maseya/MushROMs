@@ -22,6 +22,11 @@ using System.Runtime.InteropServices;
 public unsafe struct Color32BppArgb : IEquatable<Color32BppArgb>
 {
     /// <summary>
+    /// The size of a <see cref="Color32BppArgb"/> value, in bytes.
+    /// </summary>
+    public const int SizeOf = 4;
+
+    /// <summary>
     /// Gets or sets the blue channel.
     /// </summary>
     public byte B
