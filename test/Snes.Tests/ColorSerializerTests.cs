@@ -56,7 +56,7 @@ public class ColorSerializerTests
         var bytesWritten = ColorSerializer.Default.Serialize([color], destination);
 
         Assert.Equal(4, bytesWritten);
-        Assert.Equal([0x11, 0x22, 0x33, 0x44, 0x00], destination);
+        Assert.Equal([0x44, 0x33, 0x22, 0x11, 0x00], destination);
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class ColorSerializerTests
     [Fact]
     public void Deserialize_WritesColorsToDestinationSpan()
     {
-        byte[] bytes = [0x11, 0x22, 0x33, 0x44, 0xFF];
+        byte[] bytes = [0x44, 0x33, 0x22, 0x11, 0xFF];
         var destination = new Color32BppArgb[2];
 
         var colorsWritten = ColorSerializer.Default.Deserialize(bytes, destination);

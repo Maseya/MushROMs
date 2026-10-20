@@ -11,11 +11,15 @@ using System;
 
 /// <summary>
 /// Serializes and deserializes <see cref="Color32BppArgb"/> values directly
-/// as 8-bit ARGB byte sequences.
+/// as 8-bit BGRA byte sequences.
 /// </summary>
 /// <remarks>
 /// Each color is serialized directly from its four 8-bit components in
-/// alpha, red, green, and blue order, without color conversion.
+/// blue, green, red, and alpha order, without color conversion. This is the
+/// same order used by <see cref="Bitmap"/> pixels in
+/// <see cref="PixelFormat.Format32bppArgb"/>.
+/// Windows reads these BGRA bytes as a little-endian DWORD with the value
+/// 0xAARRGGBB, which is why the color is still considered ARGB.
 /// </remarks>
 public class ColorSerializer : IColorSerializer
 {
@@ -93,7 +97,7 @@ public class ColorSerializer : IColorSerializer
 
     /// <summary>
     /// Serializes each <see cref="Color32BppArgb"/> directly as four 8-bit
-    /// ARGB bytes.
+    /// BGRA bytes.
     /// </summary>
     /// <param name="colors">
     /// The colors to serialize.
@@ -118,10 +122,10 @@ public class ColorSerializer : IColorSerializer
 
         for (int i = 0, offset = 0; i < colors.Length; i++)
         {
-            destination[offset++] = colors[i].A;
-            destination[offset++] = colors[i].R;
-            destination[offset++] = colors[i].G;
             destination[offset++] = colors[i].B;
+            destination[offset++] = colors[i].G;
+            destination[offset++] = colors[i].R;
+            destination[offset++] = colors[i].A;
         }
 
         return requiredLength;
@@ -129,7 +133,7 @@ public class ColorSerializer : IColorSerializer
 
     /// <summary>
     /// Serializes each <see cref="Color32BppArgb"/> directly as four 8-bit
-    /// ARGB bytes.
+    /// BGRA bytes.
     /// </summary>
     /// <param name="colors">
     /// The colors to serialize.
@@ -147,11 +151,11 @@ public class ColorSerializer : IColorSerializer
     }
 
     /// <summary>
-    /// Deserializes complete groups of four ARGB bytes into
+    /// Deserializes complete groups of four BGRA bytes into
     /// <paramref name="destination"/>.
     /// </summary>
     /// <param name="bytes">
-    /// The bytes to deserialize, in alpha, red, green, blue order.
+    /// The bytes to deserialize, in blue, green, red, alpha order.
     /// </param>
     /// <param name="destination">
     /// The destination span for the colors.
@@ -178,21 +182,21 @@ public class ColorSerializer : IColorSerializer
         for (var i = 0; i < requiredLength; i++)
         {
             destination[i] = new Color32BppArgb(
-                alpha: bytes[(i * Color32BppArgb.SizeOf) + 0],
-                red: bytes[(i * Color32BppArgb.SizeOf) + 1],
-                green: bytes[(i * Color32BppArgb.SizeOf) + 2],
-                blue: bytes[(i * Color32BppArgb.SizeOf) + 3]);
+                alpha: bytes[(i * Color32BppArgb.SizeOf) + 3],
+                red: bytes[(i * Color32BppArgb.SizeOf) + 2],
+                green: bytes[(i * Color32BppArgb.SizeOf) + 1],
+                blue: bytes[(i * Color32BppArgb.SizeOf) + 0]);
         }
 
         return requiredLength;
     }
 
     /// <summary>
-    /// Deserializes complete groups of four ARGB bytes from
+    /// Deserializes complete groups of four BGRA bytes from
     /// <paramref name="bytes"/> into a color array.
     /// </summary>
     /// <param name="bytes">
-    /// The bytes to deserialize, in alpha, red, green, blue order.
+    /// The bytes to deserialize, in blue, green, red, alpha order.
     /// </param>
     /// <returns>
     /// An array of <see cref="Color32BppArgb"/> colors, one for each complete
