@@ -9,6 +9,9 @@ namespace Maseya.Snes;
 
 using System.Globalization;
 
+/// <summary>
+/// Provides utility methods for common mathematical operations.
+/// </summary>
 public static class MathHelper
 {
     /// <summary>
@@ -62,6 +65,76 @@ public static class MathHelper
         x |= x >> 16;
 
         return checked(x + 1);
+    }
+
+    /// <summary>
+    /// Divides <paramref name="x"/> by <paramref name="m"/> and rounds the result
+    /// toward negative infinity (floor division).
+    /// </summary>
+    /// <param name="x">The dividend.</param>
+    /// <param name="m">The divisor.</param>
+    /// <returns>The quotient rounded toward negative infinity.</returns>
+    /// <remarks>
+    /// Unlike standard integer division, which truncates toward zero, this method
+    /// rounds the quotient toward negative infinity. Intermediate calculations
+    /// use <see cref="Int64"/> to avoid overflow during division and rounding.
+    /// The result must fit within the range of <see cref="Int32"/>.
+    /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="m"/> is zero.
+    /// </exception>
+    /// <exception cref="OverflowException">
+    /// The quotient rounded toward negative infinity cannot be represented as an
+    /// <see cref="Int32"/>.
+    /// </exception>
+    public static int FloorDiv(int x, int m)
+    {
+        ArgumentOutOfRangeException.ThrowIfZero(m);
+
+        var quotient = (long)x / m;
+        var remainder = (long)x % m;
+
+        if (remainder != 0 && (x < 0) != (m < 0))
+        {
+            quotient--;
+        }
+
+        return checked((int)quotient);
+    }
+
+    /// <summary>
+    /// Divides <paramref name="x"/> by <paramref name="m"/> and rounds the result
+    /// toward positive infinity (ceiling division).
+    /// </summary>
+    /// <param name="x">The dividend.</param>
+    /// <param name="m">The divisor.</param>
+    /// <returns>The quotient rounded toward positive infinity.</returns>
+    /// <remarks>
+    /// Unlike standard integer division, which truncates toward zero, this method
+    /// rounds the quotient toward positive infinity. Intermediate calculations
+    /// use <see cref="Int64"/> to avoid overflow during division and rounding.
+    /// The result must fit within the range of <see cref="Int32"/>.
+    /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="m"/> is zero.
+    /// </exception>
+    /// <exception cref="OverflowException">
+    /// The quotient rounded toward positive infinity cannot be represented as an
+    /// <see cref="Int32"/>.
+    /// </exception>
+    public static int CeilDiv(int x, int m)
+    {
+        ArgumentOutOfRangeException.ThrowIfZero(m);
+
+        var quotient = (long)x / m;
+        var remainder = (long)x % m;
+
+        if (remainder != 0 && (x < 0) == (m < 0))
+        {
+            quotient++;
+        }
+
+        return checked((int)quotient);
     }
 
     /// <summary>
