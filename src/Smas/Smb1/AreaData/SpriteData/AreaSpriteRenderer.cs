@@ -466,15 +466,15 @@ public class AreaSpriteRenderer
     private static IEnumerable<Sprite> HiddenQuestionBlock(int x, int y)
     {
         // TODO(swr): rip from tile data.
-        var tile = new Obj16Tile(0x0453, 0x0455, 0x0454, 0x0456);
+        var tile = new Obj16Tile(0x0453, 0x0454, 0x0455, 0x0456);
         yield return new Sprite(
-            x, y, new SpriteTile(tile[0], 0, -1), TileProperties.Transparent);
+            x, y, new SpriteTile(tile.TopLeft, 0, -1), TileProperties.Transparent);
         yield return new Sprite(
-            x, y + 8, new SpriteTile(tile[2], 0, -1), TileProperties.Transparent);
+            x + 8, y, new SpriteTile(tile.TopRight, 0, -1), TileProperties.Transparent);
         yield return new Sprite(
-            x + 8, y, new SpriteTile(tile[1], 0, -1), TileProperties.Transparent);
+            x, y + 8, new SpriteTile(tile.BottomLeft, 0, -1), TileProperties.Transparent);
         yield return new Sprite(
-            x + 8, y + 8, new SpriteTile(tile[3], 0, -1), TileProperties.Transparent);
+            x + 8, y + 8, new SpriteTile(tile.BottomRight, 0, -1), TileProperties.Transparent);
     }
 
     private static IEnumerable<Sprite> Mushroom(int x, int y, int palette)

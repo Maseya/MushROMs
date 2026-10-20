@@ -14,21 +14,21 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
     public const int NumberOfTiles = 4;
 
     public const int TopLeftIndex = 0;
-    public const int BottomLeftIndex = 1;
-    public const int TopRightIndex = 2;
+    public const int TopRightIndex = 1;
+    public const int BottomLeftIndex = 2;
     public const int BottomRightIndex = 3;
 
     public const int SizeOf = NumberOfTiles * ObjTile.SizeOf;
 
     public Obj16Tile(
         ObjTile topLeft,
-        ObjTile bottomLeft,
         ObjTile topRight,
+        ObjTile bottomLeft,
         ObjTile bottomRight)
     {
         TopLeft = topLeft;
-        BottomLeft = bottomLeft;
         TopRight = topRight;
+        BottomLeft = bottomLeft;
         BottomRight = bottomRight;
     }
 
@@ -63,8 +63,8 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
             return index switch
             {
                 TopLeftIndex => TopLeft,
-                BottomLeftIndex => TopRight,
-                TopRightIndex => BottomLeft,
+                TopRightIndex => TopRight,
+                BottomLeftIndex => BottomLeft,
                 BottomRightIndex => BottomRight,
                 _ => throw new ArgumentOutOfRangeException(
                     nameof(index)),
@@ -79,11 +79,11 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
                 TopLeft = value;
                 return;
 
-            case BottomLeftIndex:
+            case TopRightIndex:
                 TopRight = value;
                 return;
 
-            case TopRightIndex:
+            case BottomLeftIndex:
                 BottomLeft = value;
                 return;
 
@@ -110,30 +110,30 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
 
     public static int GetXCoordinate(int index)
     {
-        return index / 2;
+        return index % 2;
     }
 
     public static int GetYCoordinate(int index)
     {
-        return index % 2;
+        return index / 2;
     }
 
     public readonly Obj16Tile FlipX()
     {
         return new Obj16Tile(
-            BottomLeft.FlipX(),
+            TopRight.FlipX(),
             TopLeft.FlipX(),
             BottomRight.FlipX(),
-            TopRight.FlipX());
+            BottomLeft.FlipX());
     }
 
     public readonly Obj16Tile FlipY()
     {
         return new Obj16Tile(
-            TopRight.FlipY(),
+            BottomLeft.FlipY(),
             BottomRight.FlipY(),
             TopLeft.FlipY(),
-            BottomLeft.FlipY());
+            TopRight.FlipY());
     }
 
     public readonly bool Equals(Obj16Tile other)
@@ -152,11 +152,11 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
 
     public override readonly int GetHashCode()
     {
-        return HashCode.Combine(TopLeft, BottomLeft, TopRight, BottomRight);
+        return HashCode.Combine(TopLeft, TopRight, BottomLeft, BottomRight);
     }
 
     public override readonly string ToString()
     {
-        return $"{TopLeft}-{BottomLeft}-{TopRight}-{BottomRight}";
+        return $"{TopLeft}-{TopRight}-{BottomLeft}-{BottomRight}";
     }
 }
