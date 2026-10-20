@@ -42,6 +42,19 @@ public static class MathHelper
         return checked(x + 1);
     }
 
+    /// <summary>
+    /// Attempts to parse a two-character hexadecimal string as a byte.
+    /// </summary>
+    /// <param name="token">The text to parse.</param>
+    /// <param name="value">
+    /// The parsed byte when parsing succeeds, even if <paramref name="token"/>
+    /// is not exactly two characters; otherwise, zero.
+    /// </param>
+    /// <returns>
+    /// <see langword="true"/> if <paramref name="token"/> is exactly two
+    /// characters and can be parsed as a hexadecimal byte; otherwise,
+    /// <see langword="false"/>.
+    /// </returns>
     public static bool TryGetHexByte(string token, out byte value)
     {
         return Byte.TryParse(

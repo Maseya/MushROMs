@@ -47,4 +47,39 @@ public class MathHelperTests
     {
         _ = Assert.Throws<OverflowException>(() => MathHelper.BitCeil(x));
     }
+
+    [Theory]
+    [InlineData("00", true, 0x00)]
+    [InlineData("0F", true, 0x0F)]
+    [InlineData("a5", true, 0xA5)]
+    [InlineData("FF", true, 0xFF)]
+    [InlineData("A", false, 0x0A)]
+    [InlineData("001", false, 0x01)]
+    [InlineData("G1", false, 0x00)]
+    [InlineData("100", false, 0x00)]
+    public void TryGetHexByte_ValidatesLengthAndHexFormat(
+        string token,
+        bool expectedResult,
+        byte expectedValue)
+    {
+        var actualResult = MathHelper.TryGetHexByte(token, out var actualValue);
+
+        Assert.Equal(expectedResult, actualResult);
+        Assert.Equal(expectedValue, actualValue);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("zz")]
+    [InlineData("hello")]
+    [InlineData("not a number")]
+    [InlineData("0x")]
+    [InlineData("0x00")]
+    [InlineData("x00")]
+    public void TryGetHexByte_InvalidText_ReturnsFalse(string token)
+    {
+        var result = MathHelper.TryGetHexByte(token, out _);
+
+        Assert.False(result);
+    }
 }
