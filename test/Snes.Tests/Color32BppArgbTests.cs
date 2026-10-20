@@ -14,6 +14,13 @@ using Xunit;
 public class Color32BppArgbTests
 {
     [Fact]
+    public void SizeOf_ReportsFourByteSequentialLayout()
+    {
+        Assert.Equal(4, Color32BppArgb.SizeOf);
+        Assert.Equal(Color32BppArgb.SizeOf, Marshal.SizeOf<Color32BppArgb>());
+    }
+
+    [Fact]
     public void Constructor_SetsArgbChannels()
     {
         var color = new Color32BppArgb(0x11, 0x22, 0x33, 0x44);

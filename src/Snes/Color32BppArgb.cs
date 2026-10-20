@@ -17,10 +17,17 @@ using System.Runtime.InteropServices;
 /// <remarks>
 /// Its sequential layout is designed for working with <see cref="Bitmap"/>
 /// pixels using <see cref="PixelFormat.Format32bppArgb"/>.
+/// The bytes are ordered BGRA, but Windows reads them as a little-endian
+/// DWORD with the value 0xAARRGGBB, so the color is considered ARGB.
 /// </remarks>
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct Color32BppArgb : IEquatable<Color32BppArgb>
 {
+    /// <summary>
+    /// The size of a <see cref="Color32BppArgb"/> value, in bytes.
+    /// </summary>
+    public const int SizeOf = 4;
+
     /// <summary>
     /// Gets or sets the blue channel.
     /// </summary>
