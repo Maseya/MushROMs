@@ -12,6 +12,28 @@ using System.Globalization;
 public static class MathHelper
 {
     /// <summary>
+    /// Calculates the largest power of 2 that is a lower-bound for a given
+    /// integer.
+    /// </summary>
+    /// <param name="x">
+    /// The integer to lower-bound.
+    /// </param>
+    /// <returns>
+    /// The largest power of 2 that does not exceed <paramref name="x"/>, or 0
+    /// if <paramref name="x"/> is nonpositive.
+    /// </returns>
+    public static int BitFloor(int x)
+    {
+        x |= x >> 1;
+        x |= x >> 2;
+        x |= x >> 4;
+        x |= x >> 8;
+        x |= x >> 16;
+
+        return x ^ (x >> 1);
+    }
+
+    /// <summary>
     /// Calculates the smallest power of 2 that is an upper-bound for a given integer.
     /// </summary>
     /// <param name="x">

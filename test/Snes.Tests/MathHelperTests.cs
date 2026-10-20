@@ -19,6 +19,34 @@ public class MathHelperTests
     [InlineData(0x0, 0x0)]
     [InlineData(0x1, 0x1)]
     [InlineData(0x2, 0x2)]
+    [InlineData(0x3, 0x2)]
+    [InlineData(0x4, 0x4)]
+    [InlineData(0x5, 0x4)]
+    [InlineData(0x7, 0x4)]
+    [InlineData(0x8, 0x8)]
+    [InlineData(0x9, 0x8)]
+    [InlineData(0xF, 0x8)]
+    [InlineData(0x10, 0x10)]
+    [InlineData(0x11, 0x10)]
+    [InlineData(0x3FF, 0x200)]
+    [InlineData(0x400, 0x400)]
+    [InlineData(0x401, 0x400)]
+    [InlineData(0x40000000, 0x40000000)]
+    [InlineData(0x7FFFFFFF, 0x40000000)]
+    public void BitFloor_ValidInput_ReturnsLargestPowerOfTwoLowerBound(
+        int x,
+        int expected)
+    {
+        var actual = MathHelper.BitFloor(x);
+        Assert.Equal(expected, actual);
+    }
+
+    [Theory]
+    [InlineData(unchecked((int)0x80000000), 0x0)]
+    [InlineData(-0x1, 0x0)]
+    [InlineData(0x0, 0x0)]
+    [InlineData(0x1, 0x1)]
+    [InlineData(0x2, 0x2)]
     [InlineData(0x3, 0x4)]
     [InlineData(0x4, 0x4)]
     [InlineData(0x5, 0x8)]
