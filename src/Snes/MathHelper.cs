@@ -21,19 +21,25 @@ public static class MathHelper
     /// An integer that is the smallest power of 2 that upper-bounds <paramref
     /// name="x"/>.
     /// </returns>
+    /// <exception cref="OverflowException">
+    /// The smallest power of 2 that upper-bounds <paramref name="x"/> cannot be
+    /// represented as an <see cref="Int32"/>.
+    /// </exception>
     public static int BitCeil(int x)
     {
-        // check for the set bits
+        if (x <= 0)
+        {
+            return 0;
+        }
+
+        x--;
         x |= x >> 1;
         x |= x >> 2;
         x |= x >> 4;
         x |= x >> 8;
         x |= x >> 16;
 
-        // Then we remove all but the top bit by xor'ing the string of 1's with that
-        // string of 1's shifted one to the left, and we end up with just the one top
-        // bit followed by 0's.
-        return x ^ (x >> 1);
+        return checked(x + 1);
     }
 
     public static bool TryGetHexByte(string token, out byte value)
