@@ -116,11 +116,11 @@ public struct ObjTile : IEquatable<ObjTile>
         {
             if (value)
             {
-                TileFlip &= ~TileFlip.Horizontal;
+                TileFlip |= TileFlip.Horizontal;
             }
             else
             {
-                TileFlip |= TileFlip.Horizontal;
+                TileFlip &= ~TileFlip.Horizontal;
             }
         }
     }
@@ -136,11 +136,11 @@ public struct ObjTile : IEquatable<ObjTile>
         {
             if (value)
             {
-                TileFlip &= ~TileFlip.Veritcal;
+                TileFlip |= TileFlip.Veritcal;
             }
             else
             {
-                TileFlip |= TileFlip.Veritcal;
+                TileFlip &= ~TileFlip.Veritcal;
             }
         }
     }
