@@ -1263,7 +1263,7 @@ public class Rom
 
     public void WriteBytes(
         int snesAddress,
-        Span<byte> bytes,
+        ReadOnlySpan<byte> bytes,
         bool crossBanks = true)
     {
         var pcAddress = SnesToPc(snesAddress);
@@ -1279,7 +1279,7 @@ public class Rom
 
     public void WriteBytesIndirect(
         int snesAddress,
-        Span<byte> bytes,
+        ReadOnlySpan<byte> bytes,
         bool crossBanks = true)
     {
         WriteBytesIndirectIndexed(snesAddress, 0, bytes, crossBanks);
@@ -1288,7 +1288,7 @@ public class Rom
     public void WriteBytesIndirectIndexed(
         int snesAddress,
         int index,
-        Span<byte> bytes,
+        ReadOnlySpan<byte> bytes,
         bool crossBanks = true)
     {
         var bank = snesAddress & BankMask;
@@ -1299,7 +1299,7 @@ public class Rom
 
     public void WriteInt16Array(
         int snesAddress,
-        Span<short> words,
+        ReadOnlySpan<short> words,
         bool crossBanks = true)
     {
         unsafe
@@ -1308,7 +1308,9 @@ public class Rom
             {
                 WriteBytes(
                     snesAddress,
-                    new Span<byte>((byte*)ptr, words.Length * sizeof(short)),
+                    new ReadOnlySpan<byte>(
+                        (byte*)ptr,
+                        words.Length * sizeof(short)),
                     crossBanks);
             }
         }
@@ -1316,7 +1318,7 @@ public class Rom
 
     public void WriteInt16ArrayIndirect(
         int snesAddress,
-        Span<short> words,
+        ReadOnlySpan<short> words,
         bool crossBanks = true)
     {
         WriteInt16ArrayIndirectIndexed(snesAddress, 0, words, crossBanks);
@@ -1325,7 +1327,7 @@ public class Rom
     public void WriteInt16ArrayIndirectIndexed(
         int snesAddress,
         int index,
-        Span<short> words,
+        ReadOnlySpan<short> words,
         bool crossBanks = true)
     {
         var bank = snesAddress & BankMask;
@@ -1336,7 +1338,7 @@ public class Rom
 
     public void WriteArrayAsInt16<T>(
         int snesAddress,
-        Span<T> data,
+        ReadOnlySpan<T> data,
         Func<T, short> func,
         bool crossBanks = true)
     {
@@ -1351,7 +1353,7 @@ public class Rom
 
     public void WriteArrayAsInt16Indirect<T>(
         int snesAddress,
-        Span<T> data,
+        ReadOnlySpan<T> data,
         Func<T, short> func,
         bool crossBanks = true)
     {
