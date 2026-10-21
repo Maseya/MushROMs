@@ -35,13 +35,13 @@ public class RpfColorSerializerTests
     {
         Assert.Equal(
             expectedColorCount,
-            RpfColorSerializer.Default.GetDeserializedColorCount(byteLength));
+            RpfColorSerializer.Default.GetDeserializedDataCount(byteLength));
         Assert.Equal(
             expectedValidity,
             RpfColorSerializer.Default.IsValidByteLength(byteLength));
         Assert.Equal(
             expectedValidity,
-            RpfColorSerializer.Default.TryGetDeserializedColorCount(
+            RpfColorSerializer.Default.TryGetDeserializedDataCount(
                 byteLength,
                 out var colorCount));
         Assert.Equal(expectedColorCount, colorCount);

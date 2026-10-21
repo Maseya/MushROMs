@@ -11,6 +11,9 @@ using Xunit;
 
 public class ColorSerializerTests
 {
+    public static readonly UnmanagedDataSerializer<Color32BppArgb> ColorSerializer =
+        UnmanagedDataSerializer<Color32BppArgb>.Default;
+
     [Theory]
     [InlineData(0, 0)]
     [InlineData(2, 8)]
@@ -20,7 +23,7 @@ public class ColorSerializerTests
     {
         Assert.Equal(
             expectedByteLength,
-            ColorSerializer.Default.GetSerializedLength(colorLength));
+            ColorSerializer.GetSerializedLength(colorLength));
     }
 
     [Theory]
@@ -35,13 +38,13 @@ public class ColorSerializerTests
     {
         Assert.Equal(
             expectedColorCount,
-            ColorSerializer.Default.GetDeserializedColorCount(byteLength));
+            ColorSerializer.GetDeserializedDataCount(byteLength));
         Assert.Equal(
             expectedValidity,
-            ColorSerializer.Default.IsValidByteLength(byteLength));
+            ColorSerializer.IsValidByteLength(byteLength));
         Assert.Equal(
             expectedValidity,
-            ColorSerializer.Default.TryGetDeserializedColorCount(
+            ColorSerializer.TryGetDeserializedDataCount(
                 byteLength,
                 out var colorCount));
         Assert.Equal(expectedColorCount, colorCount);
@@ -53,7 +56,7 @@ public class ColorSerializerTests
         var color = new Color32BppArgb(0x11, 0x22, 0x33, 0x44);
         var destination = new byte[5];
 
-        var bytesWritten = ColorSerializer.Default.Serialize([color], destination);
+        var bytesWritten = ColorSerializer.Serialize([color], destination);
 
         Assert.Equal(4, bytesWritten);
         Assert.Equal([0x44, 0x33, 0x22, 0x11, 0x00], destination);
@@ -66,7 +69,7 @@ public class ColorSerializerTests
         var destination = new byte[3];
 
         var exception = Assert.Throws<BufferTooSmallException>(
-            () => ColorSerializer.Default.Serialize([color], destination));
+            () => ColorSerializer.Serialize([color], destination));
 
         Assert.Equal("destination", exception.ParamName);
     }
@@ -77,7 +80,7 @@ public class ColorSerializerTests
         byte[] bytes = [0x44, 0x33, 0x22, 0x11, 0xFF];
         var destination = new Color32BppArgb[2];
 
-        var colorsWritten = ColorSerializer.Default.Deserialize(bytes, destination);
+        var colorsWritten = ColorSerializer.Deserialize(bytes, destination);
 
         Assert.Equal(1, colorsWritten);
         Assert.Equal(new Color32BppArgb(0x11, 0x22, 0x33, 0x44), destination[0]);
@@ -89,7 +92,7 @@ public class ColorSerializerTests
         byte[] bytes = [0x11, 0x22, 0x33, 0x44];
 
         var exception = Assert.Throws<BufferTooSmallException>(
-            () => ColorSerializer.Default.Deserialize(bytes, []));
+            () => ColorSerializer.Deserialize(bytes, []));
 
         Assert.Equal("destination", exception.ParamName);
     }
