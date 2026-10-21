@@ -662,7 +662,7 @@ public partial class MainForm : Form, IMainView
         {
             var drawData = Presenter.GetDrawData(
                 startX: StartX,
-                size: areaControl.Size,
+                size: areaControl.ClientSize,
                 separatorColor: Color.Blue,
                 passiveColor: Color.LightGreen,
                 selectColor: Color.White);
