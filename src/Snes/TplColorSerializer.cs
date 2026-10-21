@@ -18,7 +18,7 @@ using System;
 /// followed by a byte whose value is not validated. Serialization uses
 /// 0x02 for the fourth byte.
 /// </remarks>
-public class TplColorSerializer : IColorSerializer
+public class TplColorSerializer : IDataSerializerBase<Color32BppArgb>
 {
     /// <summary>
     /// Gets the default <see cref="TplColorSerializer"/> instance.
@@ -35,15 +35,15 @@ public class TplColorSerializer : IColorSerializer
     /// <summary>
     /// Gets the number of bytes needed to serialize a number of colors.
     /// </summary>
-    /// <param name="colorLength">
+    /// <param name="colorCount">
     /// The number of colors to serialize.
     /// </param>
     /// <returns>
     /// The required serialized size, in bytes.
     /// </returns>
-    public int GetSerializedLength(int colorLength)
+    public int GetSerializedLength(int colorCount)
     {
-        return Header.Length + (Math.Max(colorLength, 0) * sizeof(ushort));
+        return Header.Length + (Math.Max(colorCount, 0) * sizeof(ushort));
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class TplColorSerializer : IColorSerializer
     /// not form a complete color is ignored.
     /// A negative byte length returns zero.
     /// </remarks>
-    public int GetDeserializedColorCount(int byteLength)
+    public int GetDeserializedDataCount(int byteLength)
     {
         return (Math.Max(byteLength, Header.Length) - Header.Length) / sizeof(ushort);
     }
@@ -95,10 +95,12 @@ public class TplColorSerializer : IColorSerializer
     /// <see langword="true"/> if <paramref name="byteLength"/> is valid for
     /// TPL deserialization; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool TryGetDeserializedColorCount(int byteLength, out int colorCount)
+    public bool TryGetDeserializedDataCount(int byteLength, out int colorCount)
     {
-        colorCount = GetDeserializedColorCount(byteLength);
-        return IsValidByteLength(byteLength);
+        return SerializerHelper.TryGetDeserializedDataCount(
+            this,
+            byteLength,
+            out colorCount);
     }
 
     /// <summary>
@@ -156,7 +158,7 @@ public class TplColorSerializer : IColorSerializer
     /// </exception>
     public byte[] Serialize(ReadOnlySpan<Color32BppArgb> colors)
     {
-        return ColorSerializerHelper.Serialize(this, colors);
+        return SerializerHelper.Serialize(this, colors);
     }
 
     /// <summary>
@@ -215,6 +217,6 @@ public class TplColorSerializer : IColorSerializer
     /// </remarks>
     public Color32BppArgb[] Deserialize(ReadOnlySpan<byte> bytes)
     {
-        return ColorSerializerHelper.Deserialize(this, bytes);
+        return SerializerHelper.Deserialize(this, bytes);
     }
 }

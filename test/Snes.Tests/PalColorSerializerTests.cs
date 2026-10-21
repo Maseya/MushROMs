@@ -38,13 +38,13 @@ public class PalColorSerializerTests
     {
         Assert.Equal(
             expectedColorCount,
-            PalColorSerializer.Default.GetDeserializedColorCount(byteLength));
+            PalColorSerializer.Default.GetDeserializedDataCount(byteLength));
         Assert.Equal(
             expectedValidity,
             PalColorSerializer.Default.IsValidByteLength(byteLength));
         Assert.Equal(
             expectedValidity,
-            PalColorSerializer.Default.TryGetDeserializedColorCount(
+            PalColorSerializer.Default.TryGetDeserializedDataCount(
                 byteLength,
                 out var colorCount));
         Assert.Equal(expectedColorCount, colorCount);

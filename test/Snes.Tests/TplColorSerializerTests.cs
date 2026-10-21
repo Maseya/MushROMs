@@ -37,13 +37,13 @@ public class TplColorSerializerTests
     {
         Assert.Equal(
             expectedColorCount,
-            TplColorSerializer.Default.GetDeserializedColorCount(byteLength));
+            TplColorSerializer.Default.GetDeserializedDataCount(byteLength));
         Assert.Equal(
             expectedValidity,
             TplColorSerializer.Default.IsValidByteLength(byteLength));
         Assert.Equal(
             expectedValidity,
-            TplColorSerializer.Default.TryGetDeserializedColorCount(
+            TplColorSerializer.Default.TryGetDeserializedDataCount(
                 byteLength,
                 out var colorCount));
         Assert.Equal(expectedColorCount, colorCount);

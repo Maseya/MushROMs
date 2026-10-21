@@ -16,7 +16,7 @@ using System;
 /// Each color is stored as three consecutive bytes in red, green, blue order.
 /// The alpha channel is not serialized and is restored as fully opaque.
 /// </remarks>
-public class PalColorSerializer : IColorSerializer
+public class PalColorSerializer : IDataSerializerBase<Color32BppArgb>
 {
     /// <summary>
     /// Gets the default <see cref="PalColorSerializer"/> instance.
@@ -26,15 +26,15 @@ public class PalColorSerializer : IColorSerializer
     /// <summary>
     /// Gets the number of bytes needed to serialize a number of colors.
     /// </summary>
-    /// <param name="colorLength">
+    /// <param name="colorCount">
     /// The number of colors to serialize.
     /// </param>
     /// <returns>
     /// The required serialized size, in bytes.
     /// </returns>
-    public int GetSerializedLength(int colorLength)
+    public int GetSerializedLength(int colorCount)
     {
-        return Math.Max(colorLength, 0) * 3;
+        return Math.Max(colorCount, 0) * 3;
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class PalColorSerializer : IColorSerializer
     /// Any trailing bytes that do not form a complete RGB color are ignored.
     /// A negative byte length returns zero.
     /// </remarks>
-    public int GetDeserializedColorCount(int byteLength)
+    public int GetDeserializedDataCount(int byteLength)
     {
         return Math.Max(byteLength, 0) / 3;
     }
@@ -85,10 +85,12 @@ public class PalColorSerializer : IColorSerializer
     /// <see langword="true"/> if <paramref name="byteLength"/> is valid for
     /// deserialization; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool TryGetDeserializedColorCount(int byteLength, out int colorCount)
+    public bool TryGetDeserializedDataCount(int byteLength, out int colorCount)
     {
-        colorCount = GetDeserializedColorCount(byteLength);
-        return IsValidByteLength(byteLength);
+        return SerializerHelper.TryGetDeserializedDataCount(
+            this,
+            byteLength,
+            out colorCount);
     }
 
     /// <summary>
@@ -140,7 +142,7 @@ public class PalColorSerializer : IColorSerializer
     /// </exception>
     public byte[] Serialize(ReadOnlySpan<Color32BppArgb> colors)
     {
-        return ColorSerializerHelper.Serialize(this, colors);
+        return SerializerHelper.Serialize(this, colors);
     }
 
     /// <summary>
@@ -165,7 +167,7 @@ public class PalColorSerializer : IColorSerializer
     /// </remarks>
     public int Deserialize(ReadOnlySpan<byte> bytes, Span<Color32BppArgb> destination)
     {
-        var requiredLength = GetDeserializedColorCount(bytes.Length);
+        var requiredLength = GetDeserializedDataCount(bytes.Length);
         if (destination.Length < requiredLength)
         {
             throw new BufferTooSmallException(nameof(destination));
@@ -203,6 +205,6 @@ public class PalColorSerializer : IColorSerializer
     /// </exception>
     public Color32BppArgb[] Deserialize(ReadOnlySpan<byte> bytes)
     {
-        return ColorSerializerHelper.Deserialize(this, bytes);
+        return SerializerHelper.Deserialize(this, bytes);
     }
 }
