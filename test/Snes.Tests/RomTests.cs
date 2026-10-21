@@ -29,6 +29,52 @@ public class RomTests
         }
     }
 
+    [Theory]
+    // TODO(swr): I need Test ROMs for different address modes.
+    [InlineData("Test ROM", "", "??")]
+    [InlineData("Test ROM", "?", "??")]
+    [InlineData("Test ROM", "??", "??")]
+    [InlineData("Test ROM", "???", "??")]
+    [InlineData("Test ROM", " ", " ?")]
+    [InlineData("Test ROM", "A", "A?")]
+    [InlineData("Test ROM", "AB", "AB")]
+    [InlineData("Test ROM", "ABCD", "AB")]
+    [InlineData("Test ROM", " AB", " A")]
+    public void MakerCode_ValidMakerCode_ReturnsExpectedMakerCode(
+        string romName,
+        string inputCode,
+        string expectedMakerCode)
+    {
+        var rom = TestRoms[romName].CreateRom();
+        rom.MakerCode = inputCode;
+
+        Assert.Equal(expectedMakerCode, rom.MakerCode);
+    }
+
+    [Theory]
+    [InlineData("Test ROM", "", "????")]
+    [InlineData("Test ROM", "?", "????")]
+    [InlineData("Test ROM", "??", "????")]
+    [InlineData("Test ROM", "???", "????")]
+    [InlineData("Test ROM", "????", "????")]
+    [InlineData("Test ROM", "??????", "????")]
+    [InlineData("Test ROM", " ", " ???")]
+    [InlineData("Test ROM", "A", "A???")]
+    [InlineData("Test ROM", "AB", "AB??")]
+    [InlineData("Test ROM", "ABCD", "ABCD")]
+    [InlineData("Test ROM", " AB", " AB?")]
+    [InlineData("Test ROM", "ABCDEF", "ABCD")]
+    public void GameCode_ValidGameCode_ReturnsExpectedGameCode(
+        string romName,
+        string inputCode,
+        string expectedGameCode)
+    {
+        var rom = TestRoms[romName].CreateRom();
+        rom.GameCode = inputCode;
+
+        Assert.Equal(expectedGameCode, rom.GameCode);
+    }
+
     [Fact]
     public void SnesToPc_InvalidAddressMode_ThrowsInvalidEnumException()
     {
@@ -309,6 +355,21 @@ public class RomTests
     }
 
     [Theory]
+    [InlineData(Int32.MinValue, true)]
+    [InlineData(0, true)]
+    [InlineData(0x1FF, true)]
+    [InlineData(-1, false)]
+    public void PcToSnes_AddressBeforeRomData_ThrowsArgumentOutOfRangeException(
+        int pointer,
+        bool hasHeader)
+    {
+        var exception = Assert.Throws<ArgumentOutOfRangeException>(
+            () => Rom.PcToSnes(pointer, hasHeader, AddressMode.LoRom));
+
+        Assert.Equal("pointer", exception.ParamName);
+    }
+
+    [Theory]
     [InlineData(0x000000, 0x008000)]
     [InlineData(0x007FFF, 0x00FFFF)]
     [InlineData(0x008000, 0x018000)]
@@ -544,7 +605,7 @@ public class RomTests
     public void IsValidAddress_ValidLoRomAddress_ReturnsTrue(int snesAddress)
     {
         /*
-         * There are two ways to consider a LOROM address. If I'm trying to read from a LOROM address, then 
+         * There are two ways to consider a LOROM address. If I'm trying to read from a LOROM address, then
          * it doesn't matter if I get $00:8000 or $80:8000 (also note that even $40:8000 or several other values
          * may be valid based on mirroring). They point to the same PC location. However, if I'm trying to write
          * to a PC location, then writing in LOROM or LOROM2 actually matters. Not so much because they point to
@@ -1014,7 +1075,7 @@ public class RomTests
     public void Constructor_ValidData_CanDetermineFormat(string name)
     {
         var testRom = TestRoms[name];
-        var data = testRom.CreateRom();
+        var data = testRom.CreateRomData();
         Rom rom;
         try
         {

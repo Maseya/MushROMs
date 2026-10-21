@@ -47,7 +47,12 @@ internal class TestRomGenerator
         get; set;
     }
 
-    public byte[] CreateRom()
+    public Rom CreateRom()
+    {
+        return new Rom(CreateRomData());
+    }
+
+    public byte[] CreateRomData()
     {
         var result = new byte[Size];
         result[0] = 0x78;

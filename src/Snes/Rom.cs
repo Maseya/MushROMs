@@ -40,7 +40,7 @@ public class Rom
     public const int SpecialVersionAddress = 0xFFBE;
     public const int CartTypeSubNumberAddress = 0xFFBF;
     public const int GameTitleAddress = 0xFFC0;
-    public const int GameTitleSize = 0x16;
+    public const int GameTitleSize = 0x15;
     public const int MapModeAddress = 0xFFD5;
     public const int CartridgeTypeAddress = 0xFFD6;
     public const int RomSizeAddress = 0xFFD7;
@@ -140,11 +140,11 @@ public class Rom
 
         set
         {
-            var bytes = Encoding.ASCII.GetBytes(value);
-            var realLength = Math.Min(bytes.Length - 1, MakerCodeSize);
-            var result = new byte[MakerCodeSize];
-            Array.Copy(bytes, result, realLength);
-            WriteBytes(MakerCodeAddress, result);
+            var valueBytes = Encoding.ASCII.GetBytes(value);
+            var resultBytes = Encoding.ASCII.GetBytes(new string('?', MakerCodeSize));
+            var realLength = Math.Min(valueBytes.Length, MakerCodeSize);
+            Array.Copy(valueBytes, resultBytes, realLength);
+            WriteBytes(MakerCodeAddress, resultBytes);
         }
     }
 
@@ -163,11 +163,11 @@ public class Rom
 
         set
         {
-            var bytes = Encoding.ASCII.GetBytes(value);
-            var realLength = Math.Min(bytes.Length - 1, GameCodeSize);
-            var result = new byte[GameCodeSize];
-            Array.Copy(bytes, result, realLength);
-            WriteBytes(GameCodeAddress, result);
+            var valueBytes = Encoding.ASCII.GetBytes(value);
+            var resultBytes = Encoding.ASCII.GetBytes(new string('?', GameCodeSize));
+            var realLength = Math.Min(valueBytes.Length, GameCodeSize);
+            Array.Copy(valueBytes, resultBytes, realLength);
+            WriteBytes(GameCodeAddress, resultBytes);
         }
     }
 
@@ -246,7 +246,7 @@ public class Rom
         set
         {
             var bytes = GameTitleEncoding.GetBytes(value.Replace('¥', '\\'));
-            var realLength = Math.Min(bytes.Length - 1, GameTitleSize);
+            var realLength = Math.Min(bytes.Length, GameTitleSize);
             var result = new byte[GameTitleSize];
             Array.Fill(result, (byte)' ');
             Array.Copy(bytes, result, realLength);
@@ -462,7 +462,7 @@ public class Rom
     {
         get
         {
-            return (Checksum ^ ComplementCheck) == Int16.MaxValue;
+            return (Checksum ^ ComplementCheck) == UInt16.MaxValue;
         }
     }
 
@@ -759,14 +759,15 @@ public class Rom
 
     public static int PcToSnes(int pointer, bool hasHeader, AddressMode mode)
     {
-        pointer -= hasHeader ? DefaultHeaderSize : 0;
-        if (pointer < 0)
+        var headerSize = hasHeader ? DefaultHeaderSize : 0;
+        if (pointer < headerSize)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(pointer),
                 "PC Address cannot be less than zero.");
         }
 
+        pointer -= headerSize;
         int result;
         switch (mode)
         {
@@ -1400,7 +1401,7 @@ public class Rom
 
     private static bool IsValidExHiRomPointer(int pointer)
     {
-        return 
+        return
             (uint)(pointer & ~0x80_0000) < 0x40_0000 ||
                 (uint)(pointer - 0x70_0000) < 0x78_0000 - 0x70_0000
             ? (pointer & 0x8000) != 0
