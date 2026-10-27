@@ -3,6 +3,19 @@
 using System;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// Provides serialization and deserialization of unmanaged structs by directly
+/// copying the bytes of the struct's implementation in memory.
+/// </summary>
+/// <typeparam name="T">
+/// Any unmanaged struct type.
+/// </typeparam>
+/// <remarks>
+/// A security note to implementers: No validation occurs on deserialization. A
+/// malicious user could supply byte data that would deserialize into invalid
+/// data that could cause undefined behavior in your application. Only use this
+/// class for unmanaged structs that a guaranteed to have no invalid inputs.
+/// </remarks>
 public class UnmanagedDataSerializer<T> : DataSerializerBase<T>
     where T : unmanaged
 {
